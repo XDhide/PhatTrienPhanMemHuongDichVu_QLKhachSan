@@ -14,18 +14,6 @@
 - [ ] **Xem tệp** _(Hiển thị hình ảnh, tải file, kiểm tra quyền xem)_
 - [ ] **Cập nhật tệp** _(Thay thế file cũ, backup file gốc, update đường dẫn mới)_
 
-### Tiện ích hệ thống
-- [ ] **Ghi log hoạt động** _(Lưu thao tác người dùng, thời gian, IP, kết quả thành công/thất bại)_
-- [ ] **Xem log hệ thống** _(Tìm kiếm log theo người dùng/thời gian, export báo cáo)_
-- [ ] **Xóa log cũ** _(Tự động xóa log quá 6 tháng, nén file log, backup quan trọng)_
-- [ ] **Backup dữ liệu** _(Tạo file backup database, lưu trữ, lên lịch tự động)_
-- [ ] **Khôi phục dữ liệu** _(Restore từ file backup, kiểm tra tính toàn vẹn, rollback)_
-
-### Cấu hình hệ thống
-- [ ] **Xem cấu hình** _(Hiển thị các thông số hệ thống, múi giờ, ngôn ngữ, tiền tệ)_
-- [ ] **Sửa cấu hình** _(Cập nhật thuế VAT, phí dịch vụ, thông tin khách sạn)_
-- [ ] **Thêm cấu hình mới** _(Tạo parameter mới, set giá trị mặc định, mô tả)_
-- [ ] **Xóa cấu hình** _(Remove parameter không dùng, backup trước khi xóa)_
 
 ---
 
@@ -101,21 +89,7 @@
 
 ---
 
-## 📅 **HotelManagement.API.Gateway** (Cổng API)
 
-### Quản lý định tuyến API
-- [ ] **Thêm route mới** _(Endpoint, method, target service, authentication required)_
-- [ ] **Sửa cấu hình route** _(Cập nhật đường dẫn, target, timeout, retry policy)_
-- [ ] **Xóa route** _(Remove endpoint không dùng, backup cấu hình)_
-- [ ] **Xem danh sách routes** _(Tất cả endpoints, status, usage statistics)_
-
-### Quản lý bảo mật
-- [ ] **Thêm API key** _(Tạo key cho client mới, set permissions, expiry date)_
-- [ ] **Sửa quyền API key** _(Cập nhật permissions, gia hạn, thay đổi rate limit)_
-- [ ] **Xóa API key** _(Revoke key, blacklist, notify client)_
-- [ ] **Xem log API calls** _(Theo dõi usage, error rate, performance metrics)_
-
----
 
 ## 🛎️ **HotelManagement.API.Reception** (Lễ tân)
 
@@ -161,60 +135,3 @@
 - [ ] **Lưu template báo cáo** _(Save custom report format, schedule auto generate)_
 - [ ] **Xem báo cáo lịch sử** _(Archive các báo cáo đã tạo, search theo thời gian)_
 
----
-
-## 🌐 **HotelManagement.WebApp** (Ứng dụng web)
-
-### Quản lý nội dung website
-- [ ] **Thêm tin tức** _(Tiêu đề, nội dung, hình ảnh, ngày đăng, tác giả)_
-- [ ] **Sửa bài viết** _(Cập nhật nội dung, hình ảnh, SEO meta, publish date)_
-- [ ] **Xóa tin tức** _(Soft delete, backup nội dung, redirect URL nếu cần)_
-- [ ] **Xem danh sách bài viết** _(Draft/published status, search, sort theo ngày)_
-
-### Quản lý booking online
-- [ ] **Xem booking online** _(Danh sách đặt phòng từ website, status pending/confirmed)_
-- [ ] **Xác nhận booking** _(Approve reservation, send confirmation email, update status)_
-- [ ] **Từ chối booking** _(Decline với lý do, suggest alternative dates, refund deposit)_
-- [ ] **Sửa booking online** _(Customer request changes, update details, price difference)_
-
----
-
-## 📊 **HotelManagement.BLL** (Tầng logic nghiệp vụ)
-
-### Quản lý business rules
-- [ ] **Thêm quy tắc mới** _(Pricing rules, cancellation policy, overbooking limits)_
-- [ ] **Sửa quy tắc** _(Cập nhật business logic, validation rules, approval workflow)_
-- [ ] **Xóa quy tắc** _(Remove obsolete rules, migrate data, test impact)_
-- [ ] **Xem danh sách quy tắc** _(Active rules, priority order, last modified date)_
-
----
-
-## 🗄️ **HotelManagement.DAL** (Tầng dữ liệu)
-
-### Quản lý cấu trúc dữ liệu
-- [ ] **Thêm bảng mới** _(Create table, define columns, indexes, relationships)_
-- [ ] **Sửa cấu trúc bảng** _(Add/modify columns, update indexes, migrate data)_
-- [ ] **Xóa bảng** _(Drop table, backup data, update references)_
-- [ ] **Xem cấu trúc DB** _(Database schema, table relationships, data dictionary)_
-
-### Quản lý stored procedures
-- [ ] **Thêm procedure mới** _(Create SP cho reports, complex queries, batch operations)_
-- [ ] **Sửa procedure** _(Update logic, optimize performance, add parameters)_
-- [ ] **Xóa procedure** _(Drop unused SP, check dependencies)_
-- [ ] **Xem danh sách procedures** _(All SPs, execution statistics, last modified)_
-
----
-
-## 📱 **HotelManagement.Module** (Module mở rộng)
-
-### Quản lý tích hợp
-- [ ] **Thêm kết nối mới** _(Payment gateway, SMS service, email provider)_
-- [ ] **Sửa cấu hình kết nối** _(Update API credentials, endpoints, timeout settings)_
-- [ ] **Xóa kết nối** _(Remove unused integrations, cleanup configurations)_
-- [ ] **Xem trạng thái kết nối** _(Connection status, last sync time, error logs)_
-
-### Quản lý mobile app
-- [ ] **Thêm tính năng mobile** _(Push notifications, mobile check-in, digital key)_
-- [ ] **Sửa cấu hình app** _(Update app settings, notification templates, user permissions)_
-- [ ] **Xóa tính năng** _(Remove deprecated features, migrate user data)_
-- [ ] **Xem usage statistics** _(App usage, user engagement, feature adoption rates)_
