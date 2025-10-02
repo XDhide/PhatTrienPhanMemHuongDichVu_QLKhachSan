@@ -1,4 +1,5 @@
-﻿CREATE DATABASE QLKhachSan
+
+﻿REATE DATABASE QLKhachSan
 GO
 USE QLKhachSan
 GO
@@ -685,3 +686,6 @@ BEGIN
         THROW;
     END CATCH
 END;
+
+
+
