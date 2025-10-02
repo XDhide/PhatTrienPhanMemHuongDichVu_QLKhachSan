@@ -1,5 +1,5 @@
 
-﻿REATE DATABASE QLKhachSan
+C﻿REATE DATABASE QLKhachSan
 GO
 USE QLKhachSan
 GO
@@ -687,5 +687,680 @@ BEGIN
     END CATCH
 END;
 
+-------------------------------------------------------------------
+USE QLKhachSan
+GO
 
+-- =============================================
+-- STORED PROCEDURES CHO BẢNG NguoiDung
+-- =============================================
 
+-- Thêm người dùng
+CREATE PROCEDURE sp_NguoiDung_Them
+    @TenDangNhap NVARCHAR(100),
+    @MatKhau NVARCHAR(500),
+    @HoTen NVARCHAR(200),
+    @VaiTro NVARCHAR(50)
+AS
+BEGIN
+    INSERT INTO NguoiDung (TenDangNhap, MatKhau, HoTen, VaiTro)
+    VALUES (@TenDangNhap, @MatKhau, @HoTen, @VaiTro)
+    
+    SELECT SCOPE_IDENTITY() AS MaND
+END
+GO
+
+-- Sửa người dùng
+CREATE PROCEDURE sp_NguoiDung_Sua
+    @MaND INT,
+    @TenDangNhap NVARCHAR(100),
+    @MatKhau NVARCHAR(500),
+    @HoTen NVARCHAR(200),
+    @VaiTro NVARCHAR(50)
+AS
+BEGIN
+    UPDATE NguoiDung
+    SET TenDangNhap = @TenDangNhap,
+        MatKhau = @MatKhau,
+        HoTen = @HoTen,
+        VaiTro = @VaiTro
+    WHERE MaND = @MaND
+END
+GO
+
+-- Xóa người dùng
+CREATE PROCEDURE sp_NguoiDung_Xoa
+    @MaND INT
+AS
+BEGIN
+    DELETE FROM NguoiDung WHERE MaND = @MaND
+END
+GO
+
+-- Lấy danh sách người dùng
+CREATE PROCEDURE sp_NguoiDung_DanhSach
+AS
+BEGIN
+    SELECT * FROM NguoiDung ORDER BY MaND
+END
+GO
+
+-- Lấy 1 người dùng
+CREATE PROCEDURE sp_NguoiDung_ChiTiet
+    @MaND INT
+AS
+BEGIN
+    SELECT * FROM NguoiDung WHERE MaND = @MaND
+END
+GO
+
+-- =============================================
+-- STORED PROCEDURES CHO BẢNG LoaiPhong
+-- =============================================
+
+-- Thêm loại phòng
+CREATE PROCEDURE sp_LoaiPhong_Them
+    @Ma NVARCHAR(50),
+    @Ten NVARCHAR(200),
+    @MoTa NVARCHAR(500),
+    @SoKhachToiDa INT
+AS
+BEGIN
+    INSERT INTO LoaiPhong (Ma, Ten, MoTa, SoKhachToiDa)
+    VALUES (@Ma, @Ten, @MoTa, @SoKhachToiDa)
+    
+    SELECT SCOPE_IDENTITY() AS MaLoaiPhong
+END
+GO
+
+-- Sửa loại phòng
+CREATE PROCEDURE sp_LoaiPhong_Sua
+    @MaLoaiPhong INT,
+    @Ma NVARCHAR(50),
+    @Ten NVARCHAR(200),
+    @MoTa NVARCHAR(500),
+    @SoKhachToiDa INT
+AS
+BEGIN
+    UPDATE LoaiPhong
+    SET Ma = @Ma,
+        Ten = @Ten,
+        MoTa = @MoTa,
+        SoKhachToiDa = @SoKhachToiDa
+    WHERE MaLoaiPhong = @MaLoaiPhong
+END
+GO
+
+-- Xóa loại phòng
+CREATE PROCEDURE sp_LoaiPhong_Xoa
+    @MaLoaiPhong INT
+AS
+BEGIN
+    DELETE FROM LoaiPhong WHERE MaLoaiPhong = @MaLoaiPhong
+END
+GO
+
+-- Lấy danh sách loại phòng
+CREATE PROCEDURE sp_LoaiPhong_DanhSach
+AS
+BEGIN
+    SELECT * FROM LoaiPhong ORDER BY MaLoaiPhong
+END
+GO
+
+-- Lấy 1 loại phòng
+CREATE PROCEDURE sp_LoaiPhong_ChiTiet
+    @MaLoaiPhong INT
+AS
+BEGIN
+    SELECT * FROM LoaiPhong WHERE MaLoaiPhong = @MaLoaiPhong
+END
+GO
+
+-- =============================================
+-- STORED PROCEDURES CHO BẢNG Phong
+-- =============================================
+
+-- Thêm phòng
+CREATE PROCEDURE sp_Phong_Them
+    @SoPhong NVARCHAR(20),
+    @MaLoaiPhong INT,
+    @TinhTrang NVARCHAR(50)
+AS
+BEGIN
+    INSERT INTO Phong (SoPhong, MaLoaiPhong, TinhTrang)
+    VALUES (@SoPhong, @MaLoaiPhong, @TinhTrang)
+    
+    SELECT SCOPE_IDENTITY() AS MaPhong
+END
+GO
+
+-- Sửa phòng
+CREATE PROCEDURE sp_Phong_Sua
+    @MaPhong INT,
+    @SoPhong NVARCHAR(20),
+    @MaLoaiPhong INT,
+    @TinhTrang NVARCHAR(50)
+AS
+BEGIN
+    UPDATE Phong
+    SET SoPhong = @SoPhong,
+        MaLoaiPhong = @MaLoaiPhong,
+        TinhTrang = @TinhTrang
+    WHERE MaPhong = @MaPhong
+END
+GO
+
+-- Xóa phòng
+CREATE PROCEDURE sp_Phong_Xoa
+    @MaPhong INT
+AS
+BEGIN
+    DELETE FROM Phong WHERE MaPhong = @MaPhong
+END
+GO
+
+-- Lấy danh sách phòng
+CREATE PROCEDURE sp_Phong_DanhSach
+AS
+BEGIN
+    SELECT p.*, lp.Ten AS TenLoaiPhong
+    FROM Phong p
+    INNER JOIN LoaiPhong lp ON p.MaLoaiPhong = lp.MaLoaiPhong
+    ORDER BY p.SoPhong
+END
+GO
+
+-- Lấy 1 phòng
+CREATE PROCEDURE sp_Phong_ChiTiet
+    @MaPhong INT
+AS
+BEGIN
+    SELECT p.*, lp.Ten AS TenLoaiPhong
+    FROM Phong p
+    INNER JOIN LoaiPhong lp ON p.MaLoaiPhong = lp.MaLoaiPhong
+    WHERE p.MaPhong = @MaPhong
+END
+GO
+
+-- =============================================
+-- STORED PROCEDURES CHO BẢNG Gia
+-- =============================================
+
+-- Thêm giá
+CREATE PROCEDURE sp_Gia_Them
+    @MaLoaiPhong INT,
+    @TuNgay DATE,
+    @DenNgay DATE,
+    @GiaMoiDem DECIMAL(18,2),
+    @GiaMoiGio DECIMAL(18,2),
+    @GhiChu NVARCHAR(300)
+AS
+BEGIN
+    INSERT INTO Gia (MaLoaiPhong, TuNgay, DenNgay, GiaMoiDem, GiaMoiGio, GhiChu)
+    VALUES (@MaLoaiPhong, @TuNgay, @DenNgay, @GiaMoiDem, @GiaMoiGio, @GhiChu)
+    
+    SELECT SCOPE_IDENTITY() AS MaGia
+END
+GO
+
+-- Sửa giá
+CREATE PROCEDURE sp_Gia_Sua
+    @MaGia INT,
+    @MaLoaiPhong INT,
+    @TuNgay DATE,
+    @DenNgay DATE,
+    @GiaMoiDem DECIMAL(18,2),
+    @GiaMoiGio DECIMAL(18,2),
+    @GhiChu NVARCHAR(300)
+AS
+BEGIN
+    UPDATE Gia
+    SET MaLoaiPhong = @MaLoaiPhong,
+        TuNgay = @TuNgay,
+        DenNgay = @DenNgay,
+        GiaMoiDem = @GiaMoiDem,
+        GiaMoiGio = @GiaMoiGio,
+        GhiChu = @GhiChu
+    WHERE MaGia = @MaGia
+END
+GO
+
+-- Xóa giá
+CREATE PROCEDURE sp_Gia_Xoa
+    @MaGia INT
+AS
+BEGIN
+    DELETE FROM Gia WHERE MaGia = @MaGia
+END
+GO
+
+-- Lấy danh sách giá
+CREATE PROCEDURE sp_Gia_DanhSach
+AS
+BEGIN
+    SELECT g.*, lp.Ten AS TenLoaiPhong
+    FROM Gia g
+    INNER JOIN LoaiPhong lp ON g.MaLoaiPhong = lp.MaLoaiPhong
+    ORDER BY g.TuNgay DESC
+END
+GO
+
+-- Lấy 1 giá
+CREATE PROCEDURE sp_Gia_ChiTiet
+    @MaGia INT
+AS
+BEGIN
+    SELECT g.*, lp.Ten AS TenLoaiPhong
+    FROM Gia g
+    INNER JOIN LoaiPhong lp ON g.MaLoaiPhong = lp.MaLoaiPhong
+    WHERE g.MaGia = @MaGia
+END
+GO
+
+-- =============================================
+-- STORED PROCEDURES CHO BẢNG Khach
+-- =============================================
+
+-- Thêm khách
+CREATE PROCEDURE sp_Khach_Them
+    @HoTen NVARCHAR(200),
+    @DienThoai NVARCHAR(50),
+    @Email NVARCHAR(150),
+    @CMND NVARCHAR(100),
+    @DiaChi NVARCHAR(300)
+AS
+BEGIN
+    INSERT INTO Khach (HoTen, DienThoai, Email, CMND, DiaChi)
+    VALUES (@HoTen, @DienThoai, @Email, @CMND, @DiaChi)
+    
+    SELECT SCOPE_IDENTITY() AS MaKhach
+END
+GO
+
+-- Sửa khách
+CREATE PROCEDURE sp_Khach_Sua
+    @MaKhach INT,
+    @HoTen NVARCHAR(200),
+    @DienThoai NVARCHAR(50),
+    @Email NVARCHAR(150),
+    @CMND NVARCHAR(100),
+    @DiaChi NVARCHAR(300)
+AS
+BEGIN
+    UPDATE Khach
+    SET HoTen = @HoTen,
+        DienThoai = @DienThoai,
+        Email = @Email,
+        CMND = @CMND,
+        DiaChi = @DiaChi
+    WHERE MaKhach = @MaKhach
+END
+GO
+
+-- Xóa khách
+CREATE PROCEDURE sp_Khach_Xoa
+    @MaKhach INT
+AS
+BEGIN
+    DELETE FROM Khach WHERE MaKhach = @MaKhach
+END
+GO
+
+-- Lấy danh sách khách
+CREATE PROCEDURE sp_Khach_DanhSach
+AS
+BEGIN
+    SELECT * FROM Khach ORDER BY MaKhach DESC
+END
+GO
+
+-- Lấy 1 khách
+CREATE PROCEDURE sp_Khach_ChiTiet
+    @MaKhach INT
+AS
+BEGIN
+    SELECT * FROM Khach WHERE MaKhach = @MaKhach
+END
+GO
+
+-- =============================================
+-- STORED PROCEDURES CHO BẢNG DatPhong
+-- =============================================
+
+-- Thêm đặt phòng
+CREATE PROCEDURE sp_DatPhong_Them
+    @MaDat NVARCHAR(50),
+    @MaKhach INT,
+    @MaPhong INT,
+    @MaLoaiPhong INT,
+    @NgayNhan DATETIME,
+    @NgayTra DATETIME,
+    @SoKhach INT,
+    @TrangThai NVARCHAR(50),
+    @NguoiTao INT,
+    @GhiChu NVARCHAR(500)
+AS
+BEGIN
+    INSERT INTO DatPhong (MaDat, MaKhach, MaPhong, MaLoaiPhong, NgayNhan, NgayTra, 
+                          SoKhach, TrangThai, NguoiTao, GhiChu)
+    VALUES (@MaDat, @MaKhach, @MaPhong, @MaLoaiPhong, @NgayNhan, @NgayTra, 
+            @SoKhach, @TrangThai, @NguoiTao, @GhiChu)
+    
+    SELECT SCOPE_IDENTITY() AS MaDatPhong
+END
+GO
+
+-- Sửa đặt phòng
+CREATE PROCEDURE sp_DatPhong_Sua
+    @MaDatPhong INT,
+    @MaDat NVARCHAR(50),
+    @MaKhach INT,
+    @MaPhong INT,
+    @MaLoaiPhong INT,
+    @NgayNhan DATETIME,
+    @NgayTra DATETIME,
+    @SoKhach INT,
+    @TrangThai NVARCHAR(50),
+    @GhiChu NVARCHAR(500)
+AS
+BEGIN
+    UPDATE DatPhong
+    SET MaDat = @MaDat,
+        MaKhach = @MaKhach,
+        MaPhong = @MaPhong,
+        MaLoaiPhong = @MaLoaiPhong,
+        NgayNhan = @NgayNhan,
+        NgayTra = @NgayTra,
+        SoKhach = @SoKhach,
+        TrangThai = @TrangThai,
+        GhiChu = @GhiChu
+    WHERE MaDatPhong = @MaDatPhong
+END
+GO
+
+-- Xóa đặt phòng
+CREATE PROCEDURE sp_DatPhong_Xoa
+    @MaDatPhong INT
+AS
+BEGIN
+    DELETE FROM DatPhong WHERE MaDatPhong = @MaDatPhong
+END
+GO
+
+-- Lấy danh sách đặt phòng
+CREATE PROCEDURE sp_DatPhong_DanhSach
+AS
+BEGIN
+    SELECT dp.*, 
+           k.HoTen AS TenKhach,
+           k.DienThoai,
+           p.SoPhong,
+           lp.Ten AS TenLoaiPhong,
+           nd.HoTen AS NguoiTaoTen
+    FROM DatPhong dp
+    INNER JOIN Khach k ON dp.MaKhach = k.MaKhach
+    LEFT JOIN Phong p ON dp.MaPhong = p.MaPhong
+    INNER JOIN LoaiPhong lp ON dp.MaLoaiPhong = lp.MaLoaiPhong
+    LEFT JOIN NguoiDung nd ON dp.NguoiTao = nd.MaND
+    ORDER BY dp.NgayTao DESC
+END
+GO
+
+-- Lấy 1 đặt phòng
+CREATE PROCEDURE sp_DatPhong_ChiTiet
+    @MaDatPhong INT
+AS
+BEGIN
+    SELECT dp.*, 
+           k.HoTen AS TenKhach,
+           k.DienThoai,
+           k.Email,
+           k.CMND,
+           k.DiaChi,
+           p.SoPhong,
+           lp.Ten AS TenLoaiPhong,
+           nd.HoTen AS NguoiTaoTen
+    FROM DatPhong dp
+    INNER JOIN Khach k ON dp.MaKhach = k.MaKhach
+    LEFT JOIN Phong p ON dp.MaPhong = p.MaPhong
+    INNER JOIN LoaiPhong lp ON dp.MaLoaiPhong = lp.MaLoaiPhong
+    LEFT JOIN NguoiDung nd ON dp.NguoiTao = nd.MaND
+    WHERE dp.MaDatPhong = @MaDatPhong
+END
+GO
+
+-- =============================================
+-- STORED PROCEDURES CHO BẢNG DichVu
+-- =============================================
+
+-- Thêm dịch vụ
+CREATE PROCEDURE sp_DichVu_Them
+    @Ma NVARCHAR(50),
+    @Ten NVARCHAR(200),
+    @DonGia DECIMAL(18,2),
+    @Thue DECIMAL(5,2)
+AS
+BEGIN
+    INSERT INTO DichVu (Ma, Ten, DonGia, Thue)
+    VALUES (@Ma, @Ten, @DonGia, @Thue)
+    
+    SELECT SCOPE_IDENTITY() AS MaDV
+END
+GO
+
+-- Sửa dịch vụ
+CREATE PROCEDURE sp_DichVu_Sua
+    @MaDV INT,
+    @Ma NVARCHAR(50),
+    @Ten NVARCHAR(200),
+    @DonGia DECIMAL(18,2),
+    @Thue DECIMAL(5,2)
+AS
+BEGIN
+    UPDATE DichVu
+    SET Ma = @Ma,
+        Ten = @Ten,
+        DonGia = @DonGia,
+        Thue = @Thue
+    WHERE MaDV = @MaDV
+END
+GO
+
+-- Xóa dịch vụ
+CREATE PROCEDURE sp_DichVu_Xoa
+    @MaDV INT
+AS
+BEGIN
+    DELETE FROM DichVu WHERE MaDV = @MaDV
+END
+GO
+
+-- Lấy danh sách dịch vụ
+CREATE PROCEDURE sp_DichVu_DanhSach
+AS
+BEGIN
+    SELECT * FROM DichVu ORDER BY Ten
+END
+GO
+
+-- Lấy 1 dịch vụ
+CREATE PROCEDURE sp_DichVu_ChiTiet
+    @MaDV INT
+AS
+BEGIN
+    SELECT * FROM DichVu WHERE MaDV = @MaDV
+END
+GO
+
+-- =============================================
+-- STORED PROCEDURES CHO BẢNG HoaDon
+-- =============================================
+
+-- Thêm hóa đơn
+CREATE PROCEDURE sp_HoaDon_Them
+    @SoHD NVARCHAR(50),
+    @MaKhach INT,
+    @MaND INT,
+    @TongTien DECIMAL(18,2),
+    @HinhThucThanhToan NVARCHAR(50),
+    @SoTienDaTra DECIMAL(18,2)
+AS
+BEGIN
+    INSERT INTO HoaDon (SoHD, MaKhach, MaND, TongTien, HinhThucThanhToan, SoTienDaTra)
+    VALUES (@SoHD, @MaKhach, @MaND, @TongTien, @HinhThucThanhToan, @SoTienDaTra)
+    
+    SELECT SCOPE_IDENTITY() AS MaHD
+END
+GO
+
+-- Sửa hóa đơn
+CREATE PROCEDURE sp_HoaDon_Sua
+    @MaHD INT,
+    @SoHD NVARCHAR(50),
+    @MaKhach INT,
+    @MaND INT,
+    @TongTien DECIMAL(18,2),
+    @HinhThucThanhToan NVARCHAR(50),
+    @SoTienDaTra DECIMAL(18,2)
+AS
+BEGIN
+    UPDATE HoaDon
+    SET SoHD = @SoHD,
+        MaKhach = @MaKhach,
+        MaND = @MaND,
+        TongTien = @TongTien,
+        HinhThucThanhToan = @HinhThucThanhToan,
+        SoTienDaTra = @SoTienDaTra
+    WHERE MaHD = @MaHD
+END
+GO
+
+-- Xóa hóa đơn
+CREATE PROCEDURE sp_HoaDon_Xoa
+    @MaHD INT
+AS
+BEGIN
+    DELETE FROM HoaDon WHERE MaHD = @MaHD
+END
+GO
+
+-- Lấy danh sách hóa đơn
+CREATE PROCEDURE sp_HoaDon_DanhSach
+AS
+BEGIN
+    SELECT hd.*, 
+           k.HoTen AS TenKhach,
+           k.DienThoai,
+           nd.HoTen AS NguoiLap
+    FROM HoaDon hd
+    INNER JOIN Khach k ON hd.MaKhach = k.MaKhach
+    INNER JOIN NguoiDung nd ON hd.MaND = nd.MaND
+    ORDER BY hd.NgayLap DESC
+END
+GO
+
+-- Lấy 1 hóa đơn
+CREATE PROCEDURE sp_HoaDon_ChiTiet
+    @MaHD INT
+AS
+BEGIN
+    SELECT hd.*, 
+           k.HoTen AS TenKhach,
+           k.DienThoai,
+           k.Email,
+           k.DiaChi,
+           nd.HoTen AS NguoiLap
+    FROM HoaDon hd
+    INNER JOIN Khach k ON hd.MaKhach = k.MaKhach
+    INNER JOIN NguoiDung nd ON hd.MaND = nd.MaND
+    WHERE hd.MaHD = @MaHD
+END
+GO
+
+-- =============================================
+-- STORED PROCEDURES CHO BẢNG HoaDonChiTiet
+-- =============================================
+
+-- Thêm chi tiết hóa đơn
+CREATE PROCEDURE sp_HoaDonChiTiet_Them
+    @MaHD INT,
+    @MaDatPhong INT,
+    @MaDV INT,
+    @SoLuong INT,
+    @DonGia DECIMAL(18,2)
+AS
+BEGIN
+    INSERT INTO HoaDonChiTiet (MaHD, MaDatPhong, MaDV, SoLuong, DonGia)
+    VALUES (@MaHD, @MaDatPhong, @MaDV, @SoLuong, @DonGia)
+    
+    SELECT SCOPE_IDENTITY() AS MaCTHD
+END
+GO
+
+-- Sửa chi tiết hóa đơn
+CREATE PROCEDURE sp_HoaDonChiTiet_Sua
+    @MaCTHD INT,
+    @MaHD INT,
+    @MaDatPhong INT,
+    @MaDV INT,
+    @SoLuong INT,
+    @DonGia DECIMAL(18,2)
+AS
+BEGIN
+    UPDATE HoaDonChiTiet
+    SET MaHD = @MaHD,
+        MaDatPhong = @MaDatPhong,
+        MaDV = @MaDV,
+        SoLuong = @SoLuong,
+        DonGia = @DonGia
+    WHERE MaCTHD = @MaCTHD
+END
+GO
+
+-- Xóa chi tiết hóa đơn
+CREATE PROCEDURE sp_HoaDonChiTiet_Xoa
+    @MaCTHD INT
+AS
+BEGIN
+    DELETE FROM HoaDonChiTiet WHERE MaCTHD = @MaCTHD
+END
+GO
+
+-- Lấy danh sách chi tiết hóa đơn theo MaHD
+CREATE PROCEDURE sp_HoaDonChiTiet_DanhSach
+    @MaHD INT
+AS
+BEGIN
+    SELECT ct.*,
+           dp.MaDat,
+           p.SoPhong,
+           lp.Ten AS TenLoaiPhong,
+           dv.Ten AS TenDichVu
+    FROM HoaDonChiTiet ct
+    LEFT JOIN DatPhong dp ON ct.MaDatPhong = dp.MaDatPhong
+    LEFT JOIN Phong p ON dp.MaPhong = p.MaPhong
+    LEFT JOIN LoaiPhong lp ON dp.MaLoaiPhong = lp.MaLoaiPhong
+    LEFT JOIN DichVu dv ON ct.MaDV = dv.MaDV
+    WHERE ct.MaHD = @MaHD
+END
+GO
+
+-- Lấy 1 chi tiết hóa đơn
+CREATE PROCEDURE sp_HoaDonChiTiet_ChiTiet
+    @MaCTHD INT
+AS
+BEGIN
+    SELECT ct.*,
+           dp.MaDat,
+           p.SoPhong,
+           lp.Ten AS TenLoaiPhong,
+           dv.Ten AS TenDichVu
+    FROM HoaDonChiTiet ct
+    LEFT JOIN DatPhong dp ON ct.MaDatPhong = dp.MaDatPhong
+    LEFT JOIN Phong p ON dp.MaPhong = p.MaPhong
+    LEFT JOIN LoaiPhong lp ON dp.MaLoaiPhong = lp.MaLoaiPhong
+    LEFT JOIN DichVu dv ON ct.MaDV = dv.MaDV
+    WHERE ct.MaCTHD = @MaCTHD
+END
+GO
