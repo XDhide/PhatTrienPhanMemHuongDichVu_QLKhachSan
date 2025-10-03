@@ -6,68 +6,77 @@ using System.Threading.Tasks;
 using System.Data.SqlClient;
 using System.Data;
 
-
 namespace DAL
 {
     public class DatabaseConnect
     {
-        private static string query = @"Data Source=DESKTOP-3GIS5H1\SQLEXPRESS;Initial Catalog=QLKhachSan;Integrated Security=True;Trust Server Certificate=True";
-        
+        private static string connectionString = @"Data Source=DESKTOP-3GIS5H1\SQLEXPRESS;Initial Catalog=QLKhachSan;Integrated Security=True;";
 
-        public static SqlConnection Conn { get { return conn; } }
+        private static SqlConnection conn;
 
-        private static SqlConnection conn = new SqlConnection(query);
+        public static SqlConnection Conn
+        {
+            get
+            {
+                if (conn == null)
+                {
+                    conn = new SqlConnection(connectionString);
+                }
+                return conn;
+            }
+        }
+
         public static string OpenDatabase()
         {
-            if(conn.State == System.Data.ConnectionState.Closed)
+            try
             {
-                try
+                if (Conn.State == ConnectionState.Closed)
                 {
-                    conn.Open();
+                    Conn.Open();
+                    return "Ket Noi Thanh Cong";
                 }
-                catch
-                {
-                    return "Ket Noi That Bai";
-                }
-                return "Ket Noi Thanh Cong";
-                
+                return "Ket Noi Da Duoc Mo";
             }
-            return "Ket Noi Da Duoc Mo";
+            catch (Exception ex)
+            {
+                return "Ket Noi That Bai: " + ex.Message;
+            }
         }
+
         public static string CloseDatabase()
         {
-            if (conn.State == System.Data.ConnectionState.Open)
+            try
             {
-                try
+                if (Conn.State == ConnectionState.Open)
                 {
-                    conn.Close();
+                    Conn.Close();
                     return "Dong Thanh Cong";
                 }
-                catch
-                {
-                    return "Dong That Bai";
-                }
-
+                return "Ket Noi Da Duoc Dong";
             }
-            return "Ket Noi Da Duoc Dong";
+            catch (Exception ex)
+            {
+                return "Dong That Bai: " + ex.Message;
+            }
         }
-
     }
+
     public class OtherSystem
     {
-        private static DateTime now ;
         public static string Createcode(string table)
         {
-            now = DateTime.Now;
+            DateTime now = DateTime.Now;
             string formattedTime = now.ToString("yyMMddHHmmss");
-            return table + formattedTime+ Randomcode();
+            return table + formattedTime + Randomcode();
         }
+
         public static string GetDate()
         {
-            now = DateTime.Now;
+            DateTime now = DateTime.Now;
             string formattedDate = now.ToString("yyyy-MM-dd");
             return formattedDate;
         }
+
         private static char Randomcode()
         {
             Random random = new Random();
@@ -80,7 +89,7 @@ namespace DAL
 
                 if ((randomChar >= '1' && randomChar <= '9') || (randomChar >= 'a' && randomChar <= 'z'))
                 {
-                    break; 
+                    break;
                 }
             }
             return randomChar;
