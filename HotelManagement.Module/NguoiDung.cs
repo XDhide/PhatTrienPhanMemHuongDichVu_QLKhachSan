@@ -1,6 +1,7 @@
 ﻿using System;
 
-namespace DTO
+namespace HotelManagement.Module
+
 {
     public class NguoiDung
     {
