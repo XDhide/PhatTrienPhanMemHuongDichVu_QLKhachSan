@@ -1,6 +1,8 @@
 ﻿using System;
 
 namespace HotelManagement.Module
+
+
 {
     public class LoaiPhong
     {

@@ -8,6 +8,7 @@ namespace DTO
         public int MaLoaiPhong { get; set; }
         public DateTime TuNgay { get; set; }
         public DateTime DenNgay { get; set; }
+
         public decimal GiaMoiDem { get; set; }
         public decimal? GiaMoiGio { get; set; }
         public string GhiChu { get; set; }
@@ -19,6 +20,7 @@ namespace DTO
             MaLoaiPhong = 0;
             TuNgay = DateTime.Now;
             DenNgay = DateTime.Now;
+
             GiaMoiDem = 0;
             GiaMoiGio = 0;
             GhiChu = string.Empty;
@@ -26,6 +28,7 @@ namespace DTO
 
         // Constructor có tham số
         public Gia(DateTime tuNgay, DateTime denNgay, decimal giaMoiDem, decimal? giaMoiGio, string ghiChu)
+
         {
             TuNgay = tuNgay;
             DenNgay = denNgay;
