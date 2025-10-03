@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace HotelManagement.Module
+namespace DTO
 {
     public class Gia
     {
