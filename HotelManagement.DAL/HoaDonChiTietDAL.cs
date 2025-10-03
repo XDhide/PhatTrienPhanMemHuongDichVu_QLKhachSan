@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Data;
 using System.Data.SqlClient;
-using DTO;
 using DAL;
+using HotelManagement.Module;
+
 namespace DAL
-{
+{using HotelManagement.Module;
+
     public class HoaDonChiTietDAL
     {
         public DataTable GetAll()

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Data;
 using System.Data.SqlClient;
-using DTO;
+using HotelManagement.Module;
 using DAL;
 
 namespace DAL
