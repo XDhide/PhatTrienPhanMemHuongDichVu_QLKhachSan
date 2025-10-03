@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Data;
-using HotelManagement.Module;
-
+using DTO;
 using DAL;
 
 namespace BLL
