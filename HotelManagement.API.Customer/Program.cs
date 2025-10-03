@@ -27,6 +27,7 @@ namespace HotelManagement.API.Customer
 
             app.UseAuthorization();
 
+            DotNetEnv.Env.Load();
 
             app.MapControllers();
 
