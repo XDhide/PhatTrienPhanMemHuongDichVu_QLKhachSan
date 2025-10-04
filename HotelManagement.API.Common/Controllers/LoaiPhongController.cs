@@ -1,47 +1,221 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using BLL;  
-using HotelManagement.Module;  
+using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Collections.Generic;
 using System.Data;
+using BLL;
+using HotelManagement.Module;
 
-namespace HotelManagement.API.Common.Controllers  // Giả sử namespace Common
+namespace HotelManagement.API.Common.Controllers
 {
-    [Route("api/[controller]")]
     [ApiController]
+    [Route("api/[controller]")]
     public class LoaiPhongController : ControllerBase
     {
-        private readonly LoaiPhongBLL _bll = new LoaiPhongBLL();
+        private readonly LoaiPhongBLL _bll;
 
-        [HttpGet] public IActionResult GetAll() { try { DataTable dt = _bll.GetAll(); return Ok(dt); } catch (Exception ex) { return BadRequest("Lỗi: " + ex.Message); } }
-
-        [HttpGet("{maLoaiPhong}")]
-        public IActionResult GetById(int maLoaiPhong)
+        public LoaiPhongController()
         {
-            try { DataTable dt = _bll.GetById(maLoaiPhong); return dt.Rows.Count > 0 ? Ok(dt) : NotFound(); }
-            catch (Exception ex) { return BadRequest("Lỗi: " + ex.Message); }
+            _bll = new LoaiPhongBLL();
         }
 
+        // get loai phòng api
+        [HttpGet]
+        public IActionResult GetAll()
+        {
+            try
+            {
+                DataTable dt = _bll.GetAll();
+                var result = new List<object>();
+
+                foreach (DataRow row in dt.Rows)
+                {
+                    result.Add(new
+                    {
+                        MaLoaiPhong = row["MaLoaiPhong"],
+                        Ma = row["Ma"],
+                        Ten = row["Ten"],
+                        MoTa = row["MoTa"],
+                        SoKhachToiDa = row["SoKhachToiDa"]
+                    });
+                }
+
+                return Ok(new
+                {
+                    success = true,
+                    message = "Lấy danh sách loại phòng thành công",
+                    data = result
+                });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new
+                {
+                    success = false,
+                    message = "Lỗi: " + ex.Message
+                });
+            }
+        }
+
+       //get loại phòng api
+        [HttpGet("{id}")]
+        public IActionResult GetById(int id)
+        {
+            try
+            {
+                DataTable dt = _bll.GetById(id);
+
+                if (dt.Rows.Count == 0)
+                {
+                    return NotFound(new
+                    {
+                        success = false,
+                        message = "Không tìm thấy loại phòng"
+                    });
+                }
+
+                DataRow row = dt.Rows[0];
+                var result = new
+                {
+                    MaLoaiPhong = row["MaLoaiPhong"],
+                    Ma = row["Ma"],
+                    Ten = row["Ten"],
+                    MoTa = row["MoTa"],
+                    SoKhachToiDa = row["SoKhachToiDa"]
+                };
+
+                return Ok(new
+                {
+                    success = true,
+                    message = "Lấy chi tiết loại phòng thành công",
+                    data = result
+                });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new
+                {
+                    success = false,
+                    message = "Lỗi: " + ex.Message
+                });
+            }
+        }
+
+        // post loiaj phòng api
         [HttpPost]
-        public IActionResult Them([FromBody] LoaiPhong obj)  // Class từ Module
+        public IActionResult Create([FromBody] LoaiPhong loaiPhong)
         {
-            if (obj == null) return BadRequest("Dữ liệu rỗng");
-            try { string result = _bll.Them(obj); return Ok(result); }
-            catch (Exception ex) { return BadRequest("Lỗi: " + ex.Message); }
+            try
+            {
+                if (loaiPhong == null)
+                {
+                    return BadRequest(new
+                    {
+                        success = false,
+                        message = "Dữ liệu không hợp lệ"
+                    });
+                }
+
+                string result = _bll.Them(loaiPhong);
+
+                if (result.Contains("Lỗi"))
+                {
+                    return BadRequest(new
+                    {
+                        success = false,
+                        message = result
+                    });
+                }
+
+                return Ok(new
+                {
+                    success = true,
+                    message = result
+                });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new
+                {
+                    success = false,
+                    message = "Lỗi: " + ex.Message
+                });
+            }
         }
 
-        [HttpPut("{maLoaiPhong}")]
-        public IActionResult Sua(int maLoaiPhong, [FromBody] LoaiPhong obj)
+       //put loại phòng api
+        [HttpPut("{id}")]
+        public IActionResult Update(int id, [FromBody] LoaiPhong loaiPhong)
         {
-            if (obj == null) return BadRequest("Dữ liệu rỗng");
-            obj.MaLoaiPhong = maLoaiPhong;
-            try { string result = _bll.Sua(obj); return Ok(result); }
-            catch (Exception ex) { return BadRequest("Lỗi: " + ex.Message); }
+            try
+            {
+                if (loaiPhong == null)
+                {
+                    return BadRequest(new
+                    {
+                        success = false,
+                        message = "Dữ liệu không hợp lệ"
+                    });
+                }
+
+                loaiPhong.MaLoaiPhong = id;
+                string result = _bll.Sua(loaiPhong);
+
+                if (result.Contains("Lỗi"))
+                {
+                    return BadRequest(new
+                    {
+                        success = false,
+                        message = result
+                    });
+                }
+
+                return Ok(new
+                {
+                    success = true,
+                    message = result
+                });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new
+                {
+                    success = false,
+                    message = "Lỗi: " + ex.Message
+                });
+            }
         }
 
-        [HttpDelete("{maLoaiPhong}")]
-        public IActionResult Xoa(int maLoaiPhong)
+       //Xoa loai phòng api
+        [HttpDelete("{id}")]
+        public IActionResult Delete(int id)
         {
-            try { string result = _bll.Xoa(maLoaiPhong); return Ok(result); }
-            catch (Exception ex) { return BadRequest("Lỗi: " + ex.Message); }
+            try
+            {
+                string result = _bll.Xoa(id);
+
+                if (result.Contains("Lỗi"))
+                {
+                    return BadRequest(new
+                    {
+                        success = false,
+                        message = result
+                    });
+                }
+
+                return Ok(new
+                {
+                    success = true,
+                    message = result
+                });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new
+                {
+                    success = false,
+                    message = "Lỗi: " + ex.Message
+                });
+            }
         }
     }
 }
