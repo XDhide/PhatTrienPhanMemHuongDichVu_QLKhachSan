@@ -1,52 +1,221 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using BLL;  // DichVuBLL
-using HotelManagement.Module;  // Class DichVu
+using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Collections.Generic;
 using System.Data;
+using BLL;
+using HotelManagement.Module;
 
 namespace HotelManagement.API.Common.Controllers
 {
-    [Route("api/[controller]")]
     [ApiController]
+    [Route("api/[controller]")]
     public class DichVuController : ControllerBase
     {
-        private readonly DichVuBLL _bll = new DichVuBLL();
+        private readonly DichVuBLL _bll;
 
+        public DichVuController()
+        {
+            _bll = new DichVuBLL();
+        }
+
+        // GET dịch vụ all
         [HttpGet]
         public IActionResult GetAll()
         {
-            try { DataTable dt = _bll.GetAll(); return Ok(dt); }
-            catch (Exception ex) { return BadRequest("Lỗi: " + ex.Message); }
+            try
+            {
+                DataTable dt = _bll.GetAll();
+                var result = new List<object>();
+
+                foreach (DataRow row in dt.Rows)
+                {
+                    result.Add(new
+                    {
+                        MaDV = row["MaDV"],
+                        Ma = row["Ma"],
+                        Ten = row["Ten"],
+                        DonGia = row["DonGia"],
+                        Thue = row["Thue"]
+                    });
+                }
+
+                return Ok(new
+                {
+                    success = true,
+                    message = "Lấy danh sách dịch vụ thành công",
+                    data = result
+                });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new
+                {
+                    success = false,
+                    message = "Lỗi: " + ex.Message
+                });
+            }
         }
 
-        [HttpGet("{maDV}")]
-        public IActionResult GetById(int maDV)
+        // GET dịch vụ api
+        [HttpGet("{id}")]
+        public IActionResult GetById(int id)
         {
-            try { DataTable dt = _bll.GetById(maDV); return dt.Rows.Count > 0 ? Ok(dt) : NotFound(); }
-            catch (Exception ex) { return BadRequest("Lỗi: " + ex.Message); }
+            try
+            {
+                DataTable dt = _bll.GetById(id);
+
+                if (dt.Rows.Count == 0)
+                {
+                    return NotFound(new
+                    {
+                        success = false,
+                        message = "Không tìm thấy dịch vụ"
+                    });
+                }
+
+                DataRow row = dt.Rows[0];
+                var result = new
+                {
+                    MaDV = row["MaDV"],
+                    Ma = row["Ma"],
+                    Ten = row["Ten"],
+                    DonGia = row["DonGia"],
+                    Thue = row["Thue"]
+                };
+
+                return Ok(new
+                {
+                    success = true,
+                    message = "Lấy chi tiết dịch vụ thành công",
+                    data = result
+                });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new
+                {
+                    success = false,
+                    message = "Lỗi: " + ex.Message
+                });
+            }
         }
 
+        // POST dịch vụ api
         [HttpPost]
-        public IActionResult Them([FromBody] DichVu obj)
+        public IActionResult Create([FromBody] DichVu dichVu)
         {
-            if (obj == null) return BadRequest("Dữ liệu rỗng");
-            try { string result = _bll.Them(obj); return Ok(result); }
-            catch (Exception ex) { return BadRequest("Lỗi: " + ex.Message); }
+            try
+            {
+                if (dichVu == null)
+                {
+                    return BadRequest(new
+                    {
+                        success = false,
+                        message = "Dữ liệu không hợp lệ"
+                    });
+                }
+
+                string result = _bll.Them(dichVu);
+
+                if (result.Contains("Lỗi"))
+                {
+                    return BadRequest(new
+                    {
+                        success = false,
+                        message = result
+                    });
+                }
+
+                return Ok(new
+                {
+                    success = true,
+                    message = result
+                });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new
+                {
+                    success = false,
+                    message = "Lỗi: " + ex.Message
+                });
+            }
         }
 
-        [HttpPut("{maDV}")]
-        public IActionResult Sua(int maDV, [FromBody] DichVu obj)
+        // PUT dịch vụ api
+        [HttpPut("{id}")]
+        public IActionResult Update(int id, [FromBody] DichVu dichVu)
         {
-            if (obj == null) return BadRequest("Dữ liệu rỗng");
-            obj.MaDV = maDV;
-            try { string result = _bll.Sua(obj); return Ok(result); }
-            catch (Exception ex) { return BadRequest("Lỗi: " + ex.Message); }
+            try
+            {
+                if (dichVu == null)
+                {
+                    return BadRequest(new
+                    {
+                        success = false,
+                        message = "Dữ liệu không hợp lệ"
+                    });
+                }
+
+                dichVu.MaDV = id;
+                string result = _bll.Sua(dichVu);
+
+                if (result.Contains("Lỗi"))
+                {
+                    return BadRequest(new
+                    {
+                        success = false,
+                        message = result
+                    });
+                }
+
+                return Ok(new
+                {
+                    success = true,
+                    message = result
+                });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new
+                {
+                    success = false,
+                    message = "Lỗi: " + ex.Message
+                });
+            }
         }
 
-        [HttpDelete("{maDV}")]
-        public IActionResult Xoa(int maDV)
+        //xóa dịch vụ api
+        [HttpDelete("{id}")]
+        public IActionResult Delete(int id)
         {
-            try { string result = _bll.Xoa(maDV); return Ok(result); }
-            catch (Exception ex) { return BadRequest("Lỗi: " + ex.Message); }
+            try
+            {
+                string result = _bll.Xoa(id);
+
+                if (result.Contains("Lỗi"))
+                {
+                    return BadRequest(new
+                    {
+                        success = false,
+                        message = result
+                    });
+                }
+
+                return Ok(new
+                {
+                    success = true,
+                    message = result
+                });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new
+                {
+                    success = false,
+                    message = "Lỗi: " + ex.Message
+                });
+            }
         }
     }
 }
