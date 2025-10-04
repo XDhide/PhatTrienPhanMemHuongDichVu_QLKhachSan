@@ -1,52 +1,221 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using BLL;  
-using HotelManagement.Module;  
+using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Collections.Generic;
 using System.Data;
+using BLL;
+using HotelManagement.Module;
 
 namespace HotelManagement.API.Admin.Controllers
 {
-    [Route("api/[controller]")]
     [ApiController]
+    [Route("api/[controller]")]
     public class NguoiDungController : ControllerBase
     {
-        private readonly NguoiDungBLL _bll = new NguoiDungBLL();
+        private readonly NguoiDungBLL _bll;
 
+        public NguoiDungController()
+        {
+            _bll = new NguoiDungBLL();
+        }
+
+        // GET: api/nguoidung
         [HttpGet]
         public IActionResult GetAll()
         {
-            try { DataTable dt = _bll.GetAll(); return Ok(dt); }
-            catch (Exception ex) { return BadRequest("Lỗi: " + ex.Message); }
+            try
+            {
+                DataTable dt = _bll.GetAll();
+                var result = new List<object>();
+
+                foreach (DataRow row in dt.Rows)
+                {
+                    result.Add(new
+                    {
+                        MaND = row["MaND"],
+                        TenDangNhap = row["TenDangNhap"],
+                        MatKhau = row["MatKhau"],
+                        HoTen = row["HoTen"],
+                        VaiTro = row["VaiTro"]
+                    });
+                }
+
+                return Ok(new
+                {
+                    success = true,
+                    message = "Lấy danh sách người dùng thành công",
+                    data = result
+                });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new
+                {
+                    success = false,
+                    message = "Lỗi: " + ex.Message
+                });
+            }
         }
 
-        [HttpGet("{maND}")]
-        public IActionResult GetById(int maND)
+        //get api của người dùng
+        [HttpGet("{id}")]
+        public IActionResult GetById(int id)
         {
-            try { DataTable dt = _bll.GetById(maND); return dt.Rows.Count > 0 ? Ok(dt) : NotFound(); }
-            catch (Exception ex) { return BadRequest("Lỗi: " + ex.Message); }
+            try
+            {
+                DataTable dt = _bll.GetById(id);
+
+                if (dt.Rows.Count == 0)
+                {
+                    return NotFound(new
+                    {
+                        success = false,
+                        message = "Không tìm thấy người dùng"
+                    });
+                }
+
+                DataRow row = dt.Rows[0];
+                var result = new
+                {
+                    MaND = row["MaND"],
+                    TenDangNhap = row["TenDangNhap"],
+                    MatKhau = row["MatKhau"],
+                    HoTen = row["HoTen"],
+                    VaiTro = row["VaiTro"]
+                };
+
+                return Ok(new
+                {
+                    success = true,
+                    message = "Lấy chi tiết người dùng thành công",
+                    data = result
+                });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new
+                {
+                    success = false,
+                    message = "Lỗi: " + ex.Message
+                });
+            }
         }
 
+        //post api nguoi dugn
         [HttpPost]
-        public IActionResult Them([FromBody] NguoiDung obj)  // Class từ Module
+        public IActionResult Create([FromBody] NguoiDung nguoiDung)
         {
-            if (obj == null) return BadRequest("Dữ liệu rỗng");
-            try { string result = _bll.Them(obj); return Ok(result); }
-            catch (Exception ex) { return BadRequest("Lỗi: " + ex.Message); }
+            try
+            {
+                if (nguoiDung == null)
+                {
+                    return BadRequest(new
+                    {
+                        success = false,
+                        message = "Dữ liệu không hợp lệ"
+                    });
+                }
+
+                string result = _bll.Them(nguoiDung);
+
+                if (result.Contains("Lỗi"))
+                {
+                    return BadRequest(new
+                    {
+                        success = false,
+                        message = result
+                    });
+                }
+
+                return Ok(new
+                {
+                    success = true,
+                    message = result
+                });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new
+                {
+                    success = false,
+                    message = "Lỗi: " + ex.Message
+                });
+            }
         }
 
-        [HttpPut("{maND}")]
-        public IActionResult Sua(int maND, [FromBody] NguoiDung obj)
+       //put api nguoi dùng
+        [HttpPut("{id}")]
+        public IActionResult Update(int id, [FromBody] NguoiDung nguoiDung)
         {
-            if (obj == null) return BadRequest("Dữ liệu rỗng");
-            obj.MaND = maND;
-            try { string result = _bll.Sua(obj); return Ok(result); }
-            catch (Exception ex) { return BadRequest("Lỗi: " + ex.Message); }
+            try
+            {
+                if (nguoiDung == null)
+                {
+                    return BadRequest(new
+                    {
+                        success = false,
+                        message = "Dữ liệu không hợp lệ"
+                    });
+                }
+
+                nguoiDung.MaND = id;
+                string result = _bll.Sua(nguoiDung);
+
+                if (result.Contains("Lỗi"))
+                {
+                    return BadRequest(new
+                    {
+                        success = false,
+                        message = result
+                    });
+                }
+
+                return Ok(new
+                {
+                    success = true,
+                    message = result
+                });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new
+                {
+                    success = false,
+                    message = "Lỗi: " + ex.Message
+                });
+            }
         }
 
-        [HttpDelete("{maND}")]
-        public IActionResult Xoa(int maND)
+       //xóa người dùng api
+        [HttpDelete("{id}")]
+        public IActionResult Delete(int id)
         {
-            try { string result = _bll.Xoa(maND); return Ok(result); }
-            catch (Exception ex) { return BadRequest("Lỗi: " + ex.Message); }
+            try
+            {
+                string result = _bll.Xoa(id);
+
+                if (result.Contains("Lỗi"))
+                {
+                    return BadRequest(new
+                    {
+                        success = false,
+                        message = result
+                    });
+                }
+
+                return Ok(new
+                {
+                    success = true,
+                    message = result
+                });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new
+                {
+                    success = false,
+                    message = "Lỗi: " + ex.Message
+                });
+            }
         }
     }
 }
