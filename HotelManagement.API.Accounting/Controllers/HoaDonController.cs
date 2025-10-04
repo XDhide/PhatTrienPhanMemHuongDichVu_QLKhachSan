@@ -18,7 +18,6 @@ namespace HotelManagement.API.Accounting.Controllers
             _bll = new HoaDonBLL();
         }
 
-        // GET: api/hoadon
         [HttpGet]
         public IActionResult GetAll()
         {
@@ -60,7 +59,6 @@ namespace HotelManagement.API.Accounting.Controllers
             }
         }
 
-        // GET: api/hoadon/{id}
         [HttpGet("{id}")]
         public IActionResult GetById(int id)
         {
@@ -192,6 +190,8 @@ namespace HotelManagement.API.Accounting.Controllers
                 });
             }
         }
+
+
 
         // DELETE: api/hoadon/{id}
         [HttpDelete("{id}")]

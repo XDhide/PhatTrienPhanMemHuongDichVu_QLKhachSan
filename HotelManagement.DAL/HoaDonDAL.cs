@@ -54,14 +54,14 @@ namespace DAL
                 DatabaseConnect.OpenDatabase();
                 SqlCommand cmd = new SqlCommand("sp_HoaDon_Them", DatabaseConnect.Conn);
                 cmd.CommandType = CommandType.StoredProcedure;
+
                 cmd.Parameters.AddWithValue("@SoHD", obj.SoHD);
                 cmd.Parameters.AddWithValue("@MaKhach", obj.MaKhach);
                 cmd.Parameters.AddWithValue("@MaND", obj.MaND);
-                cmd.Parameters.AddWithValue("@NgayLap", obj.NgayLap);
                 cmd.Parameters.AddWithValue("@TongTien", obj.TongTien);
                 cmd.Parameters.AddWithValue("@HinhThucThanhToan", obj.HinhThucThanhToan);
                 cmd.Parameters.AddWithValue("@SoTienDaTra", obj.SoTienDaTra);
-                cmd.Parameters.AddWithValue("@SoTienConNo", obj.SoTienConNo);
+
                 cmd.ExecuteNonQuery();
                 DatabaseConnect.CloseDatabase();
                 return "Thêm HoaDon thành công";
@@ -73,6 +73,7 @@ namespace DAL
             }
         }
 
+
         public string Sua(HoaDon obj)
         {
             try
@@ -80,15 +81,15 @@ namespace DAL
                 DatabaseConnect.OpenDatabase();
                 SqlCommand cmd = new SqlCommand("sp_HoaDon_Sua", DatabaseConnect.Conn);
                 cmd.CommandType = CommandType.StoredProcedure;
+
                 cmd.Parameters.AddWithValue("@MaHD", obj.MaHD);
                 cmd.Parameters.AddWithValue("@SoHD", obj.SoHD);
                 cmd.Parameters.AddWithValue("@MaKhach", obj.MaKhach);
                 cmd.Parameters.AddWithValue("@MaND", obj.MaND);
-                cmd.Parameters.AddWithValue("@NgayLap", obj.NgayLap);
                 cmd.Parameters.AddWithValue("@TongTien", obj.TongTien);
                 cmd.Parameters.AddWithValue("@HinhThucThanhToan", obj.HinhThucThanhToan);
                 cmd.Parameters.AddWithValue("@SoTienDaTra", obj.SoTienDaTra);
-                cmd.Parameters.AddWithValue("@SoTienConNo", obj.SoTienConNo);
+
                 cmd.ExecuteNonQuery();
                 DatabaseConnect.CloseDatabase();
                 return "Sửa HoaDon thành công";
@@ -99,6 +100,10 @@ namespace DAL
                 return "Lỗi: " + ex.Message;
             }
         }
+
+
+
+
 
         public string Xoa(int maHD)
         {
