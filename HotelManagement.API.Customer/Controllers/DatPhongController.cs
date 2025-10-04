@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -30,15 +30,18 @@ namespace HotelManagement.API.Customer.Controllers
                 {
                     list.Add(new
                     {
-                        MaDP = r["MaDP"],
-                        MaSo = r["MaSo"],
+                        MaDatPhong = r["MaDatPhong"],
+                        MaDat = r["MaDat"],
+                        MaKhach = r["MaKhach"],
+                        MaPhong = r["MaPhong"],        // có thể null
+                        MaLoaiPhong = r["MaLoaiPhong"],
+                        NgayNhan = r["NgayNhan"],
+                        NgayTra = r["NgayTra"],
+                        SoKhach = r["SoKhach"],
                         TrangThai = r["TrangThai"],
-                        MaLoai = r["MaLoai"],
-                        NgayDen = r["NgayDen"],
-                        NgayDi = r["NgayDi"],
-                        NguoiLon = r["NguoiLon"],
-                        TreEm = r["TreEm"],
-                        TongTien = r["TongTien"]
+                        NguoiTao = r["NguoiTao"],       // có thể null
+                        NgayTao = r["NgayTao"],
+                        GhiChu = r["GhiChu"]
                     });
                 }
                 return Ok(new { success = true, message = "OK", data = list });
@@ -62,15 +65,17 @@ namespace HotelManagement.API.Customer.Controllers
                 var r = dt.Rows[0];
                 var obj = new
                 {
-                    MaDP = r["MaDP"],
-                    MaSo = r["MaSo"],
+                    MaDatPhong = r["MaDatPhong"],
+                    MaDat = r["MaDat"],
+                    MaKhach = r["MaKhach"],
+                    MaPhong = r["MaPhong"],
+                    MaLoaiPhong = r["MaLoaiPhong"],
+                    NgayNhan = r["NgayNhan"],
+                    NgayTra = r["NgayTra"],
+                    SoKhach = r["SoKhach"],
                     TrangThai = r["TrangThai"],
-                    MaLoai = r["MaLoai"],
-                    NgayDen = r["NgayDen"],
-                    NgayDi = r["NgayDi"],
-                    NguoiLon = r["NguoiLon"],
-                    TreEm = r["TreEm"],
-                    TongTien = r["TongTien"],
+                    NguoiTao = r["NguoiTao"],
+                    NgayTao = r["NgayTao"],
                     GhiChu = r["GhiChu"]
                 };
                 return Ok(new { success = true, message = "OK", data = obj });
