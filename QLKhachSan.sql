@@ -1328,8 +1328,7 @@ END
 GO
 
 -- Lấy danh sách chi tiết hóa đơn theo MaHD
-CREATE PROCEDURE sp_HoaDonChiTiet_DanhSach
-    @MaHD INT
+CREATE PROCEDURE dbo.sp_HoaDonChiTiet_DanhSach
 AS
 BEGIN
     SELECT ct.*,
@@ -1341,10 +1340,11 @@ BEGIN
     LEFT JOIN DatPhong dp ON ct.MaDatPhong = dp.MaDatPhong
     LEFT JOIN Phong p ON dp.MaPhong = p.MaPhong
     LEFT JOIN LoaiPhong lp ON dp.MaLoaiPhong = lp.MaLoaiPhong
-    LEFT JOIN DichVu dv ON ct.MaDV = dv.MaDV
-    WHERE ct.MaHD = @MaHD
+    LEFT JOIN DichVu dv ON ct.MaDV = dv.MaDV;
 END
 GO
+
+
 
 -- Lấy 1 chi tiết hóa đơn
 CREATE PROCEDURE sp_HoaDonChiTiet_ChiTiet

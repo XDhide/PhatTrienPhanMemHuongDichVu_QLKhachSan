@@ -106,7 +106,6 @@ namespace HotelManagement.API.Accounting.Controllers
             }
         }
 
-        // POST: api/hoadon
         [HttpPost]
         public IActionResult Create([FromBody] HoaDon hoaDon)
         {
@@ -148,7 +147,6 @@ namespace HotelManagement.API.Accounting.Controllers
             }
         }
 
-        // PUT: api/hoadon/{id}
         [HttpPut("{id}")]
         public IActionResult Update(int id, [FromBody] HoaDon hoaDon)
         {
@@ -193,7 +191,6 @@ namespace HotelManagement.API.Accounting.Controllers
 
 
 
-        // DELETE: api/hoadon/{id}
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {

@@ -53,15 +53,20 @@ namespace DAL
             try
             {
                 DatabaseConnect.OpenDatabase();
-                SqlCommand cmd = new SqlCommand("sp_HoaDonChiTiet_Them", DatabaseConnect.Conn);
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@MaHD", obj.MaHD);
-                cmd.Parameters.AddWithValue("@MaDatPhong", obj.MaDatPhong);
-                cmd.Parameters.AddWithValue("@MaDV", obj.MaDV);
-                cmd.Parameters.AddWithValue("@SoLuong", obj.SoLuong);
-                cmd.Parameters.AddWithValue("@DonGia", obj.DonGia);
-                cmd.Parameters.AddWithValue("@ThanhTien", obj.ThanhTien);
-                cmd.ExecuteNonQuery();
+
+                using (SqlCommand cmd = new SqlCommand("sp_HoaDonChiTiet_Them", DatabaseConnect.Conn))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    cmd.Parameters.AddWithValue("@MaHD", obj.MaHD);
+                    cmd.Parameters.AddWithValue("@MaDatPhong", obj.MaDatPhong ?? (object)DBNull.Value);
+                    cmd.Parameters.AddWithValue("@MaDV", obj.MaDV ?? (object)DBNull.Value);
+                    cmd.Parameters.AddWithValue("@SoLuong", obj.SoLuong);
+                    cmd.Parameters.AddWithValue("@DonGia", obj.DonGia);
+
+                    cmd.ExecuteNonQuery();
+                }
+
                 DatabaseConnect.CloseDatabase();
                 return "Thêm HoaDonChiTiet thành công";
             }
@@ -72,21 +77,32 @@ namespace DAL
             }
         }
 
+
+
         public string Sua(HoaDonChiTiet obj)
         {
             try
             {
                 DatabaseConnect.OpenDatabase();
-                SqlCommand cmd = new SqlCommand("sp_HoaDonChiTiet_Sua", DatabaseConnect.Conn);
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@MaCTHD", obj.MaCTHD);
-                cmd.Parameters.AddWithValue("@MaHD", obj.MaHD);
-                cmd.Parameters.AddWithValue("@MaDatPhong", obj.MaDatPhong);
-                cmd.Parameters.AddWithValue("@MaDV", obj.MaDV);
-                cmd.Parameters.AddWithValue("@SoLuong", obj.SoLuong);
-                cmd.Parameters.AddWithValue("@DonGia", obj.DonGia);
-                cmd.Parameters.AddWithValue("@ThanhTien", obj.ThanhTien);
-                cmd.ExecuteNonQuery();
+                using (SqlCommand cmd = new SqlCommand("sp_HoaDonChiTiet_Sua", DatabaseConnect.Conn))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    cmd.Parameters.AddWithValue("@MaCTHD", obj.MaCTHD);
+                    cmd.Parameters.AddWithValue("@MaHD", obj.MaHD);
+
+                    cmd.Parameters.AddWithValue("@MaDatPhong",
+                        obj.MaDatPhong.HasValue ? (object)obj.MaDatPhong.Value : DBNull.Value);
+
+                    cmd.Parameters.AddWithValue("@MaDV",
+                        obj.MaDV.HasValue ? (object)obj.MaDV.Value : DBNull.Value);
+
+                    cmd.Parameters.AddWithValue("@SoLuong", obj.SoLuong);
+                    cmd.Parameters.AddWithValue("@DonGia", obj.DonGia);
+
+                    cmd.ExecuteNonQuery();
+                }
+
                 DatabaseConnect.CloseDatabase();
                 return "Sửa HoaDonChiTiet thành công";
             }
@@ -96,6 +112,8 @@ namespace DAL
                 return "Lỗi: " + ex.Message;
             }
         }
+
+
 
         public string Xoa(int maCTHD)
         {
