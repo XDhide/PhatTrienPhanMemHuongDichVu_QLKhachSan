@@ -3,6 +3,14 @@
   "WorkspaceRootPath": "D:\\Code\\CODE\\Csharp\\QLKS\\PhatTrienPhanMemHuongDichVu_QLKhachSan\\User\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{847D0DEC-7384-4F5C-878C-7A9739F1A526}|UserApi\\UserApi.csproj|d:\\code\\code\\csharp\\qlks\\phattrienphanmemhuongdichvu_qlkhachsan\\user\\userapi\\controllers\\chitiethoadoncontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{847D0DEC-7384-4F5C-878C-7A9739F1A526}|UserApi\\UserApi.csproj|solutionrelative:userapi\\controllers\\chitiethoadoncontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{847D0DEC-7384-4F5C-878C-7A9739F1A526}|UserApi\\UserApi.csproj|d:\\code\\code\\csharp\\qlks\\phattrienphanmemhuongdichvu_qlkhachsan\\user\\userapi\\properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{847D0DEC-7384-4F5C-878C-7A9739F1A526}|UserApi\\UserApi.csproj|solutionrelative:userapi\\properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{847D0DEC-7384-4F5C-878C-7A9739F1A526}|UserApi\\UserApi.csproj|d:\\code\\code\\csharp\\qlks\\phattrienphanmemhuongdichvu_qlkhachsan\\user\\userapi\\dal\\databaseconnect.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{847D0DEC-7384-4F5C-878C-7A9739F1A526}|UserApi\\UserApi.csproj|solutionrelative:userapi\\dal\\databaseconnect.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -27,10 +35,6 @@
       "RelativeMoniker": "D:0:0:{847D0DEC-7384-4F5C-878C-7A9739F1A526}|UserApi\\UserApi.csproj|solutionrelative:userapi\\model\\hoadon.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{847D0DEC-7384-4F5C-878C-7A9739F1A526}|UserApi\\UserApi.csproj|d:\\code\\code\\csharp\\qlks\\phattrienphanmemhuongdichvu_qlkhachsan\\user\\userapi\\controllers\\chitiethoadoncontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{847D0DEC-7384-4F5C-878C-7A9739F1A526}|UserApi\\UserApi.csproj|solutionrelative:userapi\\controllers\\chitiethoadoncontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{847D0DEC-7384-4F5C-878C-7A9739F1A526}|UserApi\\UserApi.csproj|d:\\code\\code\\csharp\\qlks\\phattrienphanmemhuongdichvu_qlkhachsan\\user\\userapi\\bll\\hoadonchitietbll.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{847D0DEC-7384-4F5C-878C-7A9739F1A526}|UserApi\\UserApi.csproj|solutionrelative:userapi\\bll\\hoadonchitietbll.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -46,11 +50,24 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 6,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
+              "Title": "launchSettings.json",
+              "DocumentMoniker": "D:\\Code\\CODE\\Csharp\\QLKS\\PhatTrienPhanMemHuongDichVu_QLKhachSan\\User\\UserApi\\Properties\\launchSettings.json",
+              "RelativeDocumentMoniker": "UserApi\\Properties\\launchSettings.json",
+              "ToolTip": "D:\\Code\\CODE\\Csharp\\QLKS\\PhatTrienPhanMemHuongDichVu_QLKhachSan\\User\\UserApi\\Properties\\launchSettings.json",
+              "RelativeToolTip": "UserApi\\Properties\\launchSettings.json",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAQwA4AAAAcAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2025-10-14T14:06:33.839Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
               "Title": "DatabaseConnect.cs",
               "DocumentMoniker": "D:\\Code\\CODE\\Csharp\\QLKS\\PhatTrienPhanMemHuongDichVu_QLKhachSan\\User\\UserApi\\DAL\\DatabaseConnect.cs",
               "RelativeDocumentMoniker": "UserApi\\DAL\\DatabaseConnect.cs",
@@ -63,7 +80,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 3,
               "Title": "HoaDonController.cs",
               "DocumentMoniker": "D:\\Code\\CODE\\Csharp\\QLKS\\PhatTrienPhanMemHuongDichVu_QLKhachSan\\User\\UserApi\\Controllers\\HoaDonController.cs",
               "RelativeDocumentMoniker": "UserApi\\Controllers\\HoaDonController.cs",
@@ -71,12 +88,11 @@
               "RelativeToolTip": "UserApi\\Controllers\\HoaDonController.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-13T13:50:42.954Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-13T13:50:42.954Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 7,
               "Title": "HoaDon.cs",
               "DocumentMoniker": "D:\\Code\\CODE\\Csharp\\QLKS\\PhatTrienPhanMemHuongDichVu_QLKhachSan\\User\\UserApi\\Model\\HoaDon.cs",
               "RelativeDocumentMoniker": "UserApi\\Model\\HoaDon.cs",
@@ -84,12 +100,11 @@
               "RelativeToolTip": "UserApi\\Model\\HoaDon.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-13T13:50:39.319Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-13T13:50:39.319Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 5,
               "Title": "HoaDonDAL.cs",
               "DocumentMoniker": "D:\\Code\\CODE\\Csharp\\QLKS\\PhatTrienPhanMemHuongDichVu_QLKhachSan\\User\\UserApi\\DAL\\HoaDonDAL.cs",
               "RelativeDocumentMoniker": "UserApi\\DAL\\HoaDonDAL.cs",
@@ -97,12 +112,11 @@
               "RelativeToolTip": "UserApi\\DAL\\HoaDonDAL.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-13T13:49:51.283Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-13T13:49:51.283Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 6,
               "Title": "HoaDonChiTietDAL.cs",
               "DocumentMoniker": "D:\\Code\\CODE\\Csharp\\QLKS\\PhatTrienPhanMemHuongDichVu_QLKhachSan\\User\\UserApi\\DAL\\HoaDonChiTietDAL.cs",
               "RelativeDocumentMoniker": "UserApi\\DAL\\HoaDonChiTietDAL.cs",
@@ -110,46 +124,19 @@
               "RelativeToolTip": "UserApi\\DAL\\HoaDonChiTietDAL.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-13T13:49:43.086Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-13T13:49:43.086Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 0,
               "Title": "ChiTietHoaDonController.cs",
               "DocumentMoniker": "D:\\Code\\CODE\\Csharp\\QLKS\\PhatTrienPhanMemHuongDichVu_QLKhachSan\\User\\UserApi\\Controllers\\ChiTietHoaDonController.cs",
               "RelativeDocumentMoniker": "UserApi\\Controllers\\ChiTietHoaDonController.cs",
               "ToolTip": "D:\\Code\\CODE\\Csharp\\QLKS\\PhatTrienPhanMemHuongDichVu_QLKhachSan\\User\\UserApi\\Controllers\\ChiTietHoaDonController.cs",
               "RelativeToolTip": "UserApi\\Controllers\\ChiTietHoaDonController.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAL4AAAAAAAAAAAAIwMoAAAArAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-10-13T13:49:42.514Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "HoaDonChiTietBLL.cs",
-              "DocumentMoniker": "D:\\Code\\CODE\\Csharp\\QLKS\\PhatTrienPhanMemHuongDichVu_QLKhachSan\\User\\UserApi\\BLL\\HoaDonChiTietBLL.cs",
-              "RelativeDocumentMoniker": "UserApi\\BLL\\HoaDonChiTietBLL.cs",
-              "ToolTip": "D:\\Code\\CODE\\Csharp\\QLKS\\PhatTrienPhanMemHuongDichVu_QLKhachSan\\User\\UserApi\\BLL\\HoaDonChiTietBLL.cs",
-              "RelativeToolTip": "UserApi\\BLL\\HoaDonChiTietBLL.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-13T13:49:41.783Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "HoaDonBLL.cs",
-              "DocumentMoniker": "D:\\Code\\CODE\\Csharp\\QLKS\\PhatTrienPhanMemHuongDichVu_QLKhachSan\\User\\UserApi\\BLL\\HoaDonBLL.cs",
-              "RelativeDocumentMoniker": "UserApi\\BLL\\HoaDonBLL.cs",
-              "ToolTip": "D:\\Code\\CODE\\Csharp\\QLKS\\PhatTrienPhanMemHuongDichVu_QLKhachSan\\User\\UserApi\\BLL\\HoaDonBLL.cs",
-              "RelativeToolTip": "UserApi\\BLL\\HoaDonBLL.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-13T13:49:37.154Z",
               "EditorCaption": ""
             },
             {
@@ -159,6 +146,30 @@
             {
               "$type": "Document",
               "DocumentIndex": 8,
+              "Title": "HoaDonChiTietBLL.cs",
+              "DocumentMoniker": "D:\\Code\\CODE\\Csharp\\QLKS\\PhatTrienPhanMemHuongDichVu_QLKhachSan\\User\\UserApi\\BLL\\HoaDonChiTietBLL.cs",
+              "RelativeDocumentMoniker": "UserApi\\BLL\\HoaDonChiTietBLL.cs",
+              "ToolTip": "D:\\Code\\CODE\\Csharp\\QLKS\\PhatTrienPhanMemHuongDichVu_QLKhachSan\\User\\UserApi\\BLL\\HoaDonChiTietBLL.cs",
+              "RelativeToolTip": "UserApi\\BLL\\HoaDonChiTietBLL.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-13T13:49:41.783Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "HoaDonBLL.cs",
+              "DocumentMoniker": "D:\\Code\\CODE\\Csharp\\QLKS\\PhatTrienPhanMemHuongDichVu_QLKhachSan\\User\\UserApi\\BLL\\HoaDonBLL.cs",
+              "RelativeDocumentMoniker": "UserApi\\BLL\\HoaDonBLL.cs",
+              "ToolTip": "D:\\Code\\CODE\\Csharp\\QLKS\\PhatTrienPhanMemHuongDichVu_QLKhachSan\\User\\UserApi\\BLL\\HoaDonBLL.cs",
+              "RelativeToolTip": "UserApi\\BLL\\HoaDonBLL.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-13T13:49:37.154Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
               "Title": "UserApi.csproj",
               "DocumentMoniker": "D:\\Code\\CODE\\Csharp\\QLKS\\PhatTrienPhanMemHuongDichVu_QLKhachSan\\User\\UserApi\\UserApi.csproj",
               "RelativeDocumentMoniker": "UserApi\\UserApi.csproj",
@@ -166,8 +177,7 @@
               "RelativeToolTip": "UserApi\\UserApi.csproj",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
-              "WhenOpened": "2025-10-13T13:44:38.27Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-13T13:44:38.27Z"
             }
           ]
         }
