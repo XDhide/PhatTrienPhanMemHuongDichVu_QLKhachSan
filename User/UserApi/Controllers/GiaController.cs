@@ -98,6 +98,46 @@ namespace UserApi.Controllers
                 });
             }
         }
+        [HttpPost]
+        public IActionResult Create([FromBody] Gia gia)
+        {
+            try
+            {
+                if (gia == null)
+                {
+                    return BadRequest(new
+                    {
+                        success = false,
+                        message = "Dữ liệu không hợp lệ"
+                    });
+                }
+
+                string result = _bll.Them(gia);
+
+                if (result.Contains("Lỗi"))
+                {
+                    return BadRequest(new
+                    {
+                        success = false,
+                        message = result
+                    });
+                }
+
+                return Ok(new
+                {
+                    success = true,
+                    message = result
+                });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new
+                {
+                    success = false,
+                    message = "Lỗi: " + ex.Message
+                });
+            }
+        }
         [HttpPut("{id}")]
         public IActionResult Update(int id, [FromBody] Gia gia)
         {

@@ -90,6 +90,22 @@
   },
   {
     "ContainingType": "UserApi.Controllers.GiaController",
+    "Method": "Create",
+    "RelativePath": "api/Gia",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "gia",
+        "Type": "HotelManagement.Module.Gia",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "UserApi.Controllers.GiaController",
     "Method": "GetById",
     "RelativePath": "api/Gia/{id}",
     "HttpMethod": "GET",
