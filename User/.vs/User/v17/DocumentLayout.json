@@ -3,8 +3,44 @@
   "WorkspaceRootPath": "D:\\Code\\CODE\\Csharp\\QLKS\\PhatTrienPhanMemHuongDichVu_QLKhachSan\\User\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{847D0DEC-7384-4F5C-878C-7A9739F1A526}|UserApi\\UserApi.csproj|d:\\code\\code\\csharp\\qlks\\phattrienphanmemhuongdichvu_qlkhachsan\\user\\userapi\\controllers\\giacontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{847D0DEC-7384-4F5C-878C-7A9739F1A526}|UserApi\\UserApi.csproj|solutionrelative:userapi\\controllers\\giacontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{847D0DEC-7384-4F5C-878C-7A9739F1A526}|UserApi\\UserApi.csproj|d:\\code\\code\\csharp\\qlks\\phattrienphanmemhuongdichvu_qlkhachsan\\user\\userapi\\controllers\\hoadoncontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{847D0DEC-7384-4F5C-878C-7A9739F1A526}|UserApi\\UserApi.csproj|solutionrelative:userapi\\controllers\\hoadoncontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{847D0DEC-7384-4F5C-878C-7A9739F1A526}|UserApi\\UserApi.csproj|d:\\code\\code\\csharp\\qlks\\phattrienphanmemhuongdichvu_qlkhachsan\\user\\userapi\\controllers\\chitiethoadoncontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{847D0DEC-7384-4F5C-878C-7A9739F1A526}|UserApi\\UserApi.csproj|solutionrelative:userapi\\controllers\\chitiethoadoncontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{847D0DEC-7384-4F5C-878C-7A9739F1A526}|UserApi\\UserApi.csproj|d:\\code\\code\\csharp\\qlks\\phattrienphanmemhuongdichvu_qlkhachsan\\user\\userapi\\dal\\giadal.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{847D0DEC-7384-4F5C-878C-7A9739F1A526}|UserApi\\UserApi.csproj|solutionrelative:userapi\\dal\\giadal.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{847D0DEC-7384-4F5C-878C-7A9739F1A526}|UserApi\\UserApi.csproj|d:\\code\\code\\csharp\\qlks\\phattrienphanmemhuongdichvu_qlkhachsan\\user\\userapi\\dal\\hoadonchitietdal.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{847D0DEC-7384-4F5C-878C-7A9739F1A526}|UserApi\\UserApi.csproj|solutionrelative:userapi\\dal\\hoadonchitietdal.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{847D0DEC-7384-4F5C-878C-7A9739F1A526}|UserApi\\UserApi.csproj|d:\\code\\code\\csharp\\qlks\\phattrienphanmemhuongdichvu_qlkhachsan\\user\\userapi\\dal\\hoadondal.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{847D0DEC-7384-4F5C-878C-7A9739F1A526}|UserApi\\UserApi.csproj|solutionrelative:userapi\\dal\\hoadondal.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{847D0DEC-7384-4F5C-878C-7A9739F1A526}|UserApi\\UserApi.csproj|d:\\code\\code\\csharp\\qlks\\phattrienphanmemhuongdichvu_qlkhachsan\\user\\userapi\\model\\hoadon.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{847D0DEC-7384-4F5C-878C-7A9739F1A526}|UserApi\\UserApi.csproj|solutionrelative:userapi\\model\\hoadon.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{847D0DEC-7384-4F5C-878C-7A9739F1A526}|UserApi\\UserApi.csproj|d:\\code\\code\\csharp\\qlks\\phattrienphanmemhuongdichvu_qlkhachsan\\user\\userapi\\model\\hoadonchitiet.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{847D0DEC-7384-4F5C-878C-7A9739F1A526}|UserApi\\UserApi.csproj|solutionrelative:userapi\\model\\hoadonchitiet.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{847D0DEC-7384-4F5C-878C-7A9739F1A526}|UserApi\\UserApi.csproj|d:\\code\\code\\csharp\\qlks\\phattrienphanmemhuongdichvu_qlkhachsan\\user\\userapi\\model\\gia.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{847D0DEC-7384-4F5C-878C-7A9739F1A526}|UserApi\\UserApi.csproj|solutionrelative:userapi\\model\\gia.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{847D0DEC-7384-4F5C-878C-7A9739F1A526}|UserApi\\UserApi.csproj|d:\\code\\code\\csharp\\qlks\\phattrienphanmemhuongdichvu_qlkhachsan\\user\\userapi\\bll\\giabll.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{847D0DEC-7384-4F5C-878C-7A9739F1A526}|UserApi\\UserApi.csproj|solutionrelative:userapi\\bll\\giabll.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{847D0DEC-7384-4F5C-878C-7A9739F1A526}|UserApi\\UserApi.csproj|d:\\code\\code\\csharp\\qlks\\phattrienphanmemhuongdichvu_qlkhachsan\\user\\userapi\\properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
@@ -15,24 +51,8 @@
       "RelativeMoniker": "D:0:0:{847D0DEC-7384-4F5C-878C-7A9739F1A526}|UserApi\\UserApi.csproj|solutionrelative:userapi\\dal\\databaseconnect.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{847D0DEC-7384-4F5C-878C-7A9739F1A526}|UserApi\\UserApi.csproj|d:\\code\\code\\csharp\\qlks\\phattrienphanmemhuongdichvu_qlkhachsan\\user\\userapi\\controllers\\hoadoncontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{847D0DEC-7384-4F5C-878C-7A9739F1A526}|UserApi\\UserApi.csproj|solutionrelative:userapi\\controllers\\hoadoncontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{847D0DEC-7384-4F5C-878C-7A9739F1A526}|UserApi\\UserApi.csproj|d:\\code\\code\\csharp\\qlks\\phattrienphanmemhuongdichvu_qlkhachsan\\user\\userapi\\bll\\hoadonbll.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{847D0DEC-7384-4F5C-878C-7A9739F1A526}|UserApi\\UserApi.csproj|solutionrelative:userapi\\bll\\hoadonbll.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{847D0DEC-7384-4F5C-878C-7A9739F1A526}|UserApi\\UserApi.csproj|d:\\code\\code\\csharp\\qlks\\phattrienphanmemhuongdichvu_qlkhachsan\\user\\userapi\\dal\\hoadondal.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{847D0DEC-7384-4F5C-878C-7A9739F1A526}|UserApi\\UserApi.csproj|solutionrelative:userapi\\dal\\hoadondal.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{847D0DEC-7384-4F5C-878C-7A9739F1A526}|UserApi\\UserApi.csproj|d:\\code\\code\\csharp\\qlks\\phattrienphanmemhuongdichvu_qlkhachsan\\user\\userapi\\dal\\hoadonchitietdal.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{847D0DEC-7384-4F5C-878C-7A9739F1A526}|UserApi\\UserApi.csproj|solutionrelative:userapi\\dal\\hoadonchitietdal.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{847D0DEC-7384-4F5C-878C-7A9739F1A526}|UserApi\\UserApi.csproj|d:\\code\\code\\csharp\\qlks\\phattrienphanmemhuongdichvu_qlkhachsan\\user\\userapi\\model\\hoadon.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{847D0DEC-7384-4F5C-878C-7A9739F1A526}|UserApi\\UserApi.csproj|solutionrelative:userapi\\model\\hoadon.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{847D0DEC-7384-4F5C-878C-7A9739F1A526}|UserApi\\UserApi.csproj|d:\\code\\code\\csharp\\qlks\\phattrienphanmemhuongdichvu_qlkhachsan\\user\\userapi\\bll\\hoadonchitietbll.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -50,57 +70,72 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 6,
+          "SelectedChildIndex": 2,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "launchSettings.json",
-              "DocumentMoniker": "D:\\Code\\CODE\\Csharp\\QLKS\\PhatTrienPhanMemHuongDichVu_QLKhachSan\\User\\UserApi\\Properties\\launchSettings.json",
-              "RelativeDocumentMoniker": "UserApi\\Properties\\launchSettings.json",
-              "ToolTip": "D:\\Code\\CODE\\Csharp\\QLKS\\PhatTrienPhanMemHuongDichVu_QLKhachSan\\User\\UserApi\\Properties\\launchSettings.json",
-              "RelativeToolTip": "UserApi\\Properties\\launchSettings.json",
-              "ViewState": "AgIAAAMAAAAAAAAAAAAQwA4AAAAcAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2025-10-14T14:06:33.839Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "DatabaseConnect.cs",
-              "DocumentMoniker": "D:\\Code\\CODE\\Csharp\\QLKS\\PhatTrienPhanMemHuongDichVu_QLKhachSan\\User\\UserApi\\DAL\\DatabaseConnect.cs",
-              "RelativeDocumentMoniker": "UserApi\\DAL\\DatabaseConnect.cs",
-              "ToolTip": "D:\\Code\\CODE\\Csharp\\QLKS\\PhatTrienPhanMemHuongDichVu_QLKhachSan\\User\\UserApi\\DAL\\DatabaseConnect.cs",
-              "RelativeToolTip": "UserApi\\DAL\\DatabaseConnect.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAAoAAAAAAAAAA==",
+              "DocumentIndex": 7,
+              "Title": "HoaDonChiTiet.cs",
+              "DocumentMoniker": "D:\\Code\\CODE\\Csharp\\QLKS\\PhatTrienPhanMemHuongDichVu_QLKhachSan\\User\\UserApi\\Model\\HoaDonChiTiet.cs",
+              "RelativeDocumentMoniker": "UserApi\\Model\\HoaDonChiTiet.cs",
+              "ToolTip": "D:\\Code\\CODE\\Csharp\\QLKS\\PhatTrienPhanMemHuongDichVu_QLKhachSan\\User\\UserApi\\Model\\HoaDonChiTiet.cs",
+              "RelativeToolTip": "UserApi\\Model\\HoaDonChiTiet.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-13T13:50:52.902Z",
+              "WhenOpened": "2025-10-16T01:44:11.572Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 3,
-              "Title": "HoaDonController.cs",
-              "DocumentMoniker": "D:\\Code\\CODE\\Csharp\\QLKS\\PhatTrienPhanMemHuongDichVu_QLKhachSan\\User\\UserApi\\Controllers\\HoaDonController.cs",
-              "RelativeDocumentMoniker": "UserApi\\Controllers\\HoaDonController.cs",
-              "ToolTip": "D:\\Code\\CODE\\Csharp\\QLKS\\PhatTrienPhanMemHuongDichVu_QLKhachSan\\User\\UserApi\\Controllers\\HoaDonController.cs",
-              "RelativeToolTip": "UserApi\\Controllers\\HoaDonController.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Title": "GiaDAL.cs",
+              "DocumentMoniker": "D:\\Code\\CODE\\Csharp\\QLKS\\PhatTrienPhanMemHuongDichVu_QLKhachSan\\User\\UserApi\\DAL\\GiaDAL.cs",
+              "RelativeDocumentMoniker": "UserApi\\DAL\\GiaDAL.cs",
+              "ToolTip": "D:\\Code\\CODE\\Csharp\\QLKS\\PhatTrienPhanMemHuongDichVu_QLKhachSan\\User\\UserApi\\DAL\\GiaDAL.cs",
+              "RelativeToolTip": "UserApi\\DAL\\GiaDAL.cs",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-13T13:50:42.954Z"
+              "WhenOpened": "2025-10-16T01:42:40.441Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 0,
+              "Title": "GiaController.cs",
+              "DocumentMoniker": "D:\\Code\\CODE\\Csharp\\QLKS\\PhatTrienPhanMemHuongDichVu_QLKhachSan\\User\\UserApi\\Controllers\\GiaController.cs",
+              "RelativeDocumentMoniker": "UserApi\\Controllers\\GiaController.cs",
+              "ToolTip": "D:\\Code\\CODE\\Csharp\\QLKS\\PhatTrienPhanMemHuongDichVu_QLKhachSan\\User\\UserApi\\Controllers\\GiaController.cs",
+              "RelativeToolTip": "UserApi\\Controllers\\GiaController.cs",
+              "ViewState": "AgIAAFYAAAAAAAAAAAAIwF8AAAAkAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-16T01:39:52.141Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
               "Title": "HoaDon.cs",
               "DocumentMoniker": "D:\\Code\\CODE\\Csharp\\QLKS\\PhatTrienPhanMemHuongDichVu_QLKhachSan\\User\\UserApi\\Model\\HoaDon.cs",
               "RelativeDocumentMoniker": "UserApi\\Model\\HoaDon.cs",
               "ToolTip": "D:\\Code\\CODE\\Csharp\\QLKS\\PhatTrienPhanMemHuongDichVu_QLKhachSan\\User\\UserApi\\Model\\HoaDon.cs",
               "RelativeToolTip": "UserApi\\Model\\HoaDon.cs",
+              "ViewState": "AgIAAAcAAAAAAAAAAAAgwB0AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-13T13:50:39.319Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "HoaDonChiTietDAL.cs",
+              "DocumentMoniker": "D:\\Code\\CODE\\Csharp\\QLKS\\PhatTrienPhanMemHuongDichVu_QLKhachSan\\User\\UserApi\\DAL\\HoaDonChiTietDAL.cs",
+              "RelativeDocumentMoniker": "UserApi\\DAL\\HoaDonChiTietDAL.cs",
+              "ToolTip": "D:\\Code\\CODE\\Csharp\\QLKS\\PhatTrienPhanMemHuongDichVu_QLKhachSan\\User\\UserApi\\DAL\\HoaDonChiTietDAL.cs",
+              "RelativeToolTip": "UserApi\\DAL\\HoaDonChiTietDAL.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-13T13:50:39.319Z"
+              "WhenOpened": "2025-10-13T13:49:43.086Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -112,32 +147,84 @@
               "RelativeToolTip": "UserApi\\DAL\\HoaDonDAL.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-13T13:49:51.283Z"
+              "WhenOpened": "2025-10-13T13:49:51.283Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "HoaDonChiTietDAL.cs",
-              "DocumentMoniker": "D:\\Code\\CODE\\Csharp\\QLKS\\PhatTrienPhanMemHuongDichVu_QLKhachSan\\User\\UserApi\\DAL\\HoaDonChiTietDAL.cs",
-              "RelativeDocumentMoniker": "UserApi\\DAL\\HoaDonChiTietDAL.cs",
-              "ToolTip": "D:\\Code\\CODE\\Csharp\\QLKS\\PhatTrienPhanMemHuongDichVu_QLKhachSan\\User\\UserApi\\DAL\\HoaDonChiTietDAL.cs",
-              "RelativeToolTip": "UserApi\\DAL\\HoaDonChiTietDAL.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-13T13:49:43.086Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 2,
               "Title": "ChiTietHoaDonController.cs",
               "DocumentMoniker": "D:\\Code\\CODE\\Csharp\\QLKS\\PhatTrienPhanMemHuongDichVu_QLKhachSan\\User\\UserApi\\Controllers\\ChiTietHoaDonController.cs",
               "RelativeDocumentMoniker": "UserApi\\Controllers\\ChiTietHoaDonController.cs",
               "ToolTip": "D:\\Code\\CODE\\Csharp\\QLKS\\PhatTrienPhanMemHuongDichVu_QLKhachSan\\User\\UserApi\\Controllers\\ChiTietHoaDonController.cs",
               "RelativeToolTip": "UserApi\\Controllers\\ChiTietHoaDonController.cs",
-              "ViewState": "AgIAAL4AAAAAAAAAAAAIwMoAAAArAAAAAAAAAA==",
+              "ViewState": "AgIAACEAAAAAAAAAAAAowAUAAAAdAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-10-13T13:49:42.514Z",
               "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "HoaDonController.cs",
+              "DocumentMoniker": "D:\\Code\\CODE\\Csharp\\QLKS\\PhatTrienPhanMemHuongDichVu_QLKhachSan\\User\\UserApi\\Controllers\\HoaDonController.cs",
+              "RelativeDocumentMoniker": "UserApi\\Controllers\\HoaDonController.cs",
+              "ToolTip": "D:\\Code\\CODE\\Csharp\\QLKS\\PhatTrienPhanMemHuongDichVu_QLKhachSan\\User\\UserApi\\Controllers\\HoaDonController.cs",
+              "RelativeToolTip": "UserApi\\Controllers\\HoaDonController.cs",
+              "ViewState": "AgIAAJUAAAAAAAAAAAAIwNYAAAANAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-13T13:50:42.954Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "Gia.cs",
+              "DocumentMoniker": "D:\\Code\\CODE\\Csharp\\QLKS\\PhatTrienPhanMemHuongDichVu_QLKhachSan\\User\\UserApi\\Model\\Gia.cs",
+              "RelativeDocumentMoniker": "UserApi\\Model\\Gia.cs",
+              "ToolTip": "D:\\Code\\CODE\\Csharp\\QLKS\\PhatTrienPhanMemHuongDichVu_QLKhachSan\\User\\UserApi\\Model\\Gia.cs",
+              "RelativeToolTip": "UserApi\\Model\\Gia.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABsAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-16T01:42:37.566Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "GiaBLL.cs",
+              "DocumentMoniker": "D:\\Code\\CODE\\Csharp\\QLKS\\PhatTrienPhanMemHuongDichVu_QLKhachSan\\User\\UserApi\\BLL\\GiaBLL.cs",
+              "RelativeDocumentMoniker": "UserApi\\BLL\\GiaBLL.cs",
+              "ToolTip": "D:\\Code\\CODE\\Csharp\\QLKS\\PhatTrienPhanMemHuongDichVu_QLKhachSan\\User\\UserApi\\BLL\\GiaBLL.cs",
+              "RelativeToolTip": "UserApi\\BLL\\GiaBLL.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABkAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-16T01:39:29.734Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "DatabaseConnect.cs",
+              "DocumentMoniker": "D:\\Code\\CODE\\Csharp\\QLKS\\PhatTrienPhanMemHuongDichVu_QLKhachSan\\User\\UserApi\\DAL\\DatabaseConnect.cs",
+              "RelativeDocumentMoniker": "UserApi\\DAL\\DatabaseConnect.cs",
+              "ToolTip": "D:\\Code\\CODE\\Csharp\\QLKS\\PhatTrienPhanMemHuongDichVu_QLKhachSan\\User\\UserApi\\DAL\\DatabaseConnect.cs",
+              "RelativeToolTip": "UserApi\\DAL\\DatabaseConnect.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAAoAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-13T13:50:52.902Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "launchSettings.json",
+              "DocumentMoniker": "D:\\Code\\CODE\\Csharp\\QLKS\\PhatTrienPhanMemHuongDichVu_QLKhachSan\\User\\UserApi\\Properties\\launchSettings.json",
+              "RelativeDocumentMoniker": "UserApi\\Properties\\launchSettings.json",
+              "ToolTip": "D:\\Code\\CODE\\Csharp\\QLKS\\PhatTrienPhanMemHuongDichVu_QLKhachSan\\User\\UserApi\\Properties\\launchSettings.json",
+              "RelativeToolTip": "UserApi\\Properties\\launchSettings.json",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAQwA4AAAAcAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2025-10-14T14:06:33.839Z"
             },
             {
               "$type": "Bookmark",
@@ -145,7 +232,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 13,
               "Title": "HoaDonChiTietBLL.cs",
               "DocumentMoniker": "D:\\Code\\CODE\\Csharp\\QLKS\\PhatTrienPhanMemHuongDichVu_QLKhachSan\\User\\UserApi\\BLL\\HoaDonChiTietBLL.cs",
               "RelativeDocumentMoniker": "UserApi\\BLL\\HoaDonChiTietBLL.cs",
@@ -157,7 +244,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 12,
               "Title": "HoaDonBLL.cs",
               "DocumentMoniker": "D:\\Code\\CODE\\Csharp\\QLKS\\PhatTrienPhanMemHuongDichVu_QLKhachSan\\User\\UserApi\\BLL\\HoaDonBLL.cs",
               "RelativeDocumentMoniker": "UserApi\\BLL\\HoaDonBLL.cs",
@@ -169,7 +256,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 14,
               "Title": "UserApi.csproj",
               "DocumentMoniker": "D:\\Code\\CODE\\Csharp\\QLKS\\PhatTrienPhanMemHuongDichVu_QLKhachSan\\User\\UserApi\\UserApi.csproj",
               "RelativeDocumentMoniker": "UserApi\\UserApi.csproj",

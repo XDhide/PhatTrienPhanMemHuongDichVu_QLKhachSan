@@ -12,7 +12,6 @@ namespace HotelManagement.Module
         public decimal DonGia { get; set; }
         public decimal? ThanhTien { get; set; }
 
-        // Constructor mặc định
         public HoaDonChiTiet()
         {
             MaCTHD = 0;
@@ -24,7 +23,6 @@ namespace HotelManagement.Module
             ThanhTien = 0;
         }
 
-        // Constructor có tham số
         public HoaDonChiTiet(int soLuong, decimal donGia, decimal? thanhTien)
         {
             SoLuong = soLuong;

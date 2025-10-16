@@ -79,6 +79,69 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "UserApi.Controllers.GiaController",
+    "Method": "GetAll",
+    "RelativePath": "api/Gia",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "UserApi.Controllers.GiaController",
+    "Method": "GetById",
+    "RelativePath": "api/Gia/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "UserApi.Controllers.GiaController",
+    "Method": "Update",
+    "RelativePath": "api/Gia/{id}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "gia",
+        "Type": "HotelManagement.Module.Gia",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "UserApi.Controllers.GiaController",
+    "Method": "Delete",
+    "RelativePath": "api/Gia/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "HotelManagement.API.Accounting.Controllers.HoaDonController",
     "Method": "GetAll",
     "RelativePath": "api/HoaDon",

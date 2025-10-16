@@ -14,7 +14,6 @@ namespace HotelManagement.Module
         public decimal? SoTienDaTra { get; set; }
         public decimal? SoTienConNo { get; set; }
 
-        // Constructor mặc định
         public HoaDon()
         {
             MaHD = 0;
@@ -28,7 +27,6 @@ namespace HotelManagement.Module
             SoTienConNo = 0;
         }
 
-        // Constructor có tham số
         public HoaDon(string soHD, DateTime ngayLap, decimal? tongTien, string hinhThucThanhToan, decimal? soTienDaTra, decimal? soTienConNo)
         {
             SoHD = soHD;
