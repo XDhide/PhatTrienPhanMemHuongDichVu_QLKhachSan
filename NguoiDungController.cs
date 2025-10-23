@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Data;
 using BLL;
@@ -20,6 +20,7 @@ namespace HotelManagement.API.Admin.Controllers
 
         // GET: api/nguoidung
         [HttpGet]
+        [Authorize(Policy = "AdminOnly")] // Chỉ Admin được truy cập
         public IActionResult GetAll()
         {
             try
@@ -58,6 +59,7 @@ namespace HotelManagement.API.Admin.Controllers
 
         // GET: api/nguoidung/{id}
         [HttpGet("{id}")]
+        [Authorize(Policy = "AdminOnly")] // Chỉ Admin được truy cập
         public IActionResult GetById(int id)
         {
             try
