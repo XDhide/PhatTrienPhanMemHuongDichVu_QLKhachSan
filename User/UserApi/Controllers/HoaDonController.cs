@@ -222,5 +222,98 @@ namespace HotelManagement.API.Accounting.Controllers
                 });
             }
         }
+
+
+
+            [HttpGet("Getpayment/{id}")]
+            public IActionResult GetPayment(int id)
+            {
+                try
+                {
+                    var hoaDonChiTiet = _bll.GetPayment(id);
+
+                    if (hoaDonChiTiet == null || hoaDonChiTiet.Rows.Count == 0)
+                    {
+                        return NotFound(new
+                        {
+                            success = false,
+                            message = "Không tìm thấy hóa đơn hoặc hóa đơn không có chi tiết."
+                        });
+                    }
+
+                    var chiTietList = hoaDonChiTiet.AsEnumerable().Select(row => new
+                    {
+                        MaCTHD = row["MaCTHD"],
+                        MaHD = row["MaHD"],
+                        MaDatPhong = row["MaDatPhong"] == DBNull.Value ? null : row["MaDatPhong"],
+                        MaDV = row["MaDV"] == DBNull.Value ? null : row["MaDV"],
+                        SoLuong = row["SoLuong"],
+                        DonGia = row["DonGia"],
+                        ThanhTien = row["ThanhTien"],
+                        SoHD = row["SoHD"],
+                        NgayLap = row["NgayLap"],
+                        TongTien = row["TongTien"],
+                        HinhThucThanhToan = row["HinhThucThanhToan"],
+                        SoTienDaTra = row["SoTienDaTra"],
+                        SoTienConNo = row["SoTienConNo"]
+                    }).ToList();
+
+                    decimal tongTien = chiTietList.Sum(x => Convert.ToDecimal(x.ThanhTien));
+
+                return Ok(new
+                {
+                    success = true,
+                    message = "Lấy thông tin hóa đơn thành công.",
+                    data = new
+                    {
+                        MaHD = id,
+                        TongTien = tongTien,
+                        ChiTiet = chiTietList
+                    }
+                });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new
+                {
+                    success = false,
+                    message = "Lỗi: " + ex.Message
+                });
+            }
+        }
+
+        [HttpPut("payment/{maHD}")]
+        public IActionResult payment(int maHD)
+        {
+            try
+            {
+                string result = _bll.Payment(maHD, "SanSang");
+
+                if (result.Contains("Lỗi"))
+                {
+                    return BadRequest(new
+                    {
+                        success = false,
+                        message = result
+                    });
+                }
+
+                return Ok(new
+                {
+                    success = true,
+                    message = result
+                });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new
+                {
+                    success = false,
+                    message = "Lỗi: " + ex.Message
+                });
+            }
+        }
+
+
     }
 }

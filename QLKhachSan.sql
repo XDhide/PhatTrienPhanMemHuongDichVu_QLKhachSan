@@ -1364,3 +1364,75 @@ BEGIN
     WHERE ct.MaCTHD = @MaCTHD
 END
 GO
+CREATE PROCEDURE sp_LayHoaDonChiTietTheoMaHD
+    @MaHD INT
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    SELECT 
+        cthd.MaCTHD,
+        cthd.MaHD,
+        cthd.MaDatPhong,
+        cthd.MaDV,
+        cthd.SoLuong,
+        cthd.DonGia,
+        cthd.ThanhTien,
+        hd.SoHD,
+        hd.NgayLap,
+        hd.TongTien,
+        hd.HinhThucThanhToan,
+        hd.SoTienDaTra,
+        hd.SoTienConNo
+    FROM HoaDonChiTiet AS cthd
+    INNER JOIN HoaDon AS hd ON cthd.MaHD = hd.MaHD
+    WHERE cthd.MaHD = @MaHD;
+END;
+GO
+CREATE PROCEDURE sp_CapNhatTinhTrangPhong
+    @MaPhong INT,            
+    @TinhTrang NVARCHAR(50)   
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    IF EXISTS (SELECT 1 FROM Phong WHERE MaPhong = @MaPhong)
+    BEGIN
+        UPDATE Phong
+        SET TinhTrang = @TinhTrang
+        WHERE MaPhong = @MaPhong;
+
+        PRINT N'Đã cập nhật tình trạng phòng thành công.';
+    END
+    ELSE
+    BEGIN
+        PRINT N'Không tìm thấy phòng với mã được cung cấp.';
+    END
+END;
+GO
+CREATE PROCEDURE sp_CapNhatTinhTrangPhong_TuHoaDon
+    @MaHD INT,                 -- Mã hóa đơn cần xử lý
+    @TinhTrang NVARCHAR(50)    -- Trạng thái muốn cập nhật (ví dụ: 'DonDep', 'SanSang', ...)
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    -- Kiểm tra hóa đơn có tồn tại không
+    IF NOT EXISTS (SELECT 1 FROM HoaDon WHERE MaHD = @MaHD)
+    BEGIN
+        PRINT N'Không tìm thấy hóa đơn với mã được cung cấp.';
+        RETURN;
+    END
+
+    -- Cập nhật tình trạng các phòng có trong hóa đơn chi tiết (qua đặt phòng)
+    UPDATE p
+    SET p.TinhTrang = @TinhTrang
+    FROM Phong AS p
+    INNER JOIN DatPhong AS dp ON p.MaPhong = dp.MaPhong
+    INNER JOIN HoaDonChiTiet AS cthd ON dp.MaDatPhong = cthd.MaDatPhong
+    WHERE cthd.MaHD = @MaHD
+          AND cthd.MaDatPhong IS NOT NULL;  -- chỉ áp dụng cho chi tiết có mã đặt phòng
+
+    PRINT N'Đã cập nhật tình trạng phòng liên quan đến hóa đơn thành công.';
+END;
+GO

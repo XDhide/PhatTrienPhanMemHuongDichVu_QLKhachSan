@@ -235,5 +235,37 @@
       }
     ],
     "ReturnTypes": []
+  },
+  {
+    "ContainingType": "HotelManagement.API.Accounting.Controllers.HoaDonController",
+    "Method": "GetPayment",
+    "RelativePath": "api/HoaDon/Getpayment/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "HotelManagement.API.Accounting.Controllers.HoaDonController",
+    "Method": "ConfirmPayment",
+    "RelativePath": "api/HoaDon/payment/{maHD}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "maHD",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
   }
 ]

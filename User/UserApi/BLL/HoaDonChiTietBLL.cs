@@ -18,7 +18,7 @@ namespace BLL
         {
             return _dal.GetAll();
         }
-
+        
         public DataTable GetById(int maCTHD)
         {
             return _dal.GetById(maCTHD);

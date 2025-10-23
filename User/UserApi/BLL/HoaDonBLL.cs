@@ -23,7 +23,14 @@ namespace BLL
         {
             return _dal.GetById(maHD);
         }
-
+        public DataTable GetPayment(int maHD)
+        {
+            return _dal.GetPayment(maHD);
+        }
+        public string Payment(int maHD,string Text)
+        {
+            return _dal.Payment(maHD, Text);
+        }
         public string Them(HoaDon obj)
         {
             if (obj == null)
