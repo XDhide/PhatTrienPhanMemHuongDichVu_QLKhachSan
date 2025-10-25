@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -75,35 +75,22 @@ namespace HotelManagement.API.Customer.Controllers
             }
         }
 
-        // GET: api/phong/lich?roomTypeId=1&from=...&to=...
-        // Hiện chưa có hàm trong BLL → trả 501 để thống nhất API, sau này nối DAL/BLL.
-        [HttpGet("lich")]
-        public IActionResult GetLich([FromQuery] int roomTypeId, [FromQuery] DateTime from, [FromQuery] DateTime to)
-        {
-            return StatusCode(501, new { success = false, message = "Chưa cài đặt: cần bổ sung hàm kiểm tra phòng trống trong PhongDAL/BLL." });
-        }
+        //// GET: api/phong/lich?roomTypeId=1&from=...&to=...
+        //[HttpGet("lich")]
+        //public IActionResult GetLich([FromQuery] int roomTypeId, [FromQuery] DateTime from, [FromQuery] DateTime to)
+        //{
+        //    return StatusCode(501, new { success = false, message = "Chưa cài đặt: cần bổ sung hàm kiểm tra phòng trống trong PhongDAL/BLL." });
+        //}
 
-        // GET: api/phong/baogia?roomTypeId=1&from=...&to=...&channel=web
-        [HttpGet("baogia")]
-        public IActionResult BaoGia([FromQuery] int roomTypeId, [FromQuery] DateTime from, [FromQuery] DateTime to, [FromQuery] string channel = "web")
-        {
-            return StatusCode(501, new { success = false, message = "Chưa cài đặt: cần bổ sung hàm báo giá theo ngày/mùa trong GiaDAL/BLL." });
-        }
+        //// GET: api/phong/baogia?roomTypeId=1&from=...&to=...&channel=web
+        //[HttpGet("baogia")]
+        //public IActionResult BaoGia([FromQuery] int roomTypeId, [FromQuery] DateTime from, [FromQuery] DateTime to, [FromQuery] string channel = "web")
+        //{
+        //    return StatusCode(501, new { success = false, message = "Chưa cài đặt: cần bổ sung hàm báo giá theo ngày/mùa trong GiaDAL/BLL." });
+        //}
 
-        //đổi tt phòng
-        // PUT: api/phong/{id}/status
-        [HttpPut("{id}/status")]
-        public IActionResult ChangeStatus(int id, [FromBody] string tinhTrang)
-        {
-            try
-            {
-                string result = _phongBll.DoiTrangThai(id, tinhTrang);
-                if (result.Contains("Lỗi")) return BadRequest(new { success = false, message = result });
-                return Ok(new { success = true, message = result });
-            }
-            catch (Exception ex) { return StatusCode(500, new { success = false, message = "Lỗi: " + ex.Message }); }
-        }
 
+        //LỊCH TRỐNG-----------------------------------------------------------------------------
         [HttpGet("lich")]
         public IActionResult GetLich([FromQuery] int roomTypeId, [FromQuery] DateTime from, [FromQuery] DateTime to)
         {
@@ -115,6 +102,7 @@ namespace HotelManagement.API.Customer.Controllers
             catch (Exception ex) { return StatusCode(500, new { success = false, message = "Lỗi: " + ex.Message }); }
         }
 
+        //BÁO GIÁ--------------------------------------------------------------
         [HttpGet("baogia")]
         public IActionResult BaoGia([FromQuery] int roomTypeId, [FromQuery] DateTime from, [FromQuery] DateTime to, [FromQuery] string channel = "web")
         {
@@ -122,6 +110,20 @@ namespace HotelManagement.API.Customer.Controllers
             {
                 var dt = _giaBll.BaoGia(roomTypeId, from, to, channel);
                 return Ok(new { success = true, message = "OK", data = dt });
+            }
+            catch (Exception ex) { return StatusCode(500, new { success = false, message = "Lỗi: " + ex.Message }); }
+        }
+
+        //ĐỔI TT PHÒNG---------------------------------------------------
+        // PUT: api/phong/{id}/status
+        [HttpPut("{id}/status")]
+        public IActionResult ChangeStatus(int id, [FromBody] string tinhTrang)
+        {
+            try
+            {
+                string result = _phongBll.DoiTrangThai(id, tinhTrang);
+                if (result.Contains("Lỗi")) return BadRequest(new { success = false, message = result });
+                return Ok(new { success = true, message = result });
             }
             catch (Exception ex) { return StatusCode(500, new { success = false, message = "Lỗi: " + ex.Message }); }
         }
