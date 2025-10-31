@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quản Lý Hóa Đơn - Khách Sạn</title>
+    <link rel="stylesheet" href="style.css">
+
+    
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">
+                <div class="logo-icon">💰</div>
+                <h1>Quản Lý Hóa Đơn</h1>
+            </div>
+        </header>
+
+        <nav>
+            <ul class="nav-menu">
+                <li><a href="index.html">📊 Tổng Quan</a></li>
+                <li><a href="phong.html">🏠 Quản Lý Phòng</a></li>
+                <li><a href="datphong.html">📅 Đặt Phòng</a></li>
+                <li><a href="khachhang.html">👥 Khách Hàng</a></li>
+                <li><a href="hoadon.html" class="active">💰 Hóa Đơn</a></li>
+                <li><a href="dichvu.html">🛎️ Dịch Vụ</a></li>
+                <li><a href="baocao.html">📈 Báo Cáo</a></li>
+            </ul>
+        </nav>
+
+        <div class="content">
+            <div class="stats">
+                <div class="stat-card">
+                    <h3>Tổng Hóa Đơn</h3>
+                    <div class="number" id="totalInvoices">17</div>
+                </div>
+                <div class="stat-card">
+                    <h3>Doanh Thu Tháng</h3>
+                    <div class="number">₫125M</div>
+                </div>
+                <div class="stat-card">
+                    <h3>Đã Thanh Toán</h3>
+                    <div class="number">₫125M</div>
+                </div>
+                <div class="stat-card">
+                    <h3>Còn Nợ</h3>
+                    <div class="number">₫0</div>
+                </div>
+            </div>
+
+            <div class="toolbar">
+                <div class="search-bar">
+                    <input type="text" id="searchInvoice" placeholder="🔍 Tìm kiếm số hóa đơn, khách hàng...">
+                    <input type="date" id="filterDateFrom">
+                    <input type="date" id="filterDateTo">
+                </div>
+                <button class="btn btn-primary" onclick="alert('Chức năng tạo hóa đơn mới')">+ Tạo Hóa Đơn</button>
+            </div>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Số HĐ</th>
+                        <th>Khách Hàng</th>
+                        <th>Ngày Lập</th>
+                        <th>Tổng Tiền</th>
+                        <th>Đã Trả</th>
+                        <th>Còn Nợ</th>
+                        <th>Hình Thức TT</th>
+                        <th>Trạng Thái</th>
+                        <th>Thao Tác</th>
+                    </tr>
+                </thead>
+                <tbody id="invoiceList">
+                    <!-- Data will be loaded here -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Modal Chi Tiết Hóa Đơn -->
+    <div id="invoiceModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Chi Tiết Hóa Đơn <span id="invoiceNumber"></span></h2>
+                <span class="close-btn" onclick="closeModal()">&times;</span>
+            </div>
+            
+            <div class="invoice-info" id="invoiceInfo">
+                <!-- Invoice info will be loaded here -->
+            </div>
+
+            <h3 style="margin-bottom: 15px; color: #333;">Chi Tiết Dịch Vụ</h3>
+            <table style="margin-top: 0;">
+                <thead>
+                    <tr>
+                        <th>Dịch Vụ</th>
+                        <th>Số Lượng</th>
+                        <th>Đơn Giá</th>
+                        <th>Thành Tiền</th>
+                    </tr>
+                </thead>
+                <tbody id="invoiceDetails">
+                    <!-- Details will be loaded here -->
+                </tbody>
+            </table>
+
+            <div style="display: flex; gap: 10px; margin-top: 25px;">
+                <button class="btn btn-success" onclick="printInvoice()">🖨️ In Hóa Đơn</button>
+                <button class="btn btn-info" onclick="closeModal()">✖ Đóng</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const invoices = [
+            { id: 1, code: 'HD001', customer: 'Phan Văn Khánh', date: '2024-09-03', total: 2350000, paid: 2350000, paymentMethod: 'Tiền Mặt' },
+            { id: 2, code: 'HD002', customer: 'Vũ Minh Hào', date: '2024-09-04', total: 3000000, paid: 3000000, paymentMethod: 'Thẻ' },
+            { id: 3, code: 'HD003', customer: 'Lưu Thị Thanh Mai', date: '2024-09-05', total: 4800000, paid: 4800000, paymentMethod: 'Chuyển Khoản' },
+            { id: 4, code: 'HD004', customer: 'Lê Tiến Linh', date: '2024-09-07', total: 6400000, paid: 6400000, paymentMethod: 'Thẻ' },
+            { id: 5, code: 'HD005', customer: 'Phạm Huy Anh', date: '2024-09-08', total: 9550000, paid: 9550000, paymentMethod: 'Chuyển Khoản' },
+            { id: 6, code: 'HD006', customer: 'Nguyễn Văn Phúc', date: '2024-09-09', total: 7500000, paid: 7500000, paymentMethod: 'Tiền Mặt' },
+            { id: 7, code: 'HD007', customer: 'Lê Huy Hoàng', date: '2024-09-10', total: 21400000, paid: 21400000, paymentMethod: 'Chuyển Khoản' },
+            { id: 8, code: 'HD008', customer: 'Đinh Ngọc Đại', date: '2024-09-12', total: 2150000, paid: 2150000, paymentMethod: 'Thẻ' },
+            { id: 9, code: 'HD009', customer: 'Ngô Minh Nguyệt', date: '2024-09-13', total: 3250000, paid: 3250000, paymentMethod: 'Tiền Mặt' },
+            { id: 10, code: 'HD010', customer: 'Nguyễn Văn Dũng', date: '2024-09-15', total: 6800000, paid: 6800000, paymentMethod: 'Chuyển Khoản' },
+            { id: 11, code: 'HD011', customer: 'Đỗ Hữu Quốc Anh', date: '2024-09-17', total: 6700000, paid: 6700000, paymentMethod: 'Thẻ' },
+            { id: 12, code: 'HD012', customer: 'Đỗ Tiến Đạt', date: '2024-09-18', total: 10500000, paid: 10500000, paymentMethod: 'Chuyển Khoản' },
+            { id: 13, code: 'HD013', customer: 'Trần Đức Lượng', date: '2024-09-19', total: 8850000, paid: 8850000, paymentMethod: 'Tiền Mặt' },
+            { id: 14, code: 'HD014', customer: 'Đào Minh Quang', date: '2024-09-20', total: 21200000, paid: 21200000, paymentMethod: 'Chuyển Khoản' },
+            { id: 15, code: 'HD015', customer: 'Bùi Trí Dũng', date: '2024-09-22', total: 2350000, paid: 2350000, paymentMethod: 'Thẻ' },
+            { id: 16, code: 'HD016', customer: 'Nguyễn Mạnh Dũng', date: '2024-09-23', total: 3550000, paid: 3550000, paymentMethod: 'Tiền Mặt' },
+            { id: 17, code: 'HD017', customer: 'Trần Thế Thiên', date: '2024-09-24', total: 4800000, paid: 4800000, paymentMethod: 'Chuyển Khoản' }
+        ];
+
+        const invoiceDetails = {
+            1: [
+                { service: 'Phòng Standard - 2 đêm', quantity: 2, price: 800000 },
+                { service: 'Bữa sáng buffet', quantity: 2, price: 250000 },
+                { service: 'Đưa đón sân bay', quantity: 1, price: 300000 },
+                { service: 'WiFi cao tốc', quantity: 2, price: 100000 },
+                { service: 'Gửi xe ô tô', quantity: 2, price: 200000 }
+            ],
+            2: [
+                { service: 'Phòng Superior - 2 đêm', quantity: 2, price: 1200000 },
+                { service: 'Bữa sáng buffet', quantity: 4, price: 250000 },
+                { service: 'Massage 60 phút', quantity: 1, price: 800000 },
+                { service: 'Phòng gym', quantity: 2, price: 200000 },
+                { service: 'Hồ bơi & jacuzzi', quantity: 2, price: 150000 }
+            ]
+        };
+
+        function loadInvoices() {
+            const tbody = document.getElementById('invoiceList');
+            const searchTerm = document.getElementById('searchInvoice').value.toLowerCase();
+            const dateFrom = document.getElementById('filterDateFrom').value;
+            const dateTo = document.getElementById('filterDateTo').value;
+
+            let filtered = invoices.filter(inv => {
+                const matchSearch = inv.code.toLowerCase().includes(searchTerm) || 
+                                   inv.customer.toLowerCase().includes(searchTerm);
+                const matchDateFrom = !dateFrom || inv.date >= dateFrom;
+                const matchDateTo = !dateTo || inv.date <= dateTo;
+                return matchSearch && matchDateFrom && matchDateTo;
+            });
+
+            tbody.innerHTML = '';
+            filtered.forEach(inv => {
+                const debt = inv.total - inv.paid;
+                const statusBadge = debt === 0 ? 
+                    '<span class="badge badge-success">Đã Thanh Toán</span>' :
+                    '<span class="badge badge-warning">Còn Nợ</span>';
+
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td><strong>${inv.code}</strong></td>
+                    <td>${inv.customer}</td>
+                    <td>${formatDate(inv.date)}</td>
+                    <td class="price">${formatMoney(inv.total)}</td>
+                    <td>${formatMoney(inv.paid)}</td>
+                    <td class="price">${formatMoney(debt)}</td>
+                    <td>${inv.paymentMethod}</td>
+                    <td>${statusBadge}</td>
+                    <td>
+                        <button class="btn btn-info" onclick="viewInvoice(${inv.id})" style="padding: 6px 12px; font-size: 12px;">👁️ Xem</button>
+                    </td>
+                `;
+                tbody.appendChild(row);
+            });
+
+            document.getElementById('totalInvoices').textContent = invoices.length;
+        }
+
+        function formatDate(dateStr) {
+            const date = new Date(dateStr);
+            return date.toLocaleDateString('vi-VN');
+        }
+
+        function formatMoney(amount) {
+            return amount.toLocaleString('vi-VN') + ' ₫';
+        }
+
+        function viewInvoice(id) {
+            const invoice = invoices.find(inv => inv.id === id);
+            if (!invoice) return;
+
+            const debt = invoice.total - invoice.paid;
+            document.getElementById('invoiceNumber').textContent = invoice.code;
+            document.getElementById('invoiceInfo').innerHTML = `
+                <p><strong>Khách Hàng:</strong> ${invoice.customer}</p>
+                <p><strong>Ngày Lập:</strong> ${formatDate(invoice.date)}</p>
+                <p><strong>Hình Thức Thanh Toán:</strong> ${invoice.paymentMethod}</p>
+                <p><strong>Tổng Tiền:</strong> <span class="price-large">${formatMoney(invoice.total)}</span></p>
+                <p><strong>Đã Trả:</strong> <span class="price">${formatMoney(invoice.paid)}</span></p>
+                <p><strong>Còn Nợ:</strong> <span class="price">${formatMoney(debt)}</span></p>
+            `;
+
+            const details = invoiceDetails[id] || [];
+            const tbody = document.getElementById('invoiceDetails');
+            tbody.innerHTML = '';
+            details.forEach(item => {
+                const total = item.quantity * item.price;
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${item.service}</td>
+                    <td>${item.quantity}</td>
+                    <td>${formatMoney(item.price)}</td>
+                    <td class="price">${formatMoney(total)}</td>
+                `;
+                tbody.appendChild(row);
+            });
+
+            document.getElementById('invoiceModal').classList.add('active');
+        }
+
+        function closeModal() {
+            document.getElementById('invoiceModal').classList.remove('active');
+        }
+
+        function printInvoice() {
+            alert('🖨️ Chức năng in hóa đơn sẽ được phát triển!');
+        }
+
+        // Event listeners
+        document.getElementById('searchInvoice').addEventListener('input', loadInvoices);
+        document.getElementById('filterDateFrom').addEventListener('change', loadInvoices);
+        document.getElementById('filterDateTo').addEventListener('change', loadInvoices);
+
+        // Initialize
+        loadInvoices();
+    </script>
+</body>
+</html>

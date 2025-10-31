@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trang Chủ - Quản Lý Khách Sạn</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">
+                <div class="logo-icon">🏨</div>
+                <h1>Hệ Thống Quản Lý Khách Sạn</h1>
+            </div>
+            <div class="user-info">
+                <span>👤 <strong>admin</strong></span>
+                <span class="badge badge-info">Quản trị viên</span>
+            </div>
+        </header>
+
+        <nav>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="active">📊 Tổng Quan</a></li>
+                <li><a href="phong.html">🏠 Quản Lý Phòng</a></li>
+                <li><a href="datphong.html">📅 Đặt Phòng</a></li>
+                <li><a href="khachhang.html">👥 Khách Hàng</a></li>
+                <li><a href="hoadon.html">💰 Hóa Đơn</a></li>
+                <li><a href="dichvu.html">🛎️ Dịch Vụ</a></li>
+                <li><a href="baocao.html">📈 Báo Cáo</a></li>
+            </ul>
+        </nav>
+
+        <div class="content">
+            <h2 style="margin-bottom: 20px;">Tổng Quan Hệ Thống</h2>
+            
+            <div class="dashboard-grid">
+                <div class="stat-card">
+                    <h3>Tổng Số Phòng</h3>
+                    <div class="number">47</div>
+                    <small>7 loại phòng khác nhau</small>
+                </div>
+                <div class="stat-card">
+                    <h3>Phòng Trống</h3>
+                    <div class="number">35</div>
+                    <small>Sẵn sàng đón khách</small>
+                </div>
+                <div class="stat-card">
+                    <h3>Đặt Phòng Hôm Nay</h3>
+                    <div class="number">8</div>
+                    <small>3 check-in, 5 check-out</small>
+                </div>
+                <div class="stat-card">
+                    <h3>Doanh Thu Tháng</h3>
+                    <div class="number">₫125M</div>
+                    <small>+15% so với tháng trước</small>
+                </div>
+            </div>
+
+            <h3 style="margin: 30px 0 15px; color: #333;">📋 Đặt Phòng Gần Đây</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Mã Đặt</th>
+                        <th>Khách Hàng</th>
+                        <th>Loại Phòng</th>
+                        <th>Số Phòng</th>
+                        <th>Ngày Nhận</th>
+                        <th>Ngày Trả</th>
+                        <th>Trạng Thái</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>DP030</strong></td>
+                        <td>Dương Mịch</td>
+                        <td>Family Room</td>
+                        <td>603</td>
+                        <td>06/10/2024 14:00</td>
+                        <td>08/10/2024 11:00</td>
+                        <td><span class="badge badge-info">Đã Đặt</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>DP029</strong></td>
+                        <td>Giang Thị Huệ</td>
+                        <td>Junior Suite</td>
+                        <td>405</td>
+                        <td>05/10/2024 15:00</td>
+                        <td>07/10/2024 12:00</td>
+                        <td><span class="badge badge-info">Đã Đặt</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>DP018</strong></td>
+                        <td>Nguyễn Thị Hòa</td>
+                        <td>Junior Suite</td>
+                        <td>403</td>
+                        <td>23/09/2024 16:00</td>
+                        <td>25/09/2024 11:00</td>
+                        <td><span class="badge badge-success">Đã Nhận</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>DP017</strong></td>
+                        <td>Trần Thế Thiên</td>
+                        <td>Deluxe</td>
+                        <td>303</td>
+                        <td>22/09/2024 14:00</td>
+                        <td>24/09/2024 12:00</td>
+                        <td><span class="badge badge-warning">Đã Trả</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>DP016</strong></td>
+                        <td>Nguyễn Mạnh Dũng</td>
+                        <td>Superior</td>
+                        <td>203</td>
+                        <td>21/09/2024 15:00</td>
+                        <td>23/09/2024 11:00</td>
+                        <td><span class="badge badge-warning">Đã Trả</span></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3 style="margin: 30px 0 15px; color: #333;">💰 Hóa Đơn Chưa Thanh Toán Đủ</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Số HĐ</th>
+                        <th>Khách Hàng</th>
+                        <th>Ngày Lập</th>
+                        <th>Tổng Tiền</th>
+                        <th>Đã Trả</th>
+                        <th>Còn Nợ</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td colspan="6" style="text-align: center; color: #28a745;">
+                            ✓ Tất cả hóa đơn đã được thanh toán đầy đủ
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="dashboard-grid" style="margin-top: 30px;">
+                <div class="stat-card">
+                    <h3>Tổng Khách Hàng</h3>
+                    <div class="number">30</div>
+                    <small>Khách hàng đã đăng ký</small>
+                </div>
+                <div class="stat-card">
+                    <h3>Dịch Vụ Đang Cung Cấp</h3>
+                    <div class="number">20</div>
+                    <small>Các loại dịch vụ</small>
+                </div>
+                <div class="stat-card">
+                    <h3>Tỷ Lệ Lấp Đầy</h3>
+                    <div class="number">78%</div>
+                    <small>Trung bình tháng này</small>
+                </div>
+                <div class="stat-card">
+                    <h3>Đánh Giá Trung Bình</h3>
+                    <div class="number">4.8★</div>
+                    <small>Từ khách hàng</small>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Hiển thị thời gian thực
+        function updateDateTime() {
+            const now = new Date();
+            const dateStr = now.toLocaleDateString('vi-VN', {
+                weekday: 'long',
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            });
+            const timeStr = now.toLocaleTimeString('vi-VN');
+            console.log(dateStr + ' - ' + timeStr);
+        }
+        
+        updateDateTime();
+        setInterval(updateDateTime, 60000);
+    </script>
+</body>
+</html>
