@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đăng Nhập - Golden Pearl Hotel</title>
+    <link rel="stylesheet" href="./public/css/login.css">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo">🏨</div>
+            <h1>Golden Pearl Hotel</h1>
+            <p>Đăng nhập vào tài khoản của bạn</p>
+        </div>
+
+        <div class="form-group">
+            <label>Email</label>
+            <div class="input-wrapper">
+                <span class="input-icon">📧</span>
+                <input type="email" id="email" placeholder="email@example.com" required>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>Mật khẩu</label>
+            <div class="input-wrapper">
+                <span class="input-icon">🔒</span>
+                <input type="password" id="password" placeholder="••••••••" required>
+            </div>
+        </div>
+
+        <div class="remember-forgot">
+            <label>
+                <input type="checkbox">
+                Ghi nhớ đăng nhập
+            </label>
+            <a href="forgot-password.html">Quên mật khẩu?</a>
+        </div>
+
+        <button class="btn" onclick="handleLogin()">Đăng Nhập</button>
+
+        <div class="register-link">
+            Chưa có tài khoản? <a href="register.html">Đăng ký ngay</a>
+        </div>
+    </div>
+
+    <script src="./public/js/login.js">
+        
+    </script>
+</body>
+</html>

@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loại Phòng - Golden Pearl Hotel</title>
+    <link rel="stylesheet" href="./public/css/heade_fooder.css">
+    <link rel="stylesheet" href="./public/css/room_listing.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">🏨 Golden Pearl Hotel</div>
+            <div style="display: flex; align-items: center; gap: 2.5rem; flex: 1; justify-content: center;">
+                <ul class="nav-links">
+                    <li><a href="./index.html">Trang Chủ</a></li>
+                    <li><a href="#about">Giới Thiệu</a></li>
+                    <li><a href="./room_listing.html">Loại Phòng</a></li>
+                    <li><a href="#contact">Liên Hệ</a></li>
+                </ul>
+            </div>
+            
+            <div class="auth-container">
+                <div class="auth-buttons" id="authButtons">
+                    <button class="login-btn" onclick="handleLogin()">Đăng Nhập</button>
+                    <button class="register-btn" onclick="handleRegister()">Đăng Ký</button>
+                </div>
+
+                <div class="user-menu" id="userMenu" style="display: none;">
+                    <button class="avatar-btn" id="avatarBtn">
+                        <span id="avatarText">👤</span>
+                    </button>
+                    <div class="dropdown-menu" id="dropdownMenu">
+                        <div class="dropdown-header" id="userName">Người dùng</div>
+                        <a href="#profile">👤 Trang Cá Nhân</a>
+                        <a href="#booking-history">📋 Lịch Sử Đặt Phòng</a>
+                        <a href="#" class="logout-btn" onclick="handleLogout(event)">🚪 Đăng Xuất</a>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <h1>Khám Phá Các Loại Phòng</h1>
+        <p>Tìm kiếm và lựa chọn phòng phù hợp với nhu cầu của bạn</p>
+    </section>
+
+    <section class="search-filter">
+        <div class="search-box">
+            <div class="search-input-wrapper">
+                <span class="search-icon">🔍</span>
+                <input type="text" id="searchInput" class="search-input" placeholder="Tìm kiếm theo tên phòng...">
+            </div>
+            <div class="filters">
+                <div class="filter-group">
+                    <label for="priceFilter">Giá phòng</label>
+                    <select id="priceFilter">
+                        <option value="">Tất cả</option>
+                        <option value="low">Dưới 2.000.000đ</option>
+                        <option value="mid">2.000.000đ - 5.000.000đ</option>
+                        <option value="high">Trên 5.000.000đ</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label for="guestFilter">Số người</label>
+                    <select id="guestFilter">
+                        <option value="">Tất cả</option>
+                        <option value="2">2 Người</option>
+                        <option value="3">3 Người</option>
+                        <option value="4">4+ Người</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label for="featureFilter">Tiện nghi</label>
+                    <select id="featureFilter">
+                        <option value="">Tất cả</option>
+                        <option value="view">View Thành Phố</option>
+                        <option value="wifi">WiFi Free</option>
+                        <option value="minibar">Minibar</option>
+                        <option value="butler">Butler 24/7</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="rooms-container">
+        <div class="results-info">
+            <span id="resultsCount">Hiển thị 6 phòng</span>
+        </div>
+        <div class="rooms-grid" id="roomsGrid"></div>
+        <div class="no-results" id="noResults" style="display: none;">
+            Không tìm thấy phòng phù hợp. Vui lòng thử lại với tiêu chí khác.
+        </div>
+    </section>
+
+    <script src="./public/js/room_listing.js"></script>
+    <script src="./public/js/header_fooder.js"></script>
+</body>
+</html>

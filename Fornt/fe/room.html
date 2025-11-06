@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Danh Sách Phòng - Quản Lý Khách Sạn</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f5f5f5;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .header h1 {
+            font-size: 2em;
+        }
+        
+        .header-actions {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary {
+            background: white;
+            color: #667eea;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: 1px solid white;
+        }
+        
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+        
+        .filters {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .filter-group {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+        
+        .filter-item {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .filter-item label {
+            margin-bottom: 5px;
+            color: #333;
+            font-weight: 600;
+        }
+        
+        .filter-item input,
+        .filter-item select {
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1em;
+        }
+        
+        .rooms-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        
+        .room-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .room-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+        }
+        
+        .room-image {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 3em;
+        }
+        
+        .room-content {
+            padding: 20px;
+        }
+        
+        .room-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 10px;
+        }
+        
+        .room-number {
+            font-size: 1.5em;
+            font-weight: 700;
+            color: #333;
+        }
+        
+        .room-status {
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.8em;
+            font-weight: 600;
+        }
+        
+        .status-available {
+            background: #d5f4e6;
+            color: #27ae60;
+        }
+        
+        .status-occupied {
+            background: #fadbd8;
+            color: #e74c3c;
+        }
+        
+        .status-maintenance {
+            background: #fef5e7;
+            color: #f39c12;
+        }
+        
+        .room-type {
+            color: #667eea;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+        
+        .room-info {
+            color: #666;
+            font-size: 0.9em;
+            margin-bottom: 15px;
+            line-height: 1.6;
+        }
+        
+        .room-price {
+            font-size: 1.5em;
+            color: #667eea;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+        
+        .room-actions {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .btn-small {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-book {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        
+        .btn-book:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+        
+        .btn-view {
+            background: #f0f0f0;
+            color: #333;
+        }
+        
+        .btn-view:hover {
+            background: #e0e0e0;
+        }
+        
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: #999;
+        }
+        
+        .error {
+            background: #fadbd8;
+            color: #e74c3c;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div>
+                <h1>Danh Sách Phòng</h1>
+                <p>Chọn phòng để đặt</p>
+            </div>
+            <div class="header-actions">
+                <button class="btn btn-secondary" onclick="window.location.href='index.html'">Trang chủ</button>
+                <button class="btn btn-primary" onclick="logout()">Đăng xuất</button>
+            </div>
+        </div>
+        
+        <div class="filters">
+            <div class="filter-group">
+                <div class="filter-item">
+                    <label for="checkIn">Ngày nhận phòng</label>
+                    <input type="date" id="checkIn">
+                </div>
+                <div class="filter-item">
+                    <label for="checkOut">Ngày trả phòng</label>
+                    <input type="date" id="checkOut">
+                </div>
+                <div class="filter-item">
+                    <label for="roomType">Loại phòng</label>
+                    <select id="roomType">
+                        <option value="">Tất cả</option>
+                        <option value="Standard">Standard</option>
+                        <option value="Superior">Superior</option>
+                        <option value="Deluxe">Deluxe</option>
+                        <option value="Suite">Suite</option>
+                    </select>
+                </div>
+                <div class="filter-item">
+                    <label for="status">Trạng thái</label>
+                    <select id="status">
+                        <option value="">Tất cả</option>
+                        <option value="SanSang">Sẵn sàng</option>
+                        <option value="DonDep">Đang dọn dẹp</option>
+                        <option value="BaoTri">Bảo trì</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        
+        <div id="errorContainer"></div>
+        <div id="roomsContainer" class="rooms-grid">
+            <div class="loading">Đang tải dữ liệu...</div>
+        </div>
+    </div>
+    
+    <script>
+        function logout() {
+            localStorage.removeItem('user');
+            localStorage.removeItem('token');
+            window.location.href = 'login.html';
+        }
+        
+        async function loadRooms() {
+            try {
+                const response = await fetch('/api/rooms');
+                const data = await response.json();
+                
+                if (response.ok) {
+                    displayRooms(data.rooms || []);
+                } else {
+                    showError(data.message || 'Lỗi tải dữ liệu');
+                }
+            } catch (error) {
+                showError('Lỗi kết nối: ' + error.message);
+            }
+        }
+        
+        function displayRooms(rooms) {
+            const container = document.getElementById('roomsContainer');
+            
+            if (rooms.length === 0) {
+                container.innerHTML = '<div class="loading">Không có phòng nào</div>';
+                return;
+            }
+            
+            container.innerHTML = rooms.map(room => `
+                <div class="room-card">
+                    <div class="room-image">🛏️</div>
+                    <div class="room-content">
+                        <div class="room-header">
+                            <div class="room-number">Phòng ${room.SoPhong}</div>
+                            <span class="room-status ${getStatusClass(room.TinhTrang)}">
+                                ${getStatusText(room.TinhTrang)}
+                            </span>
+                        </div>
+                        <div class="room-type">${room.TenLoaiPhong}</div>
+                        <div class="room-info">
+                            <div>Sức chứa: ${room.SucChua || 2} người</div>
+                            <div>Diện tích: ${room.DienTich || 'N/A'} m²</div>
+                        </div>
+                        <div class="room-price">${formatPrice(room.Gia || 0)}</div>
+                        <div class="room-actions">
+                            <button class="btn-small btn-book" onclick="bookRoom(${room.MaPhong})">
+                                Đặt phòng
+                            </button>
+                            <button class="btn-small btn-view" onclick="viewRoom(${room.MaPhong})">
+                                Chi tiết
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+        
+        function getStatusClass(status) {
+            switch(status) {
+                case 'SanSang': return 'status-available';
+                case 'DonDep': return 'status-maintenance';
+                case 'BaoTri': return 'status-maintenance';
+                default: return 'status-occupied';
+            }
+        }
+        
+        function getStatusText(status) {
+            switch(status) {
+                case 'SanSang': return 'Sẵn sàng';
+                case 'DonDep': return 'Đang dọn dẹp';
+                case 'BaoTri': return 'Bảo trì';
+                default: return 'Đã đặt';
+            }
+        }
+        
+        function formatPrice(price) {
+            return new Intl.NumberFormat('vi-VN', {
+                style: 'currency',
+                currency: 'VND'
+            }).format(price);
+        }
+        
+        function showError(message) {
+            const container = document.getElementById('errorContainer');
+            container.innerHTML = `<div class="error">${message}</div>`;
+        }
+        
+        function bookRoom(roomId) {
+            window.location.href = `booking.html?roomId=${roomId}`;
+        }
+        
+        function viewRoom(roomId) {
+            alert(`Chi tiết phòng ${roomId}`);
+        }
+        
+        // Load rooms on page load
+        loadRooms();
+        
+        // Add event listeners for filters
+        document.getElementById('checkIn').addEventListener('change', loadRooms);
+        document.getElementById('checkOut').addEventListener('change', loadRooms);
+        document.getElementById('roomType').addEventListener('change', loadRooms);
+        document.getElementById('status').addEventListener('change', loadRooms);
+    </script>
+</body>
+</html>
