@@ -3,6 +3,38 @@
   "WorkspaceRootPath": "D:\\Code\\CODE\\Csharp\\QLKS\\PhatTrienPhanMemHuongDichVu_QLKhachSan\\Admin\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{41125255-7D76-4202-8281-951CB93B6F7E}|AdminApi\\AdminApi.csproj|d:\\code\\code\\csharp\\qlks\\phattrienphanmemhuongdichvu_qlkhachsan\\admin\\adminapi\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{41125255-7D76-4202-8281-951CB93B6F7E}|AdminApi\\AdminApi.csproj|solutionrelative:adminapi\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{41125255-7D76-4202-8281-951CB93B6F7E}|AdminApi\\AdminApi.csproj|d:\\code\\code\\csharp\\qlks\\phattrienphanmemhuongdichvu_qlkhachsan\\admin\\adminapi\\controllers\\logincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{41125255-7D76-4202-8281-951CB93B6F7E}|AdminApi\\AdminApi.csproj|solutionrelative:adminapi\\controllers\\logincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{41125255-7D76-4202-8281-951CB93B6F7E}|AdminApi\\AdminApi.csproj|d:\\code\\code\\csharp\\qlks\\phattrienphanmemhuongdichvu_qlkhachsan\\admin\\adminapi\\model\\nguoidung.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{41125255-7D76-4202-8281-951CB93B6F7E}|AdminApi\\AdminApi.csproj|solutionrelative:adminapi\\model\\nguoidung.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{41125255-7D76-4202-8281-951CB93B6F7E}|AdminApi\\AdminApi.csproj|d:\\code\\code\\csharp\\qlks\\phattrienphanmemhuongdichvu_qlkhachsan\\admin\\adminapi\\dal\\nguoidungdal.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{41125255-7D76-4202-8281-951CB93B6F7E}|AdminApi\\AdminApi.csproj|solutionrelative:adminapi\\dal\\nguoidungdal.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{41125255-7D76-4202-8281-951CB93B6F7E}|AdminApi\\AdminApi.csproj|d:\\code\\code\\csharp\\qlks\\phattrienphanmemhuongdichvu_qlkhachsan\\admin\\adminapi\\dal\\databaseconnect.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{41125255-7D76-4202-8281-951CB93B6F7E}|AdminApi\\AdminApi.csproj|solutionrelative:adminapi\\dal\\databaseconnect.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{41125255-7D76-4202-8281-951CB93B6F7E}|AdminApi\\AdminApi.csproj|d:\\code\\code\\csharp\\qlks\\phattrienphanmemhuongdichvu_qlkhachsan\\admin\\adminapi\\bll\\nguoidungbll.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{41125255-7D76-4202-8281-951CB93B6F7E}|AdminApi\\AdminApi.csproj|solutionrelative:adminapi\\bll\\nguoidungbll.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{41125255-7D76-4202-8281-951CB93B6F7E}|AdminApi\\AdminApi.csproj|d:\\code\\code\\csharp\\qlks\\phattrienphanmemhuongdichvu_qlkhachsan\\admin\\adminapi\\controllers\\nguoidungcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{41125255-7D76-4202-8281-951CB93B6F7E}|AdminApi\\AdminApi.csproj|solutionrelative:adminapi\\controllers\\nguoidungcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{41125255-7D76-4202-8281-951CB93B6F7E}|AdminApi\\AdminApi.csproj|d:\\code\\code\\csharp\\qlks\\phattrienphanmemhuongdichvu_qlkhachsan\\admin\\adminapi\\controllers\\passwordresetcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{41125255-7D76-4202-8281-951CB93B6F7E}|AdminApi\\AdminApi.csproj|solutionrelative:adminapi\\controllers\\passwordresetcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{41125255-7D76-4202-8281-951CB93B6F7E}|AdminApi\\AdminApi.csproj|d:\\code\\code\\csharp\\qlks\\phattrienphanmemhuongdichvu_qlkhachsan\\admin\\adminapi\\properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
       "RelativeMoniker": "D:0:0:{41125255-7D76-4202-8281-951CB93B6F7E}|AdminApi\\AdminApi.csproj|solutionrelative:adminapi\\properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
     },
@@ -27,19 +59,115 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
+              "Title": "Program.cs",
+              "DocumentMoniker": "D:\\Code\\CODE\\Csharp\\QLKS\\PhatTrienPhanMemHuongDichVu_QLKhachSan\\Admin\\AdminApi\\Program.cs",
+              "RelativeDocumentMoniker": "AdminApi\\Program.cs",
+              "ToolTip": "D:\\Code\\CODE\\Csharp\\QLKS\\PhatTrienPhanMemHuongDichVu_QLKhachSan\\Admin\\AdminApi\\Program.cs",
+              "RelativeToolTip": "AdminApi\\Program.cs",
+              "ViewState": "AgIAAA0AAAAAAAAAAAAAACIAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-11T13:18:38.823Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "NguoiDung.cs",
+              "DocumentMoniker": "D:\\Code\\CODE\\Csharp\\QLKS\\PhatTrienPhanMemHuongDichVu_QLKhachSan\\Admin\\AdminApi\\Model\\NguoiDung.cs",
+              "RelativeDocumentMoniker": "AdminApi\\Model\\NguoiDung.cs",
+              "ToolTip": "D:\\Code\\CODE\\Csharp\\QLKS\\PhatTrienPhanMemHuongDichVu_QLKhachSan\\Admin\\AdminApi\\Model\\NguoiDung.cs",
+              "RelativeToolTip": "AdminApi\\Model\\NguoiDung.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAqAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-11T13:16:09.987Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "DatabaseConnect.cs",
+              "DocumentMoniker": "D:\\Code\\CODE\\Csharp\\QLKS\\PhatTrienPhanMemHuongDichVu_QLKhachSan\\Admin\\AdminApi\\DAL\\DatabaseConnect.cs",
+              "RelativeDocumentMoniker": "AdminApi\\DAL\\DatabaseConnect.cs",
+              "ToolTip": "D:\\Code\\CODE\\Csharp\\QLKS\\PhatTrienPhanMemHuongDichVu_QLKhachSan\\Admin\\AdminApi\\DAL\\DatabaseConnect.cs",
+              "RelativeToolTip": "AdminApi\\DAL\\DatabaseConnect.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-11T13:14:40.588Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "NguoiDungBLL.cs",
+              "DocumentMoniker": "D:\\Code\\CODE\\Csharp\\QLKS\\PhatTrienPhanMemHuongDichVu_QLKhachSan\\Admin\\AdminApi\\BLL\\NguoiDungBLL.cs",
+              "RelativeDocumentMoniker": "AdminApi\\BLL\\NguoiDungBLL.cs",
+              "ToolTip": "D:\\Code\\CODE\\Csharp\\QLKS\\PhatTrienPhanMemHuongDichVu_QLKhachSan\\Admin\\AdminApi\\BLL\\NguoiDungBLL.cs",
+              "RelativeToolTip": "AdminApi\\BLL\\NguoiDungBLL.cs",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAqwBIAAAAeAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-11T13:14:55.387Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "NguoiDungDAL.cs",
+              "DocumentMoniker": "D:\\Code\\CODE\\Csharp\\QLKS\\PhatTrienPhanMemHuongDichVu_QLKhachSan\\Admin\\AdminApi\\DAL\\NguoiDungDAL.cs",
+              "RelativeDocumentMoniker": "AdminApi\\DAL\\NguoiDungDAL.cs",
+              "ToolTip": "D:\\Code\\CODE\\Csharp\\QLKS\\PhatTrienPhanMemHuongDichVu_QLKhachSan\\Admin\\AdminApi\\DAL\\NguoiDungDAL.cs",
+              "RelativeToolTip": "AdminApi\\DAL\\NguoiDungDAL.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAF4AAAAjAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-11T13:14:42.792Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "NguoiDungConTroller.cs",
+              "DocumentMoniker": "D:\\Code\\CODE\\Csharp\\QLKS\\PhatTrienPhanMemHuongDichVu_QLKhachSan\\Admin\\AdminApi\\Controllers\\NguoiDungConTroller.cs",
+              "RelativeDocumentMoniker": "AdminApi\\Controllers\\NguoiDungConTroller.cs",
+              "ToolTip": "D:\\Code\\CODE\\Csharp\\QLKS\\PhatTrienPhanMemHuongDichVu_QLKhachSan\\Admin\\AdminApi\\Controllers\\NguoiDungConTroller.cs",
+              "RelativeToolTip": "AdminApi\\Controllers\\NguoiDungConTroller.cs",
+              "ViewState": "AgIAACQAAAAAAAAAAAAowAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-11T13:13:12.463Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "PasswordResetController.cs",
+              "DocumentMoniker": "D:\\Code\\CODE\\Csharp\\QLKS\\PhatTrienPhanMemHuongDichVu_QLKhachSan\\Admin\\AdminApi\\Controllers\\PasswordResetController.cs",
+              "RelativeDocumentMoniker": "AdminApi\\Controllers\\PasswordResetController.cs",
+              "ToolTip": "D:\\Code\\CODE\\Csharp\\QLKS\\PhatTrienPhanMemHuongDichVu_QLKhachSan\\Admin\\AdminApi\\Controllers\\PasswordResetController.cs",
+              "RelativeToolTip": "AdminApi\\Controllers\\PasswordResetController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-11T13:13:10.908Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "LoginConTroller.cs",
+              "DocumentMoniker": "D:\\Code\\CODE\\Csharp\\QLKS\\PhatTrienPhanMemHuongDichVu_QLKhachSan\\Admin\\AdminApi\\Controllers\\LoginConTroller.cs",
+              "RelativeDocumentMoniker": "AdminApi\\Controllers\\LoginConTroller.cs",
+              "ToolTip": "D:\\Code\\CODE\\Csharp\\QLKS\\PhatTrienPhanMemHuongDichVu_QLKhachSan\\Admin\\AdminApi\\Controllers\\LoginConTroller.cs",
+              "RelativeToolTip": "AdminApi\\Controllers\\LoginConTroller.cs",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAUwCMAAAAqAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-11T13:08:07.856Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
               "Title": "launchSettings.json",
               "DocumentMoniker": "D:\\Code\\CODE\\Csharp\\QLKS\\PhatTrienPhanMemHuongDichVu_QLKhachSan\\Admin\\AdminApi\\Properties\\launchSettings.json",
               "RelativeDocumentMoniker": "AdminApi\\Properties\\launchSettings.json",
               "ToolTip": "D:\\Code\\CODE\\Csharp\\QLKS\\PhatTrienPhanMemHuongDichVu_QLKhachSan\\Admin\\AdminApi\\Properties\\launchSettings.json",
               "RelativeToolTip": "AdminApi\\Properties\\launchSettings.json",
-              "ViewState": "AgIAAAMAAAAAAAAAAAAQwBIAAAAvAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAAvAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2025-10-14T14:05:22.097Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-14T14:05:22.097Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 9,
               "Title": "AdminApi.csproj",
               "DocumentMoniker": "D:\\Code\\CODE\\Csharp\\QLKS\\PhatTrienPhanMemHuongDichVu_QLKhachSan\\Admin\\AdminApi\\AdminApi.csproj",
               "RelativeDocumentMoniker": "AdminApi\\AdminApi.csproj",
