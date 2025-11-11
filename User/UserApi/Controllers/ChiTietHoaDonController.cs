@@ -4,11 +4,13 @@ using System.Collections.Generic;
 using System.Data;
 using BLL;
 using HotelManagement.Module;
+using Microsoft.AspNetCore.Authorization;
 
 namespace HotelManagement.API.Accounting.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
+    [Authorize]
     public class ChiTietHoaDonController : ControllerBase
     {
         private readonly HoaDonChiTietBLL _bll;

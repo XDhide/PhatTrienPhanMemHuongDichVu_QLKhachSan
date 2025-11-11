@@ -1,14 +1,17 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using BLL;
+using HotelManagement.Module;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Data;
-using BLL;
-using HotelManagement.Module;
+
 
 namespace HotelManagement.API.Accounting.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
+    [Authorize]
     public class HoaDonController : ControllerBase
     {
         private readonly HoaDonBLL _bll;

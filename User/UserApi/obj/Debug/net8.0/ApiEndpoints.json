@@ -79,6 +79,122 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "HotelManagement.API.Customer.Controllers.DatPhongController",
+    "Method": "GetAll",
+    "RelativePath": "api/DatPhong",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "HotelManagement.API.Customer.Controllers.DatPhongController",
+    "Method": "Create",
+    "RelativePath": "api/DatPhong",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "don",
+        "Type": "HotelManagement.Module.DatPhong",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "HotelManagement.API.Customer.Controllers.DatPhongController",
+    "Method": "GetById",
+    "RelativePath": "api/DatPhong/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "HotelManagement.API.Customer.Controllers.DatPhongController",
+    "Method": "Update",
+    "RelativePath": "api/DatPhong/{id}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "don",
+        "Type": "HotelManagement.Module.DatPhong",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "HotelManagement.API.Customer.Controllers.DatPhongController",
+    "Method": "Delete",
+    "RelativePath": "api/DatPhong/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "HotelManagement.API.Customer.Controllers.DatPhongController",
+    "Method": "CheckIn",
+    "RelativePath": "api/DatPhong/{id}/checkin",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "maPhong",
+        "Type": "System.Nullable\u00601[[System.Int32, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "HotelManagement.API.Customer.Controllers.DatPhongController",
+    "Method": "CheckOut",
+    "RelativePath": "api/DatPhong/{id}/checkout",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "UserApi.Controllers.GiaController",
     "Method": "GetAll",
     "RelativePath": "api/Gia",
@@ -254,7 +370,7 @@
   },
   {
     "ContainingType": "HotelManagement.API.Accounting.Controllers.HoaDonController",
-    "Method": "ConfirmPayment",
+    "Method": "payment",
     "RelativePath": "api/HoaDon/payment/{maHD}",
     "HttpMethod": "PUT",
     "IsController": true,
@@ -266,6 +382,231 @@
         "IsRequired": true
       }
     ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "HotelManagement.API.Customer.Controllers.KhachController",
+    "Method": "GetAll",
+    "RelativePath": "api/Khach",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "HotelManagement.API.Customer.Controllers.KhachController",
+    "Method": "Create",
+    "RelativePath": "api/Khach",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "khach",
+        "Type": "HotelManagement.Module.Khach",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "HotelManagement.API.Customer.Controllers.KhachController",
+    "Method": "GetById",
+    "RelativePath": "api/Khach/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "HotelManagement.API.Customer.Controllers.KhachController",
+    "Method": "Update",
+    "RelativePath": "api/Khach/{id}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "khach",
+        "Type": "HotelManagement.Module.Khach",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "HotelManagement.API.Customer.Controllers.KhachController",
+    "Method": "Delete",
+    "RelativePath": "api/Khach/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "HotelManagement.API.Customer.Controllers.LoaiPhongController",
+    "Method": "GetAll",
+    "RelativePath": "api/LoaiPhong",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "HotelManagement.API.Customer.Controllers.LoaiPhongController",
+    "Method": "Create",
+    "RelativePath": "api/LoaiPhong",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "obj",
+        "Type": "HotelManagement.Module.LoaiPhong",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "HotelManagement.API.Customer.Controllers.LoaiPhongController",
+    "Method": "GetById",
+    "RelativePath": "api/LoaiPhong/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "HotelManagement.API.Customer.Controllers.LoaiPhongController",
+    "Method": "Update",
+    "RelativePath": "api/LoaiPhong/{id}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "obj",
+        "Type": "HotelManagement.Module.LoaiPhong",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "HotelManagement.API.Customer.Controllers.LoaiPhongController",
+    "Method": "Delete",
+    "RelativePath": "api/LoaiPhong/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "HotelManagement.API.Customer.Controllers.PhongController",
+    "Method": "GetPhong",
+    "RelativePath": "api/Phong",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "HotelManagement.API.Customer.Controllers.PhongController",
+    "Method": "ChangeStatus",
+    "RelativePath": "api/Phong/{id}/status",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "tinhTrang",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "HotelManagement.API.Customer.Controllers.PhongController",
+    "Method": "GetLich",
+    "RelativePath": "api/Phong/lich",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "roomTypeId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "from",
+        "Type": "System.DateTime",
+        "IsRequired": false
+      },
+      {
+        "Name": "to",
+        "Type": "System.DateTime",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "HotelManagement.API.Customer.Controllers.PhongController",
+    "Method": "GetLoai",
+    "RelativePath": "api/Phong/loai",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
     "ReturnTypes": []
   }
 ]

@@ -1,5 +1,6 @@
 ﻿using BLL;
 using HotelManagement.Module;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Data;
 
@@ -7,6 +8,7 @@ namespace UserApi.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
+    [Authorize]
     public class GiaController: ControllerBase
     {
         private readonly GiaBLL _bll;

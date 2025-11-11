@@ -1,14 +1,16 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using BLL;
+using HotelManagement.Module;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Data;
-using BLL;
-using HotelManagement.Module;
 
 namespace HotelManagement.API.Customer.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
+    [Authorize]
     public class DatPhongController : ControllerBase
     {
         private readonly DatPhongBLL _bll;

@@ -40,3 +40,11 @@ D:\Code\CODE\Csharp\QLKS\PhatTrienPhanMemHuongDichVu_QLKhachSan\User\UserApi\obj
 D:\Code\CODE\Csharp\QLKS\PhatTrienPhanMemHuongDichVu_QLKhachSan\User\UserApi\obj\Debug\net8.0\UserApi.pdb
 D:\Code\CODE\Csharp\QLKS\PhatTrienPhanMemHuongDichVu_QLKhachSan\User\UserApi\obj\Debug\net8.0\UserApi.genruntimeconfig.cache
 D:\Code\CODE\Csharp\QLKS\PhatTrienPhanMemHuongDichVu_QLKhachSan\User\UserApi\obj\Debug\net8.0\ref\UserApi.dll
+D:\Code\CODE\Csharp\QLKS\PhatTrienPhanMemHuongDichVu_QLKhachSan\User\UserApi\bin\Debug\net8.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+D:\Code\CODE\Csharp\QLKS\PhatTrienPhanMemHuongDichVu_QLKhachSan\User\UserApi\bin\Debug\net8.0\Microsoft.IdentityModel.Abstractions.dll
+D:\Code\CODE\Csharp\QLKS\PhatTrienPhanMemHuongDichVu_QLKhachSan\User\UserApi\bin\Debug\net8.0\Microsoft.IdentityModel.JsonWebTokens.dll
+D:\Code\CODE\Csharp\QLKS\PhatTrienPhanMemHuongDichVu_QLKhachSan\User\UserApi\bin\Debug\net8.0\Microsoft.IdentityModel.Logging.dll
+D:\Code\CODE\Csharp\QLKS\PhatTrienPhanMemHuongDichVu_QLKhachSan\User\UserApi\bin\Debug\net8.0\Microsoft.IdentityModel.Protocols.dll
+D:\Code\CODE\Csharp\QLKS\PhatTrienPhanMemHuongDichVu_QLKhachSan\User\UserApi\bin\Debug\net8.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+D:\Code\CODE\Csharp\QLKS\PhatTrienPhanMemHuongDichVu_QLKhachSan\User\UserApi\bin\Debug\net8.0\Microsoft.IdentityModel.Tokens.dll
+D:\Code\CODE\Csharp\QLKS\PhatTrienPhanMemHuongDichVu_QLKhachSan\User\UserApi\bin\Debug\net8.0\System.IdentityModel.Tokens.Jwt.dll

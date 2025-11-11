@@ -102,17 +102,17 @@ namespace HotelManagement.API.Customer.Controllers
             catch (Exception ex) { return StatusCode(500, new { success = false, message = "Lỗi: " + ex.Message }); }
         }
 
-        //BÁO GIÁ--------------------------------------------------------------
-        [HttpGet("baogia")]
-        public IActionResult BaoGia([FromQuery] int roomTypeId, [FromQuery] DateTime from, [FromQuery] DateTime to, [FromQuery] string channel = "web")
-        {
-            try
-            {
-                var dt = _giaBll.BaoGia(roomTypeId, from, to, channel);
-                return Ok(new { success = true, message = "OK", data = dt });
-            }
-            catch (Exception ex) { return StatusCode(500, new { success = false, message = "Lỗi: " + ex.Message }); }
-        }
+        ////BÁO GIÁ--------------------------------------------------------------
+        //[HttpGet("baogia")]
+        //public IActionResult BaoGia([FromQuery] int roomTypeId, [FromQuery] DateTime from, [FromQuery] DateTime to, [FromQuery] string channel = "web")
+        //{
+        //    try
+        //    {
+        //        var dt = _giaBll.BaoGia(roomTypeId, from, to, channel);
+        //        return Ok(new { success = true, message = "OK", data = dt });
+        //    }
+        //    catch (Exception ex) { return StatusCode(500, new { success = false, message = "Lỗi: " + ex.Message }); }
+        //}
 
         //ĐỔI TT PHÒNG---------------------------------------------------
         // PUT: api/phong/{id}/status

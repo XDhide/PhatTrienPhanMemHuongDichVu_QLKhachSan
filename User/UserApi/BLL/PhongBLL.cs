@@ -54,11 +54,11 @@ namespace BLL
             return _dal.LichTrong(roomTypeId, from, to);
         }
 
-        public class GiaBLL
-        {
-            private GiaDAL _dal = new GiaDAL();
-            public DataTable BaoGia(int roomTypeId, DateTime from, DateTime to, string channel)
-                => _dal.BaoGia(roomTypeId, from, to, channel);
-        }
+        //public class GiaBLL
+        //{
+        //    private GiaDAL _dal = new GiaDAL();
+        //    public DataTable BaoGia(int roomTypeId, DateTime from, DateTime to, string channel)
+        //        => _dal.BaoGia(roomTypeId, from, to, channel);
+        //}
     }
 }
