@@ -275,20 +275,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "type": "integer",
-                "format": "int32"
+                "$ref": "#/components/schemas/CheckInRequest"
               }
             },
             "text/json": {
               "schema": {
-                "type": "integer",
-                "format": "int32"
+                "$ref": "#/components/schemas/CheckInRequest"
               }
             },
             "application/*+json": {
               "schema": {
-                "type": "integer",
-                "format": "int32"
+                "$ref": "#/components/schemas/CheckInRequest"
               }
             }
           }
@@ -976,6 +973,17 @@
   },
   "components": {
     "schemas": {
+      "CheckInRequest": {
+        "type": "object",
+        "properties": {
+          "maPhong": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "DatPhong": {
         "type": "object",
         "properties": {
