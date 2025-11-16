@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Text.Json;
 
 
 namespace HotelManagement.API.Accounting.Controllers
@@ -286,36 +287,36 @@ namespace HotelManagement.API.Accounting.Controllers
         }
 
         [HttpPut("payment/{maHD}")]
-        public IActionResult payment(int maHD)
+        public IActionResult Payment(int maHD, [FromBody] JsonElement request)
         {
             try
             {
-                string result = _bll.Payment(maHD, "SanSang");
+                decimal soTienTra = request.GetProperty("soTienTra").GetDecimal();
+                string hinhThucThanhToan = request.GetProperty("hinhThucThanhToan").GetString();
+                string tinhTrang = request.TryGetProperty("tinhTrang", out JsonElement tt) ? tt.GetString() : "SanSang";
+
+                string result = _bll.Payment(
+                    maHD,
+                    tinhTrang,
+                    soTienTra,
+                    hinhThucThanhToan
+                );
 
                 if (result.Contains("Lỗi"))
                 {
-                    return BadRequest(new
-                    {
-                        success = false,
-                        message = result
-                    });
+                    return BadRequest(new { success = false, message = result });
                 }
 
-                return Ok(new
-                {
-                    success = true,
-                    message = result
-                });
+                return Ok(new { success = true, message = result });
             }
             catch (Exception ex)
             {
-                return StatusCode(500, new
-                {
-                    success = false,
-                    message = "Lỗi: " + ex.Message
-                });
+                return StatusCode(500, new { success = false, message = "Lỗi: " + ex.Message });
             }
         }
+
+
+
 
 
     }

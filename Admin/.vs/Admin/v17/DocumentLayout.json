@@ -79,8 +79,7 @@
               "RelativeToolTip": "AdminApi\\Model\\NguoiDung.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAqAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-11T13:16:09.987Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-11T13:16:09.987Z"
             },
             {
               "$type": "Document",
@@ -92,8 +91,7 @@
               "RelativeToolTip": "AdminApi\\DAL\\DatabaseConnect.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-11T13:14:40.588Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-11T13:14:40.588Z"
             },
             {
               "$type": "Document",
@@ -105,8 +103,7 @@
               "RelativeToolTip": "AdminApi\\BLL\\NguoiDungBLL.cs",
               "ViewState": "AgIAAAYAAAAAAAAAAAAqwBIAAAAeAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-11T13:14:55.387Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-11T13:14:55.387Z"
             },
             {
               "$type": "Document",
@@ -118,8 +115,7 @@
               "RelativeToolTip": "AdminApi\\DAL\\NguoiDungDAL.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAF4AAAAjAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-11T13:14:42.792Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-11T13:14:42.792Z"
             },
             {
               "$type": "Document",
@@ -131,8 +127,7 @@
               "RelativeToolTip": "AdminApi\\Controllers\\NguoiDungConTroller.cs",
               "ViewState": "AgIAACQAAAAAAAAAAAAowAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-11T13:13:12.463Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-11T13:13:12.463Z"
             },
             {
               "$type": "Document",
@@ -144,8 +139,7 @@
               "RelativeToolTip": "AdminApi\\Controllers\\PasswordResetController.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-11T13:13:10.908Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-11T13:13:10.908Z"
             },
             {
               "$type": "Document",
@@ -157,8 +151,7 @@
               "RelativeToolTip": "AdminApi\\Controllers\\LoginConTroller.cs",
               "ViewState": "AgIAACgAAAAAAAAAAAAAADwAAAASAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-11T13:08:07.856Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-11T13:08:07.856Z"
             },
             {
               "$type": "Document",
@@ -170,8 +163,7 @@
               "RelativeToolTip": "AdminApi\\Properties\\launchSettings.json",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAAvAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2025-10-14T14:05:22.097Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-14T14:05:22.097Z"
             },
             {
               "$type": "Document",
@@ -183,8 +175,7 @@
               "RelativeToolTip": "AdminApi\\AdminApi.csproj",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
-              "WhenOpened": "2025-10-13T13:41:16.129Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-13T13:41:16.129Z"
             }
           ]
         }

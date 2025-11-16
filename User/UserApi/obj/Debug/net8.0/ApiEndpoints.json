@@ -370,7 +370,7 @@
   },
   {
     "ContainingType": "HotelManagement.API.Accounting.Controllers.HoaDonController",
-    "Method": "payment",
+    "Method": "Payment",
     "RelativePath": "api/HoaDon/payment/{maHD}",
     "HttpMethod": "PUT",
     "IsController": true,
@@ -379,6 +379,11 @@
       {
         "Name": "maHD",
         "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "request",
+        "Type": "System.Text.Json.JsonElement",
         "IsRequired": true
       }
     ],
