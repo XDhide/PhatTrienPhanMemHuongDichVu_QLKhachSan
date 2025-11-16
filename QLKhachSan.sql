@@ -10,7 +10,7 @@ CREATE TABLE NguoiDung (
     TenDangNhap NVARCHAR(100) NOT NULL UNIQUE,
     MatKhau NVARCHAR(500) NOT NULL,
     HoTen NVARCHAR(200),
-    VaiTro NVARCHAR(50) NOT NULL -- Admin, LeTan, KeToan, Khach
+    VaiTro NVARCHAR(50) NOT NULL 
 );
 
 -- Loai phong
@@ -27,7 +27,7 @@ CREATE TABLE Phong (
     MaPhong INT IDENTITY(1,1) PRIMARY KEY,
     SoPhong NVARCHAR(20) NOT NULL UNIQUE,
     MaLoaiPhong INT NOT NULL,
-    TinhTrang NVARCHAR(50) NOT NULL DEFAULT 'SanSang', -- SanSang, BaoTri, DonDep
+    TinhTrang NVARCHAR(50) NOT NULL DEFAULT 'SanSang', 
     FOREIGN KEY (MaLoaiPhong) REFERENCES LoaiPhong(MaLoaiPhong)
 );
 
@@ -58,13 +58,13 @@ CREATE TABLE DatPhong (
     MaDatPhong INT IDENTITY(1,1) PRIMARY KEY,
     MaDat NVARCHAR(50) NOT NULL UNIQUE,
     MaKhach INT NOT NULL FOREIGN KEY REFERENCES Khach(MaKhach),
-    MaPhong INT NULL FOREIGN KEY REFERENCES Phong(MaPhong), -- neu NULL thi dat theo loai phong
+    MaPhong INT NULL FOREIGN KEY REFERENCES Phong(MaPhong), 
     MaLoaiPhong INT NOT NULL FOREIGN KEY REFERENCES LoaiPhong(MaLoaiPhong),
     NgayNhan DATETIME NOT NULL,
     NgayTra DATETIME NOT NULL,
     SoKhach INT NOT NULL DEFAULT 1,
-    TrangThai NVARCHAR(50) NOT NULL DEFAULT 'DaDat', -- DaDat, DaNhan, DaTra, Huy
-    NguoiTao INT NULL, -- MaND
+    TrangThai NVARCHAR(50) NOT NULL DEFAULT 'DaDat', 
+    NguoiTao INT NULL, 
     NgayTao DATETIME NOT NULL DEFAULT GETDATE(),
     GhiChu NVARCHAR(500)
 );
@@ -86,9 +86,9 @@ CREATE TABLE HoaDon (
     MaND INT NOT NULL REFERENCES NguoiDung(MaND),
     NgayLap DATETIME NOT NULL DEFAULT GETDATE(),
     TongTien DECIMAL(18,2) DEFAULT 0,
-    HinhThucThanhToan NVARCHAR(50), -- TienMat, The, ChuyenKhoan
+    HinhThucThanhToan NVARCHAR(50), 
     SoTienDaTra DECIMAL(18,2) DEFAULT 0,
-    SoTienConNo AS (TongTien - SoTienDaTra) -- cột tính toán
+    SoTienConNo AS (TongTien - SoTienDaTra) 
 );
 
 -- Hoa don chi tiet
@@ -96,7 +96,7 @@ CREATE TABLE HoaDonChiTiet (
     MaCTHD INT IDENTITY(1,1) PRIMARY KEY,
     MaHD INT NOT NULL REFERENCES HoaDon(MaHD),
 
-    -- Một trong 2 cái này: hoặc đặt phòng, hoặc dịch vụ
+
     MaDatPhong INT NULL REFERENCES DatPhong(MaDatPhong),
     MaDV INT NULL REFERENCES DichVu(MaDV),
 
@@ -104,14 +104,12 @@ CREATE TABLE HoaDonChiTiet (
     DonGia DECIMAL(18,2) NOT NULL,
     ThanhTien AS (SoLuong * DonGia),
 
-    -- Ràng buộc: bắt buộc chọn 1 trong 2
     CONSTRAINT CK_HoaDonChiTiet CHECK (
         (MaDatPhong IS NOT NULL AND MaDV IS NULL)
         OR (MaDatPhong IS NULL AND MaDV IS NOT NULL)
     )
 );
 
--- Thêm dữ liệu
 INSERT INTO NguoiDung (TenDangNhap, MatKhau, HoTen, VaiTro) VALUES
 ('dxdung', 'dung123', N'Đỗ Xuân Dũng', N'Admin'),
 ('tmlan', 'lan123', N'Trần Mai Lan', N'LeTan'),
@@ -438,254 +436,6 @@ UPDATE HoaDon SET TongTien = 21200000, SoTienDaTra = 21200000 WHERE MaHD = 14;
 UPDATE HoaDon SET TongTien = 2350000, SoTienDaTra = 2350000 WHERE MaHD = 15;
 UPDATE HoaDon SET TongTien = 3550000, SoTienDaTra = 3550000 WHERE MaHD = 16;
 UPDATE HoaDon SET TongTien = 4800000, SoTienDaTra = 4800000 WHERE MaHD = 17;
-
------------------------------------------------------------------------------------------------------
---Stored Procedure
--- Tạo hóa đơn
-CREATE PROCEDURE sp_TaoHoaDon
-(
-    @SoHD NVARCHAR(50),
-    @MaKhach INT,
-    @MaND INT,
-    @HinhThucThanhToan NVARCHAR(50) = NULL
-)
-AS
-BEGIN
-    SET NOCOUNT ON;
-    BEGIN TRY
-        -- Kiểm tra khách hàng tồn tại
-        IF NOT EXISTS(SELECT 1 FROM Khach WHERE MaKhach = @MaKhach)
-            THROW 50001, N'Khách hàng không tồn tại', 1;
-            
-        -- Kiểm tra người dùng tồn tại  
-        IF NOT EXISTS(SELECT 1 FROM NguoiDung WHERE MaND = @MaND)
-            THROW 50002, N'Người dùng không tồn tại', 1;
-            
-        INSERT INTO HoaDon(SoHD, MaKhach, MaND, HinhThucThanhToan)
-        VALUES (@SoHD, @MaKhach, @MaND, @HinhThucThanhToan);
-        
-        SELECT SCOPE_IDENTITY() AS MaHD; -- Trả về ID mới tạo
-    END TRY
-    BEGIN CATCH
-        THROW;
-    END CATCH
-END;
-
---Thêm chi tiết hóa đơn
-CREATE PROCEDURE sp_ThemHoaDonChiTiet
-(
-    @MaHD INT,
-    @MaDatPhong INT = NULL,
-    @MaDV INT = NULL,
-    @SoLuong INT = 1,
-    @DonGia DECIMAL(18,2)
-)
-AS
-BEGIN
-    SET NOCOUNT ON;
-    BEGIN TRY
-        -- Kiểm tra hóa đơn
-        IF NOT EXISTS (SELECT 1 FROM HoaDon WHERE MaHD = @MaHD)
-            THROW 50003, N'Hóa đơn không tồn tại', 1;
-
-        -- Kiểm tra đặt phòng hoặc dịch vụ
-        IF @MaDatPhong IS NOT NULL AND NOT EXISTS (SELECT 1 FROM DatPhong WHERE MaDatPhong = @MaDatPhong)
-            THROW 50004, N'Đặt phòng không tồn tại', 1;
-
-        IF @MaDV IS NOT NULL AND NOT EXISTS (SELECT 1 FROM DichVu WHERE MaDV = @MaDV)
-            THROW 50005, N'Dịch vụ không tồn tại', 1;
-
-        -- Kiểm tra số lượng và đơn giá
-        IF @SoLuong <= 0
-            THROW 50006, N'Số lượng phải lớn hơn 0', 1;
-
-        IF @DonGia < 0
-            THROW 50007, N'Đơn giá không được âm', 1;
-
-        -- Kiểm tra ràng buộc: chỉ một trong hai MaDatPhong hoặc MaDV được cung cấp
-        IF (@MaDatPhong IS NULL AND @MaDV IS NULL) OR (@MaDatPhong IS NOT NULL AND @MaDV IS NOT NULL)
-            THROW 50008, N'Phải chọn một và chỉ một trong hai: Đặt phòng hoặc Dịch vụ', 1;
-
-        INSERT INTO HoaDonChiTiet (MaHD, MaDatPhong, MaDV, SoLuong, DonGia)
-        VALUES (@MaHD, @MaDatPhong, @MaDV, @SoLuong, @DonGia);
-
-        -- Gọi SP cập nhật tổng tiền (đảm bảo SP này tồn tại)
-        EXEC sp_HoaDon_UpdateTongTien @MaHD;
-    END TRY
-    BEGIN CATCH
-        THROW;
-    END CATCH
-END;
-
--- Cập nhật tổng tiền trong chi tiết hóa đơn
-CREATE PROCEDURE sp_HoaDon_CapNhatTongTien
-(
-    @MaHD INT
-)
-AS
-BEGIN
-    SET NOCOUNT ON;
-    BEGIN TRY
-        -- Kiểm tra hóa đơn
-        IF NOT EXISTS (SELECT 1 FROM HoaDon WHERE MaHD = @MaHD)
-            THROW 50009, N'Hóa đơn không tồn tại', 1;
-
-        -- Cập nhật tổng tiền dựa trên chi tiết hóa đơn
-        UPDATE HoaDon
-		SET TongTien = ISNULL((
-		SELECT SUM(ThanhTien)
-			FROM HoaDonChiTiet
-			WHERE MaHD = @MaHD
-			), 0)
-		WHERE MaHD = @MaHD;
-
-
-        SELECT MaHD, TongTien, SoTienDaTra, SoTienConNo
-        FROM HoaDon
-        WHERE MaHD = @MaHD;
-    END TRY
-    BEGIN CATCH
-        THROW;
-    END CATCH
-END;
-
---Cập nhật tổng tiền (hóa đơn)
-CREATE PROCEDURE sp_HoaDon_ThanhToan
-(
-    @MaHD INT,
-    @SoTienTra DECIMAL(18,2)
-)
-AS
-BEGIN
-    SET NOCOUNT ON;
-    BEGIN TRY
-        -- Kiểm tra hóa đơn
-        IF NOT EXISTS (SELECT 1 FROM HoaDon WHERE MaHD = @MaHD)
-            THROW 50004, N'Hóa đơn không tồn tại', 1;
-
-        -- Kiểm tra số tiền thanh toán
-        IF @SoTienTra <= 0
-            THROW 50003, N'Số tiền thanh toán phải lớn hơn 0', 1;
-
-        DECLARE @TongTien DECIMAL(18,2), @DaTra DECIMAL(18,2);
-        SELECT @TongTien = TongTien, @DaTra = ISNULL(SoTienDaTra, 0)
-        FROM HoaDon
-        WHERE MaHD = @MaHD;
-
-        -- Kiểm tra thanh toán vượt quá tổng hóa đơn
-        IF (@DaTra + @SoTienTra) > @TongTien
-            THROW 50005, N'Số tiền thanh toán vượt quá tổng hóa đơn', 1;
-
-        -- Cập nhật số tiền đã trả
-        UPDATE HoaDon
-        SET SoTienDaTra = @DaTra + @SoTienTra
-        WHERE MaHD = @MaHD;
-
-        -- Trả về thông tin hóa đơn
-        SELECT MaHD, TongTien, SoTienDaTra, SoTienConNo
-        FROM HoaDon
-        WHERE MaHD = @MaHD;
-    END TRY
-    BEGIN CATCH
-        THROW;
-    END CATCH
-END;
-
--- Thêm sp tìm kiếm và báo cáo, lấy ds hóa đơn
-CREATE OR ALTER PROCEDURE sp_HoaDon_TimKiem
-(
-    @TuNgay DATE = NULL,
-    @DenNgay DATE = NULL,
-    @MaKhach INT = NULL,
-    @PageIndex INT = 1,
-    @PageSize INT = 20
-)
-AS
-BEGIN
-    SET NOCOUNT ON;
-    BEGIN TRY
-        -- Kiểm tra tham số phân trang
-        IF @PageIndex <= 0
-            THROW 50010, N'PageIndex phải lớn hơn 0', 1;
-
-        IF @PageSize <= 0
-            THROW 50011, N'PageSize phải lớn hơn 0', 1;
-
-        ;WITH CTE AS (
-            SELECT 
-                h.MaHD, 
-                h.SoHD, 
-                k.HoTen AS TenKhach, 
-                h.NgayLap,
-                h.TongTien, 
-                h.SoTienDaTra, 
-                h.SoTienConNo,
-                h.HinhThucThanhToan,
-                CASE WHEN h.SoTienConNo = 0 
-                     THEN N'Đã thanh toán' 
-                     ELSE N'Còn nợ' END AS TrangThaiTT,
-                ROW_NUMBER() OVER (ORDER BY h.NgayLap DESC) AS rn
-            FROM HoaDon h
-            INNER JOIN Khach k ON h.MaKhach = k.MaKhach
-            WHERE (@TuNgay IS NULL OR h.NgayLap >= @TuNgay)
-              AND (@DenNgay IS NULL OR h.NgayLap <= @DenNgay)  
-              AND (@MaKhach IS NULL OR h.MaKhach = @MaKhach)
-        )
-        -- Lấy dữ liệu phân trang
-        SELECT *
-        FROM CTE
-        WHERE rn BETWEEN (@PageIndex - 1) * @PageSize + 1
-                     AND @PageIndex * @PageSize;
-
-        -- Lấy tổng số bản ghi
-        SELECT COUNT(*) AS TotalRecords
-        FROM HoaDon h
-        WHERE (@TuNgay IS NULL OR h.NgayLap >= @TuNgay)
-          AND (@DenNgay IS NULL OR h.NgayLap <= @DenNgay)  
-          AND (@MaKhach IS NULL OR h.MaKhach = @MaKhach);
-    END TRY
-    BEGIN CATCH
-        THROW;
-    END CATCH
-END;
-GO
-
---Tự động tạo số hóa đơn
-CREATE TRIGGER tr_HoaDon_TaoSoHD
-ON HoaDon 
-AFTER INSERT
-AS
-BEGIN
-    SET NOCOUNT ON;
-    BEGIN TRY
-        DECLARE @NewSoHD NVARCHAR(50);
-        
-        -- Tạo SoHD mới
-        UPDATE h 
-        SET SoHD = 'HD' + FORMAT(GETDATE(), 'yyyyMMdd') + 
-                  RIGHT('000' + CAST(h.MaHD AS VARCHAR), 3)
-        FROM HoaDon h
-        INNER JOIN inserted i ON h.MaHD = i.MaHD
-        WHERE h.SoHD IS NULL OR h.SoHD = '';
-
-        -- Kiểm tra trùng lặp (tùy chọn)
-        IF EXISTS (
-            SELECT 1 
-            FROM HoaDon h
-            INNER JOIN inserted i ON h.SoHD = (
-                'HD' + FORMAT(GETDATE(), 'yyyyMMdd') + 
-                RIGHT('000' + CAST(i.MaHD AS VARCHAR), 3)
-            )
-            WHERE h.MaHD != i.MaHD
-        )
-        BEGIN
-            THROW 50012, N'Số hóa đơn đã tồn tại', 1;
-        END;
-    END TRY
-    BEGIN CATCH
-        THROW;
-    END CATCH
-END;
 
 -------------------------------------------------------------------
 USE QLKhachSan
@@ -1390,8 +1140,8 @@ BEGIN
 END;
 GO
 CREATE PROCEDURE sp_CapNhatTinhTrangPhong
-    @MaPhong INT,            
-    @TinhTrang NVARCHAR(50)   
+    @MaPhong INT,
+    @TinhTrang NVARCHAR(50)
 AS
 BEGIN
     SET NOCOUNT ON;
@@ -1410,29 +1160,37 @@ BEGIN
     END
 END;
 GO
+
 CREATE PROCEDURE sp_CapNhatTinhTrangPhong_TuHoaDon
-    @MaHD INT,                 -- Mã hóa đơn cần xử lý
-    @TinhTrang NVARCHAR(50)    -- Trạng thái muốn cập nhật (ví dụ: 'DonDep', 'SanSang', ...)
+    @MaHD INT,
+    @HinhThucThanhToan NVARCHAR(50),
+    @SoTienTra DECIMAL(18,2),
+    @TinhTrang NVARCHAR(50)
 AS
 BEGIN
     SET NOCOUNT ON;
 
-    -- Kiểm tra hóa đơn có tồn tại không
     IF NOT EXISTS (SELECT 1 FROM HoaDon WHERE MaHD = @MaHD)
     BEGIN
         PRINT N'Không tìm thấy hóa đơn với mã được cung cấp.';
         RETURN;
     END
 
-    -- Cập nhật tình trạng các phòng có trong hóa đơn chi tiết (qua đặt phòng)
+    UPDATE HoaDon
+    SET 
+        SoTienDaTra = ISNULL(SoTienDaTra,0) + @SoTienTra,
+        HinhThucThanhToan = @HinhThucThanhToan
+    WHERE MaHD = @MaHD;
+
     UPDATE p
     SET p.TinhTrang = @TinhTrang
     FROM Phong AS p
     INNER JOIN DatPhong AS dp ON p.MaPhong = dp.MaPhong
     INNER JOIN HoaDonChiTiet AS cthd ON dp.MaDatPhong = cthd.MaDatPhong
     WHERE cthd.MaHD = @MaHD
-          AND cthd.MaDatPhong IS NOT NULL;  -- chỉ áp dụng cho chi tiết có mã đặt phòng
+          AND cthd.MaDatPhong IS NOT NULL;
 
-    PRINT N'Đã cập nhật tình trạng phòng liên quan đến hóa đơn thành công.';
+    PRINT N'Đã cập nhật thanh toán và tình trạng phòng thành công.';
 END;
 GO
+
