@@ -916,23 +916,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Dung\\.nuget\\packages\\": {},
+    "C:\\Users\\Tran Mai Lan\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Code\\CODE\\Csharp\\QLKS\\PhatTrienPhanMemHuongDichVu_QLKhachSan\\User\\UserApi\\UserApi.csproj",
+      "projectUniqueName": "C:\\Users\\Tran Mai Lan\\OneDrive\\Documents\\5th semester\\PTPM\\New folder\\PhatTrienPhanMemHuongDichVu_QLKhachSan\\User\\UserApi\\UserApi.csproj",
       "projectName": "UserApi",
-      "projectPath": "D:\\Code\\CODE\\Csharp\\QLKS\\PhatTrienPhanMemHuongDichVu_QLKhachSan\\User\\UserApi\\UserApi.csproj",
-      "packagesPath": "C:\\Users\\Dung\\.nuget\\packages\\",
-      "outputPath": "D:\\Code\\CODE\\Csharp\\QLKS\\PhatTrienPhanMemHuongDichVu_QLKhachSan\\User\\UserApi\\obj\\",
+      "projectPath": "C:\\Users\\Tran Mai Lan\\OneDrive\\Documents\\5th semester\\PTPM\\New folder\\PhatTrienPhanMemHuongDichVu_QLKhachSan\\User\\UserApi\\UserApi.csproj",
+      "packagesPath": "C:\\Users\\Tran Mai Lan\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Tran Mai Lan\\OneDrive\\Documents\\5th semester\\PTPM\\New folder\\PhatTrienPhanMemHuongDichVu_QLKhachSan\\User\\UserApi\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\Dung\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Tran Mai Lan\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
@@ -959,7 +959,7 @@
         "auditLevel": "low",
         "auditMode": "direct"
       },
-      "SdkAnalysisLevel": "9.0.300"
+      "SdkAnalysisLevel": "9.0.200"
     },
     "frameworks": {
       "net8.0": {
@@ -997,7 +997,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.305/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.200/PortableRuntimeIdentifierGraph.json"
       }
     }
   }

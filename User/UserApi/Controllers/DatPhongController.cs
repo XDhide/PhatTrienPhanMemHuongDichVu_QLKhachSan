@@ -10,7 +10,7 @@ namespace HotelManagement.API.Customer.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    [Authorize]
+    //[Authorize]
     public class DatPhongController : ControllerBase
     {
         private readonly DatPhongBLL _bll;
@@ -152,16 +152,37 @@ namespace HotelManagement.API.Customer.Controllers
         }
 
         // POST: api/datphong/{id}/checkin
+        //[HttpPost("{id}/checkin")]
+        //public IActionResult CheckIn(int id, [FromBody] int? maPhong)
+        //{
+        //    try
+        //    {
+        //        string result = _bll.CheckIn(id, maPhong);
+        //        if (result.Contains("Lỗi")) return BadRequest(new { success = false, message = result });
+        //        return Ok(new { success = true, message = result });
+        //    }
+        //    catch (Exception ex) { return StatusCode(500, new { success = false, message = "Lỗi: " + ex.Message }); }
+        //}
+        // POST: api/datphong/{id}/checkin
         [HttpPost("{id}/checkin")]
-        public IActionResult CheckIn(int id, [FromBody] int? maPhong)
+        public IActionResult CheckIn(int id, [FromBody] CheckInRequest request)
         {
             try
             {
-                string result = _bll.CheckIn(id, maPhong);
-                if (result.Contains("Lỗi")) return BadRequest(new { success = false, message = result });
+                string result = _bll.CheckIn(id, request?.MaPhong);
+                if (result.Contains("Lỗi"))
+                    return BadRequest(new { success = false, message = result });
                 return Ok(new { success = true, message = result });
             }
-            catch (Exception ex) { return StatusCode(500, new { success = false, message = "Lỗi: " + ex.Message }); }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { success = false, message = "Lỗi: " + ex.Message });
+            }
+        }
+
+        public class CheckInRequest
+        {
+            public int? MaPhong { get; set; }
         }
 
         // POST: api/datphong/{id}/checkout
