@@ -316,6 +316,78 @@ namespace HotelManagement.API.Accounting.Controllers
         }
 
 
+        [HttpGet("BaoCao")]
+        public IActionResult BaoCao(
+        [FromQuery] string loai = "thang",
+        [FromQuery] int? nam = null,
+        [FromQuery] int? thang = null,
+        [FromQuery] int? tuan = null,
+         [FromQuery] int? ngay = null
+)
+        {
+            try
+            {
+                DataTable dt = _bll.BaoCao();
+                var query = dt.AsEnumerable();
+
+                if (nam.HasValue)
+                    query = query.Where(r => ((DateTime)r["NgayLap"]).Year == nam.Value);
+                if (thang.HasValue)
+                    query = query.Where(r => ((DateTime)r["NgayLap"]).Month == thang.Value);
+                if (ngay.HasValue)
+                    query = query.Where(r => ((DateTime)r["NgayLap"]).Day == ngay.Value);
+
+                // Lọc tuần hoặc quý nếu cần
+                if (loai.ToLower() == "quy" && thang.HasValue)
+                {
+                    int quy = (thang.Value - 1) / 3 + 1;
+                    query = query.Where(r =>
+                    {
+                        int month = ((DateTime)r["NgayLap"]).Month;
+                        int monthQuy = (month - 1) / 3 + 1;
+                        return monthQuy == quy;
+                    });
+                }
+
+                if (loai.ToLower() == "tuan" && tuan.HasValue && nam.HasValue)
+                {
+                    var cul = System.Globalization.CultureInfo.CurrentCulture;
+                    query = query.Where(r =>
+                    {
+                        DateTime dtNgay = (DateTime)r["NgayLap"];
+                        int weekNum = cul.Calendar.GetWeekOfYear(dtNgay, System.Globalization.CalendarWeekRule.FirstDay, DayOfWeek.Monday);
+                        return weekNum == tuan.Value && dtNgay.Year == nam.Value;
+                    });
+                }
+
+                // Tính tổng
+                decimal tongTien = query.Sum(r => Convert.ToDecimal(r["ThanhTien"]));
+                int soPhong = query.Count(r => r["MaDatPhong"] != DBNull.Value);
+                int soHoaDon = query.Select(r => r["MaHD"]).Distinct().Count();
+
+                return Ok(new
+                {
+                    success = true,
+                    message = "Lấy báo cáo tổng hợp thành công",
+                    data = new
+                    {
+                        tongTien,
+                        soPhong,
+                        soHoaDon,
+                        thoiGian = loai.ToLower()
+                    }
+                });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new
+                {
+                    success = false,
+                    message = "Lỗi khi lấy báo cáo: " + ex.Message
+                });
+            }
+        }
+
 
 
 

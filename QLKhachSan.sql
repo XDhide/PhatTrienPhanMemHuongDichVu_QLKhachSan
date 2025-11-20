@@ -999,35 +999,28 @@ GO
 CREATE PROCEDURE sp_HoaDon_DanhSach
 AS
 BEGIN
-    -- Cập nhật giá tất cả hóa đơn trước khi select
-    DECLARE @MaHD INT;
+    SET NOCOUNT ON;
 
-    DECLARE cur CURSOR LOCAL FAST_FORWARD FOR
-        SELECT MaHD FROM HoaDon;
-
-    OPEN cur;
-    FETCH NEXT FROM cur INTO @MaHD;
-
-    WHILE @@FETCH_STATUS = 0
-    BEGIN
-        EXEC sp_LayHoaDonChiTietTheoMaHD @MaHD = @MaHD;
-        FETCH NEXT FROM cur INTO @MaHD;
-    END
-
-    CLOSE cur;
-    DEALLOCATE cur;
-
-    -- Trả kết quả danh sách hóa đơn giống hoàn toàn như trước
-    SELECT hd.*, 
-           k.HoTen AS TenKhach,
-           k.DienThoai,
-           nd.HoTen AS NguoiLap
+    SELECT 
+        hd.MaHD,
+        hd.SoHD,
+        hd.MaKhach,
+        k.HoTen AS TenKhach,
+        k.DienThoai,
+        hd.MaND,
+        nd.HoTen AS NguoiLap,
+        hd.NgayLap,
+        hd.TongTien,
+        hd.HinhThucThanhToan,
+        hd.SoTienDaTra,
+        hd.SoTienConNo
     FROM HoaDon hd
     INNER JOIN Khach k ON hd.MaKhach = k.MaKhach
     INNER JOIN NguoiDung nd ON hd.MaND = nd.MaND
     ORDER BY hd.NgayLap DESC;
 END;
 GO
+
 
 
 -- Lấy 1 hóa đơn
@@ -1140,7 +1133,7 @@ AS
 BEGIN
     SET NOCOUNT ON;
 
-    -- 1. Cập nhật giá các hóa đơn chi tiết phòng theo quy tắc
+    -- 1. Cập nhật giá chi tiết phòng theo quy tắc
     UPDATE cthd
     SET DonGia = 
         CASE 
@@ -1155,16 +1148,20 @@ BEGIN
     INNER JOIN Gia g 
         ON g.MaLoaiPhong = lp.MaLoaiPhong
         AND dp.NgayNhan BETWEEN g.TuNgay AND g.DenNgay
+    INNER JOIN HoaDon hd ON cthd.MaHD = hd.MaHD
     WHERE cthd.MaHD = @MaHD
-          AND cthd.MaDatPhong IS NOT NULL;
+          AND cthd.MaDatPhong IS NOT NULL
+          AND (LEN(hd.HinhThucThanhToan) = 0 OR LEN(hd.HinhThucThanhToan) = 1);
 
-    -- 2. Cập nhật tổng tiền hóa đơn (sử dụng SUM trên computed column ThanhTien)
+    -- 2. Cập nhật tổng tiền hóa đơn (chỉ những hóa đơn hợp lệ)
     UPDATE hd
-    SET TongTien = ISNULL((SELECT SUM(ThanhTien) FROM HoaDonChiTiet WHERE MaHD = @MaHD),0)
-    FROM HoaDon hd
-    WHERE hd.MaHD = @MaHD;
+    SET TongTien = ISNULL((SELECT SUM(ThanhTien) 
+                           FROM HoaDonChiTiet 
+                           WHERE MaHD = @MaHD),0)
+    WHERE hd.MaHD = @MaHD
+          AND (LEN(hd.HinhThucThanhToan) = 0 OR LEN(hd.HinhThucThanhToan) = 1);
 
-    -- 3. Trả kết quả giống hoàn toàn như cũ
+    -- 3. Trả kết quả chi tiết hóa đơn
     SELECT 
         cthd.MaCTHD,
         cthd.MaHD,
@@ -1172,7 +1169,7 @@ BEGIN
         cthd.MaDV,
         cthd.SoLuong,
         cthd.DonGia,
-        cthd.ThanhTien, -- computed column tự động tính
+        cthd.ThanhTien,
         hd.SoHD,
         hd.NgayLap,
         hd.TongTien,
@@ -1184,6 +1181,7 @@ BEGIN
     WHERE cthd.MaHD = @MaHD;
 END;
 GO
+
 
 
 CREATE PROCEDURE sp_CapNhatTinhTrangPhong
@@ -1241,3 +1239,44 @@ BEGIN
 END;
 GO
 
+CREATE PROCEDURE sp_HoaDon_DaThanhToan
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    SELECT 
+        hd.MaHD,
+        hd.SoHD,
+        hd.MaKhach,
+        k.HoTen AS TenKhach,
+        k.DienThoai,
+        hd.MaND,
+        nd.HoTen AS NguoiLap,
+        hd.NgayLap,
+        hd.TongTien,
+        hd.HinhThucThanhToan,
+        hd.SoTienDaTra,
+        hd.SoTienConNo,
+        cthd.MaCTHD,
+        cthd.MaDatPhong,
+        cthd.MaDV,
+        cthd.SoLuong,
+        cthd.DonGia,
+        cthd.ThanhTien,
+        dp.MaDat,
+        p.SoPhong,
+        lp.Ten AS TenLoaiPhong,
+        dv.Ten AS TenDichVu,
+        p.TinhTrang
+    FROM HoaDon hd
+    INNER JOIN Khach k ON hd.MaKhach = k.MaKhach
+    INNER JOIN NguoiDung nd ON hd.MaND = nd.MaND
+    INNER JOIN HoaDonChiTiet cthd ON hd.MaHD = cthd.MaHD
+    LEFT JOIN DatPhong dp ON cthd.MaDatPhong = dp.MaDatPhong
+    LEFT JOIN Phong p ON dp.MaPhong = p.MaPhong
+    LEFT JOIN LoaiPhong lp ON dp.MaLoaiPhong = lp.MaLoaiPhong
+    LEFT JOIN DichVu dv ON cthd.MaDV = dv.MaDV
+    WHERE (p.TinhTrang IS NOT NULL AND LEN(p.TinhTrang) >= 5)
+    ORDER BY hd.NgayLap DESC, hd.MaHD, cthd.MaCTHD;
+END;
+GO

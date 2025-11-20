@@ -27,6 +27,30 @@ namespace DAL
             }
         }
 
+        public DataTable BaoCao()
+        {
+            try
+            {
+                DatabaseConnect.OpenDatabase();
+
+                using (SqlCommand cmd = new SqlCommand("sp_HoaDon_DaThanhToan", DatabaseConnect.Conn))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    DataTable dt = new DataTable();
+                    dt.Load(cmd.ExecuteReader());
+
+                    DatabaseConnect.CloseDatabase();
+                    return dt;
+                }
+            }
+            catch (Exception ex)
+            {
+                DatabaseConnect.CloseDatabase();
+                throw new Exception("Lỗi khi lấy báo cáo: " + ex.Message);
+            }
+        }
+
         public DataTable GetById(int maHD)
         {
             try

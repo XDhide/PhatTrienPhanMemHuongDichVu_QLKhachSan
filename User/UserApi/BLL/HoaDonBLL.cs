@@ -31,7 +31,11 @@ namespace BLL
         {
             return _dal.Payment(maHD, tinhTrang, soTienTra, hinhThucThanhToan);
         }
-
+        
+        public DataTable BaoCao()
+        {
+            return _dal.BaoCao();
+        }
         public string Them(HoaDon obj)
         {
             if (obj == null)
