@@ -999,6 +999,25 @@ GO
 CREATE PROCEDURE sp_HoaDon_DanhSach
 AS
 BEGIN
+    -- Cập nhật giá tất cả hóa đơn trước khi select
+    DECLARE @MaHD INT;
+
+    DECLARE cur CURSOR LOCAL FAST_FORWARD FOR
+        SELECT MaHD FROM HoaDon;
+
+    OPEN cur;
+    FETCH NEXT FROM cur INTO @MaHD;
+
+    WHILE @@FETCH_STATUS = 0
+    BEGIN
+        EXEC sp_LayHoaDonChiTietTheoMaHD @MaHD = @MaHD;
+        FETCH NEXT FROM cur INTO @MaHD;
+    END
+
+    CLOSE cur;
+    DEALLOCATE cur;
+
+    -- Trả kết quả danh sách hóa đơn giống hoàn toàn như trước
     SELECT hd.*, 
            k.HoTen AS TenKhach,
            k.DienThoai,
@@ -1006,9 +1025,10 @@ BEGIN
     FROM HoaDon hd
     INNER JOIN Khach k ON hd.MaKhach = k.MaKhach
     INNER JOIN NguoiDung nd ON hd.MaND = nd.MaND
-    ORDER BY hd.NgayLap DESC
-END
+    ORDER BY hd.NgayLap DESC;
+END;
 GO
+
 
 -- Lấy 1 hóa đơn
 CREATE PROCEDURE sp_HoaDon_ChiTiet
@@ -1120,6 +1140,31 @@ AS
 BEGIN
     SET NOCOUNT ON;
 
+    -- 1. Cập nhật giá các hóa đơn chi tiết phòng theo quy tắc
+    UPDATE cthd
+    SET DonGia = 
+        CASE 
+            WHEN DATEDIFF(HOUR, dp.NgayNhan, dp.NgayTra) <= 3 THEN g.GiaMoiGio
+            WHEN DATEDIFF(HOUR, dp.NgayNhan, dp.NgayTra) > 24 THEN 0.7 * g.GiaMoiGio
+            WHEN CAST(dp.NgayNhan AS TIME) >= '21:00' OR CAST(dp.NgayTra AS TIME) <= '19:00' THEN g.GiaMoiDem
+            ELSE g.GiaMoiGio
+        END
+    FROM HoaDonChiTiet cthd
+    INNER JOIN DatPhong dp ON cthd.MaDatPhong = dp.MaDatPhong
+    INNER JOIN LoaiPhong lp ON dp.MaLoaiPhong = lp.MaLoaiPhong
+    INNER JOIN Gia g 
+        ON g.MaLoaiPhong = lp.MaLoaiPhong
+        AND dp.NgayNhan BETWEEN g.TuNgay AND g.DenNgay
+    WHERE cthd.MaHD = @MaHD
+          AND cthd.MaDatPhong IS NOT NULL;
+
+    -- 2. Cập nhật tổng tiền hóa đơn (sử dụng SUM trên computed column ThanhTien)
+    UPDATE hd
+    SET TongTien = ISNULL((SELECT SUM(ThanhTien) FROM HoaDonChiTiet WHERE MaHD = @MaHD),0)
+    FROM HoaDon hd
+    WHERE hd.MaHD = @MaHD;
+
+    -- 3. Trả kết quả giống hoàn toàn như cũ
     SELECT 
         cthd.MaCTHD,
         cthd.MaHD,
@@ -1127,18 +1172,20 @@ BEGIN
         cthd.MaDV,
         cthd.SoLuong,
         cthd.DonGia,
-        cthd.ThanhTien,
+        cthd.ThanhTien, -- computed column tự động tính
         hd.SoHD,
         hd.NgayLap,
         hd.TongTien,
         hd.HinhThucThanhToan,
         hd.SoTienDaTra,
         hd.SoTienConNo
-    FROM HoaDonChiTiet AS cthd
-    INNER JOIN HoaDon AS hd ON cthd.MaHD = hd.MaHD
+    FROM HoaDonChiTiet cthd
+    INNER JOIN HoaDon hd ON cthd.MaHD = hd.MaHD
     WHERE cthd.MaHD = @MaHD;
 END;
 GO
+
+
 CREATE PROCEDURE sp_CapNhatTinhTrangPhong
     @MaPhong INT,
     @TinhTrang NVARCHAR(50)
