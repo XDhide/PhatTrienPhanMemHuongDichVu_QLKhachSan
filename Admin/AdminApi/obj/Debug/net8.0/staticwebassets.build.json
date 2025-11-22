@@ -1,12 +1,1 @@
-{
-  "Version": 1,
-  "Hash": "udYj+a6F7RXM4XICeT64DhrS7Bu9Zd8EAek8PViyfhU=",
-  "Source": "AdminApi",
-  "BasePath": "_content/AdminApi",
-  "Mode": "Default",
-  "ManifestType": "Build",
-  "ReferencedProjectsConfiguration": [],
-  "DiscoveryPatterns": [],
-  "Assets": [],
-  "Endpoints": []
-}
+{"Version":1,"Hash":"udYj+a6F7RXM4XICeT64DhrS7Bu9Zd8EAek8PViyfhU=","Source":"AdminApi","BasePath":"_content/AdminApi","Mode":"Default","ManifestType":"Build","ReferencedProjectsConfiguration":[],"DiscoveryPatterns":[],"Assets":[],"Endpoints":[]}

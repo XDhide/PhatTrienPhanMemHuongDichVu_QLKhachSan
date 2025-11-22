@@ -26,6 +26,34 @@ namespace DAL
                 throw new Exception("Lỗi khi lấy danh sách: " + ex.Message);
             }
         }
+        public string DoiMatKhau(string tenDangNhap, string matKhauHienTai, string matKhauMoi)
+        {
+            try
+            {
+                DatabaseConnect.OpenDatabase();
+
+                using (SqlCommand cmd = new SqlCommand("sp_DoiMatKhau", DatabaseConnect.Conn))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@TenDangNhap", tenDangNhap);
+                    cmd.Parameters.AddWithValue("@MatKhauHienTai", matKhauHienTai);
+                    cmd.Parameters.AddWithValue("@MatKhauMoi", matKhauMoi);
+
+                    object result = cmd.ExecuteScalar();
+                    return result?.ToString() ?? "Không có phản hồi từ server";
+                }
+            }
+            catch (Exception ex)
+            {
+                return "Lỗi khi đổi mật khẩu: " + ex.Message;
+            }
+            finally
+            {
+               
+                DatabaseConnect.CloseDatabase();
+            }
+        }
+
 
         public DataTable GetById(int maND)
         {

@@ -1259,23 +1259,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\luudi\\.nuget\\packages\\": {},
+    "C:\\Users\\Dung\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\api\\PhatTrienPhanMemHuongDichVu_QLKhachSan\\Gateway\\Gateway\\Gateway.csproj",
+      "projectUniqueName": "D:\\Code\\CODE\\Csharp\\QLKS\\PhatTrienPhanMemHuongDichVu_QLKhachSan\\Gateway\\Gateway\\Gateway.csproj",
       "projectName": "Gateway",
-      "projectPath": "D:\\api\\PhatTrienPhanMemHuongDichVu_QLKhachSan\\Gateway\\Gateway\\Gateway.csproj",
-      "packagesPath": "C:\\Users\\luudi\\.nuget\\packages\\",
-      "outputPath": "D:\\api\\PhatTrienPhanMemHuongDichVu_QLKhachSan\\Gateway\\Gateway\\obj\\",
+      "projectPath": "D:\\Code\\CODE\\Csharp\\QLKS\\PhatTrienPhanMemHuongDichVu_QLKhachSan\\Gateway\\Gateway\\Gateway.csproj",
+      "packagesPath": "C:\\Users\\Dung\\.nuget\\packages\\",
+      "outputPath": "D:\\Code\\CODE\\Csharp\\QLKS\\PhatTrienPhanMemHuongDichVu_QLKhachSan\\Gateway\\Gateway\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\luudi\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Dung\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
@@ -1284,7 +1284,6 @@
       ],
       "sources": {
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-        "C:\\Program Files\\dotnet\\library-packs": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
@@ -1301,9 +1300,9 @@
       "restoreAuditProperties": {
         "enableAudit": "true",
         "auditLevel": "low",
-        "auditMode": "all"
+        "auditMode": "direct"
       },
-      "SdkAnalysisLevel": "9.0.100"
+      "SdkAnalysisLevel": "9.0.300"
     },
     "frameworks": {
       "net8.0": {
@@ -1341,7 +1340,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.100/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.305/PortableRuntimeIdentifierGraph.json"
       }
     }
   }

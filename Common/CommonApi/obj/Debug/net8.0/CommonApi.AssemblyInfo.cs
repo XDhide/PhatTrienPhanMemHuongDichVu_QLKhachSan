@@ -14,11 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("CommonApi")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-<<<<<<< HEAD
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+27ad0972633c4a1a6a85eddfd0e5bd6e9bdfd71f")]
-=======
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+137cb9746477a72c059c85d0a9eeb2021c42ccdb")]
->>>>>>> f29d70f (Phan Quyen API)
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+dbb2bfbe74378b56955ab3f8d77c3a0382adf35e")]
 [assembly: System.Reflection.AssemblyProductAttribute("CommonApi")]
 [assembly: System.Reflection.AssemblyTitleAttribute("CommonApi")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

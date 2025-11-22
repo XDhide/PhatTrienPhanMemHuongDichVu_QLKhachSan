@@ -18,6 +18,10 @@ namespace BLL
         {
             return _dal.GetAll();
         }
+        public string DoiMatKhau(string tenDangNhap, string matKhauHienTai, string matKhauMoi)
+        {
+            return _dal.DoiMatKhau(tenDangNhap, matKhauHienTai, matKhauMoi);
+        }
 
         public DataTable GetById(int maND)
         {

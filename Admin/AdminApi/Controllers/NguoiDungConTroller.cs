@@ -1,9 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Data;
-using BLL;
+﻿using BLL;
 using HotelManagement.Module;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Data;
+using System.Text.Json;
 
 namespace HotelManagement.API.Admin.Controllers
 {
@@ -280,5 +281,58 @@ namespace HotelManagement.API.Admin.Controllers
                 });
             }
         }
+        // PUT: api/nguoidung/changepassword
+        [HttpPut("changepassword")]
+        [Authorize]
+        public IActionResult ChangePassword([FromBody] JsonElement data)
+        {
+            try
+            {
+                string tenDangNhap = data.GetProperty("TenDangNhap").GetString();
+                string matKhauHienTai = data.GetProperty("MatKhauHienTai").GetString();
+                string matKhauMoi = data.GetProperty("MatKhauMoi").GetString();
+
+                if (string.IsNullOrEmpty(tenDangNhap) || string.IsNullOrEmpty(matKhauHienTai) || string.IsNullOrEmpty(matKhauMoi))
+                {
+                    return BadRequest(new
+                    {
+                        success = false,
+                        message = "Thiếu dữ liệu"
+                    });
+                }
+
+                string result = _bll.DoiMatKhau(tenDangNhap, matKhauHienTai, matKhauMoi);
+
+                if (result.Contains("thành công"))
+                {
+                    return Ok(new
+                    {
+                        success = true,
+                        message = result
+                    });
+                }
+                else
+                {
+                    return BadRequest(new
+                    {
+                        success = false,
+                        message = result
+                    });
+                }
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new
+                {
+                    success = false,
+                    message = "Lỗi: " + ex.Message
+                });
+            }
+        }
+
+
+
+
+
     }
 }
