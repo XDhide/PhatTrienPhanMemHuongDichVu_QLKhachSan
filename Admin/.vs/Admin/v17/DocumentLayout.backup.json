@@ -3,12 +3,16 @@
   "WorkspaceRootPath": "D:\\Code\\CODE\\Csharp\\QLKS\\PhatTrienPhanMemHuongDichVu_QLKhachSan\\Admin\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{41125255-7D76-4202-8281-951CB93B6F7E}|AdminApi\\AdminApi.csproj|d:\\code\\code\\csharp\\qlks\\phattrienphanmemhuongdichvu_qlkhachsan\\admin\\adminapi\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{41125255-7D76-4202-8281-951CB93B6F7E}|AdminApi\\AdminApi.csproj|solutionrelative:adminapi\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{41125255-7D76-4202-8281-951CB93B6F7E}|AdminApi\\AdminApi.csproj|d:\\code\\code\\csharp\\qlks\\phattrienphanmemhuongdichvu_qlkhachsan\\admin\\adminapi\\controllers\\logincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{41125255-7D76-4202-8281-951CB93B6F7E}|AdminApi\\AdminApi.csproj|solutionrelative:adminapi\\controllers\\logincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{41125255-7D76-4202-8281-951CB93B6F7E}|AdminApi\\AdminApi.csproj|d:\\code\\code\\csharp\\qlks\\phattrienphanmemhuongdichvu_qlkhachsan\\admin\\adminapi\\controllers\\nguoidungcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{41125255-7D76-4202-8281-951CB93B6F7E}|AdminApi\\AdminApi.csproj|solutionrelative:adminapi\\controllers\\nguoidungcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{41125255-7D76-4202-8281-951CB93B6F7E}|AdminApi\\AdminApi.csproj|d:\\code\\code\\csharp\\qlks\\phattrienphanmemhuongdichvu_qlkhachsan\\admin\\adminapi\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{41125255-7D76-4202-8281-951CB93B6F7E}|AdminApi\\AdminApi.csproj|solutionrelative:adminapi\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{41125255-7D76-4202-8281-951CB93B6F7E}|AdminApi\\AdminApi.csproj|d:\\code\\code\\csharp\\qlks\\phattrienphanmemhuongdichvu_qlkhachsan\\admin\\adminapi\\model\\nguoidung.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -25,10 +29,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{41125255-7D76-4202-8281-951CB93B6F7E}|AdminApi\\AdminApi.csproj|d:\\code\\code\\csharp\\qlks\\phattrienphanmemhuongdichvu_qlkhachsan\\admin\\adminapi\\bll\\nguoidungbll.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{41125255-7D76-4202-8281-951CB93B6F7E}|AdminApi\\AdminApi.csproj|solutionrelative:adminapi\\bll\\nguoidungbll.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{41125255-7D76-4202-8281-951CB93B6F7E}|AdminApi\\AdminApi.csproj|d:\\code\\code\\csharp\\qlks\\phattrienphanmemhuongdichvu_qlkhachsan\\admin\\adminapi\\controllers\\nguoidungcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{41125255-7D76-4202-8281-951CB93B6F7E}|AdminApi\\AdminApi.csproj|solutionrelative:adminapi\\controllers\\nguoidungcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{41125255-7D76-4202-8281-951CB93B6F7E}|AdminApi\\AdminApi.csproj|d:\\code\\code\\csharp\\qlks\\phattrienphanmemhuongdichvu_qlkhachsan\\admin\\adminapi\\controllers\\passwordresetcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -50,7 +50,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 8,
           "Children": [
             {
               "$type": "Bookmark",
@@ -58,7 +58,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 2,
               "Title": "Program.cs",
               "DocumentMoniker": "D:\\Code\\CODE\\Csharp\\QLKS\\PhatTrienPhanMemHuongDichVu_QLKhachSan\\Admin\\AdminApi\\Program.cs",
               "RelativeDocumentMoniker": "AdminApi\\Program.cs",
@@ -66,12 +66,11 @@
               "RelativeToolTip": "AdminApi\\Program.cs",
               "ViewState": "AgIAAA0AAAAAAAAAAAAAACkAAABGAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-11T13:18:38.823Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-11T13:18:38.823Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 3,
               "Title": "NguoiDung.cs",
               "DocumentMoniker": "D:\\Code\\CODE\\Csharp\\QLKS\\PhatTrienPhanMemHuongDichVu_QLKhachSan\\Admin\\AdminApi\\Model\\NguoiDung.cs",
               "RelativeDocumentMoniker": "AdminApi\\Model\\NguoiDung.cs",
@@ -79,12 +78,11 @@
               "RelativeToolTip": "AdminApi\\Model\\NguoiDung.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAqAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-11T13:16:09.987Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-11T13:16:09.987Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 5,
               "Title": "DatabaseConnect.cs",
               "DocumentMoniker": "D:\\Code\\CODE\\Csharp\\QLKS\\PhatTrienPhanMemHuongDichVu_QLKhachSan\\Admin\\AdminApi\\DAL\\DatabaseConnect.cs",
               "RelativeDocumentMoniker": "AdminApi\\DAL\\DatabaseConnect.cs",
@@ -92,12 +90,11 @@
               "RelativeToolTip": "AdminApi\\DAL\\DatabaseConnect.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-11T13:14:40.588Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-11T13:14:40.588Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 6,
               "Title": "NguoiDungBLL.cs",
               "DocumentMoniker": "D:\\Code\\CODE\\Csharp\\QLKS\\PhatTrienPhanMemHuongDichVu_QLKhachSan\\Admin\\AdminApi\\BLL\\NguoiDungBLL.cs",
               "RelativeDocumentMoniker": "AdminApi\\BLL\\NguoiDungBLL.cs",
@@ -105,12 +102,11 @@
               "RelativeToolTip": "AdminApi\\BLL\\NguoiDungBLL.cs",
               "ViewState": "AgIAAAYAAAAAAAAAAAAqwBIAAAAeAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-11T13:14:55.387Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-11T13:14:55.387Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 4,
               "Title": "NguoiDungDAL.cs",
               "DocumentMoniker": "D:\\Code\\CODE\\Csharp\\QLKS\\PhatTrienPhanMemHuongDichVu_QLKhachSan\\Admin\\AdminApi\\DAL\\NguoiDungDAL.cs",
               "RelativeDocumentMoniker": "AdminApi\\DAL\\NguoiDungDAL.cs",
@@ -118,21 +114,19 @@
               "RelativeToolTip": "AdminApi\\DAL\\NguoiDungDAL.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAF4AAAAjAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-11T13:14:42.792Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-11T13:14:42.792Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 1,
               "Title": "NguoiDungConTroller.cs",
               "DocumentMoniker": "D:\\Code\\CODE\\Csharp\\QLKS\\PhatTrienPhanMemHuongDichVu_QLKhachSan\\Admin\\AdminApi\\Controllers\\NguoiDungConTroller.cs",
               "RelativeDocumentMoniker": "AdminApi\\Controllers\\NguoiDungConTroller.cs",
               "ToolTip": "D:\\Code\\CODE\\Csharp\\QLKS\\PhatTrienPhanMemHuongDichVu_QLKhachSan\\Admin\\AdminApi\\Controllers\\NguoiDungConTroller.cs",
               "RelativeToolTip": "AdminApi\\Controllers\\NguoiDungConTroller.cs",
-              "ViewState": "AgIAACQAAAAAAAAAAAAowAAAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAGgAAAAAAAAAAAAwwAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-11T13:13:12.463Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-11T13:13:12.463Z"
             },
             {
               "$type": "Document",
@@ -144,18 +138,17 @@
               "RelativeToolTip": "AdminApi\\Controllers\\PasswordResetController.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-11T13:13:10.908Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-11T13:13:10.908Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 0,
               "Title": "LoginConTroller.cs",
               "DocumentMoniker": "D:\\Code\\CODE\\Csharp\\QLKS\\PhatTrienPhanMemHuongDichVu_QLKhachSan\\Admin\\AdminApi\\Controllers\\LoginConTroller.cs",
               "RelativeDocumentMoniker": "AdminApi\\Controllers\\LoginConTroller.cs",
               "ToolTip": "D:\\Code\\CODE\\Csharp\\QLKS\\PhatTrienPhanMemHuongDichVu_QLKhachSan\\Admin\\AdminApi\\Controllers\\LoginConTroller.cs",
               "RelativeToolTip": "AdminApi\\Controllers\\LoginConTroller.cs",
-              "ViewState": "AgIAACgAAAAAAAAAAAAAADwAAAASAAAAAAAAAA==",
+              "ViewState": "AgIAAB8AAAAAAAAAAAAAAEYAAAANAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-11-11T13:08:07.856Z",
               "EditorCaption": ""
@@ -170,8 +163,7 @@
               "RelativeToolTip": "AdminApi\\Properties\\launchSettings.json",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAAvAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2025-10-14T14:05:22.097Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-14T14:05:22.097Z"
             },
             {
               "$type": "Document",
@@ -183,8 +175,7 @@
               "RelativeToolTip": "AdminApi\\AdminApi.csproj",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
-              "WhenOpened": "2025-10-13T13:41:16.129Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-13T13:41:16.129Z"
             }
           ]
         }

@@ -27,6 +27,30 @@ namespace DAL
             }
         }
 
+        public DataTable BaoCao()
+        {
+            try
+            {
+                DatabaseConnect.OpenDatabase();
+
+                using (SqlCommand cmd = new SqlCommand("sp_HoaDon_DaThanhToan", DatabaseConnect.Conn))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    DataTable dt = new DataTable();
+                    dt.Load(cmd.ExecuteReader());
+
+                    DatabaseConnect.CloseDatabase();
+                    return dt;
+                }
+            }
+            catch (Exception ex)
+            {
+                DatabaseConnect.CloseDatabase();
+                throw new Exception("Lỗi khi lấy báo cáo: " + ex.Message);
+            }
+        }
+
         public DataTable GetById(int maHD)
         {
             try
@@ -65,7 +89,7 @@ namespace DAL
                 throw new Exception("Lỗi khi lấy chi tiết: " + ex.Message);
             }
         }
-        public string Payment(int maHD, string tinhTrang)
+        public string Payment(int maHD, string tinhTrang, decimal soTienTra, string hinhThucThanhToan)
         {
             try
             {
@@ -74,21 +98,25 @@ namespace DAL
                 using (SqlCommand cmd = new SqlCommand("sp_CapNhatTinhTrangPhong_TuHoaDon", DatabaseConnect.Conn))
                 {
                     cmd.CommandType = CommandType.StoredProcedure;
+
                     cmd.Parameters.AddWithValue("@MaHD", maHD);
                     cmd.Parameters.AddWithValue("@TinhTrang", tinhTrang);
+                    cmd.Parameters.AddWithValue("@SoTienTra", soTienTra);
+                    cmd.Parameters.AddWithValue("@HinhThucThanhToan", hinhThucThanhToan);
 
                     cmd.ExecuteNonQuery();
                 }
 
                 DatabaseConnect.CloseDatabase();
-                return "Cập nhật tình trạng phòng thành công.";
+                return "Cập nhật thanh toán và tình trạng phòng thành công.";
             }
             catch (Exception ex)
             {
                 DatabaseConnect.CloseDatabase();
-                throw new Exception("Lỗi khi cập nhật tình trạng phòng: " + ex.Message);
+                throw new Exception("Lỗi khi cập nhật thanh toán và tình trạng phòng: " + ex.Message);
             }
         }
+
 
 
         public string Them(HoaDon obj)

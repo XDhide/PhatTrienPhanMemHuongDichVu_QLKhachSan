@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Data;
 using System.Data.SqlClient;
 using HotelManagement.Module;
@@ -100,7 +100,7 @@ namespace DAL
                 cmd.Parameters.AddWithValue("@TrangThai", obj.TrangThai);
                 cmd.Parameters.AddWithValue("@NguoiTao", (object)obj.NguoiTao ?? DBNull.Value);
                 //cmd.Parameters.AddWithValue("@NgayTao", obj.NgayTao == default(DateTime) ? (object)DBNull.Value : obj.NgayTao);
-                //cmd.Parameters.AddWithValue("@GhiChu", (object)obj.GhiChu ?? DBNull.Value);
+                cmd.Parameters.AddWithValue("@GhiChu", (object)obj.GhiChu ?? DBNull.Value);
                 cmd.ExecuteNonQuery();
                 return "Sửa DatPhong thành công";
             }

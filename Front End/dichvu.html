@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dịch Vụ - Hotel Management</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f5f7fa;
+            min-height: 100vh;
+        }
+
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 250px;
+            height: 100vh;
+            background: linear-gradient(180deg, #2d5016 0%, #1a3009 100%);
+            color: white;
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid rgba(255,255,255,0.2);
+        }
+
+        .logo h1 {
+            font-size: 24px;
+            color: white;
+        }
+
+        .logo-subtitle {
+            color: rgba(255,255,255,0.7);
+            font-size: 12px;
+            margin-top: 5px;
+        }
+
+        .menu {
+            margin-top: 30px;
+        }
+
+        .menu-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 15px;
+            margin-bottom: 8px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            color: white;
+            text-decoration: none;
+        }
+
+        .menu-item:hover {
+            background: rgba(255,255,255,0.1);
+        }
+
+        .menu-item.active {
+            background: rgba(255,255,255,0.15);
+        }
+
+        .main-content {
+            margin-left: 250px;
+            padding: 20px;
+        }
+
+        .top-bar {
+            background: white;
+            padding: 15px 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            background: #2d5016;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        .tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 25px;
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .tab-btn {
+            flex: 1;
+            padding: 12px 20px;
+            border: none;
+            background: #f0f0f0;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 15px;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+
+        .tab-btn.active {
+            background: #2d5016;
+            color: white;
+        }
+
+        .content-card {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .action-bar {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+
+        .btn-primary {
+            background: #2d5016;
+            color: white;
+        }
+
+        .btn-success {
+            background: #28a745;
+            color: white;
+        }
+
+        .btn-warning {
+            background: #ffc107;
+            color: #333;
+        }
+
+        .btn-danger {
+            background: #dc3545;
+            color: white;
+        }
+
+        .service-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .service-card {
+            border: 2px solid #e0e0e0;
+            padding: 20px;
+            border-radius: 12px;
+            transition: all 0.3s;
+        }
+
+        .service-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .service-icon {
+            font-size: 40px;
+            margin-bottom: 10px;
+        }
+
+        .service-name {
+            font-size: 18px;
+            font-weight: 600;
+            color: #2d5016;
+            margin-bottom: 8px;
+        }
+
+        .service-price {
+            font-size: 22px;
+            font-weight: 700;
+            color: #28a745;
+            margin: 10px 0;
+        }
+
+        .service-code {
+            font-size: 12px;
+            color: #999;
+            margin-bottom: 5px;
+        }
+
+        .service-tax {
+            font-size: 13px;
+            color: #666;
+        }
+
+        .service-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .service-actions button {
+            flex: 1;
+            padding: 8px;
+            font-size: 13px;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.7);
+            z-index: 1000;
+            overflow-y: auto;
+        }
+
+        .modal.show {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            max-width: 600px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            font-size: 28px;
+            cursor: pointer;
+            color: #999;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 14px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        th {
+            background: #f8f9fa;
+            font-weight: 600;
+        }
+
+        .booking-select {
+            margin-bottom: 20px;
+        }
+
+        .service-usage-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            margin-bottom: 10px;
+        }
+
+        .api-note {
+            background: #fff3cd;
+            border: 2px solid #ffc107;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .api-note h4 {
+            color: #856404;
+            margin-bottom: 10px;
+        }
+
+        .api-note code {
+            background: rgba(0,0,0,0.1);
+            padding: 2px 6px;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <div class="logo">
+            <span>🏨</span>
+            <div>
+                <h1>HOTEL</h1>
+                <div class="logo-subtitle">Quản Lý Khách Sạn</div>
+            </div>
+        </div>
+
+        <div class="menu">
+          <a href="/management.html" class="menu-item">
+                <span>🏠</span>
+                <span>Trang chủ</span>
+            </a>
+            <a href="/rooms.html" class="menu-item">
+                <span>🚪</span>
+                <span>Danh Mục Phòng</span>
+            </a>
+            <a href="/booking.html" class="menu-item ">
+                <span>📅</span>
+                <span>Đặt phòng</span>
+            </a>
+            <a href="/thanhtoan.html" class="menu-item">
+                <span>💳</span>
+                <span>Thanh toán</span>
+            </a>
+            <a href="/checkinout.html" class="menu-item ">
+                <span>✅</span>
+                <span>Check In/Out</span>
+            </a>
+            <a href="/dichvu.html" class="menu-item active">
+                <span>🛎️</span>
+                <span>Dịch Vụ</span>
+            </a>
+            <a href="/hoadon.html" class="menu-item">
+                <span>💰</span>
+                <span>Hóa Đơn</span>
+            </a>
+            <a href="/baocao.html" class="menu-item " >
+                <span>📊</span>
+                <span>Báo Cáo</span>
+            </a>
+        </div>
+    </div>
+
+    <div class="main-content">
+        <div class="top-bar">
+            <h2>Quản Lý Dịch Vụ</h2>
+            <div class="user-avatar">A</div>
+        </div>
+
+        <div class="api-note">
+            <h4>📌 API Endpoints (đang demo):</h4>
+            <p><strong>GET /api-admin/DichVu</strong> - Danh sách dịch vụ</p>
+            <p><strong>POST /api-admin/DichVu</strong> - Thêm dịch vụ mới</p>
+            <p><strong>PUT /api-admin/DichVu/{id}</strong> - Cập nhật</p>
+            <p><strong>POST /api-admin/SuDungDichVu</strong> - Ghi nhận sử dụng dịch vụ cho booking</p>
+        </div>
+
+        <div class="tabs">
+            <button class="tab-btn active" onclick="switchTab('list')">Danh Sách Dịch Vụ</button>
+            <button class="tab-btn" onclick="switchTab('usage')">Sử Dụng Dịch Vụ</button>
+        </div>
+
+        <div class="content-card" id="listTab">
+            <div class="action-bar">
+                <h3>Danh sách dịch vụ</h3>
+                <button class="btn btn-primary" onclick="openAddModal()">➕ Thêm Dịch Vụ</button>
+            </div>
+            <div class="service-grid" id="serviceGrid"></div>
+        </div>
+
+        <div class="content-card" id="usageTab" style="display: none;">
+            <h3>Ghi nhận sử dụng dịch vụ</h3>
+            
+            <div class="booking-select">
+                <label><strong>Chọn đặt phòng:</strong></label>
+                <select id="bookingSelect" onchange="loadBookingServices()">
+                    <option value="">-- Chọn booking --</option>
+                </select>
+            </div>
+
+            <div id="selectedBookingInfo" style="margin: 20px 0;"></div>
+            
+            <div id="serviceUsageList"></div>
+            
+            <button class="btn btn-primary" onclick="openAddServiceModal()">➕ Thêm Dịch Vụ</button>
+        </div>
+    </div>
+
+    <!-- Add/Edit Service Modal -->
+    <div id="serviceModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modalTitle">Thêm Dịch Vụ</h2>
+                <button class="close-btn" onclick="closeModal('serviceModal')">&times;</button>
+            </div>
+            <form id="serviceForm">
+                <div class="form-group">
+                    <label>Mã dịch vụ *</label>
+                    <input type="text" id="serviceMa" required>
+                </div>
+                <div class="form-group">
+                    <label>Tên dịch vụ *</label>
+                    <input type="text" id="serviceTen" required>
+                </div>
+                <div class="form-group">
+                    <label>Đơn giá (VNĐ) *</label>
+                    <input type="number" id="serviceDonGia" min="0" required>
+                </div>
+                <div class="form-group">
+                    <label>Thuế (%) *</label>
+                    <input type="number" id="serviceThue" min="0" max="100" value="10" required>
+                </div>
+                <button type="submit" class="btn btn-success" style="width: 100%;">💾 Lưu</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Add Service Usage Modal -->
+    <div id="addServiceUsageModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Thêm Dịch Vụ Cho Khách</h2>
+                <button class="close-btn" onclick="closeModal('addServiceUsageModal')">&times;</button>
+            </div>
+            <form id="serviceUsageForm">
+                <div class="form-group">
+                    <label>Chọn dịch vụ *</label>
+                    <select id="usageServiceId" required>
+                        <option value="">-- Chọn --</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Số lượng *</label>
+                    <input type="number" id="usageQuantity" min="1" value="1" required>
+                </div>
+                <div class="form-group">
+                    <label>Ghi chú</label>
+                    <input type="text" id="usageNote">
+                </div>
+                <button type="submit" class="btn btn-success" style="width: 100%;">✅ Xác Nhận</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        const demoServices = [
+            { maDV: 1, ma: 'BREAKFAST', ten: 'Bữa sáng buffet', donGia: 250000, thue: 10 },
+            { maDV: 2, ma: 'LUNCH', ten: 'Bữa trưa set menu', donGia: 350000, thue: 10 },
+            { maDV: 3, ma: 'DINNER', ten: 'Bữa tối cao cấp', donGia: 500000, thue: 10 },
+            { maDV: 4, ma: 'MASSAGE', ten: 'Massage thư giãn 60 phút', donGia: 800000, thue: 10 },
+            { maDV: 5, ma: 'SPA', ten: 'Gói spa toàn thân', donGia: 1200000, thue: 10 },
+            { maDV: 6, ma: 'LAUNDRY', ten: 'Giặt là nhanh', donGia: 150000, thue: 10 },
+            { maDV: 7, ma: 'AIRPORT', ten: 'Đưa đón sân bay', donGia: 300000, thue: 10 },
+            { maDV: 10, ma: 'MINIBAR', ten: 'Mini bar phòng', donGia: 200000, thue: 10 },
+            { maDV: 11, ma: 'WIFI', ten: 'WiFi cao tốc 24h', donGia: 100000, thue: 0 },
+            { maDV: 12, ma: 'GYM', ten: 'Phòng gym 1 ngày', donGia: 200000, thue: 10 }
+        ];
+
+        const demoBookings = [
+            { maDatPhong: 18, maDat: 'DP018', tenKhach: 'Trần Thế Thiên', soPhong: '303', trangThai: 'DaNhan' },
+            { maDatPhong: 19, maDat: 'DP019', tenKhach: 'Nguyễn Thị Hòa', soPhong: '104', trangThai: 'DaNhan' }
+        ];
+
+        let serviceUsages = [];
+        let currentBooking = null;
+        let editingService = null;
+
+        function displayServices() {
+            const grid = document.getElementById('serviceGrid');
+            grid.innerHTML = demoServices.map(s => `
+                <div class="service-card">
+                    <div class="service-icon">🛎️</div>
+                    <div class="service-code">Mã: ${s.ma}</div>
+                    <div class="service-name">${s.ten}</div>
+                    <div class="service-price">${formatPrice(s.donGia)}</div>
+                    <div class="service-tax">Thuế: ${s.thue}%</div>
+                    <div class="service-actions">
+                        <button class="btn btn-warning" onclick='editService(${JSON.stringify(s)})'>✏️</button>
+                        <button class="btn btn-danger" onclick='deleteService(${s.maDV})'>🗑️</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function loadBookingsForUsage() {
+            const select = document.getElementById('bookingSelect');
+            select.innerHTML = '<option value="">-- Chọn booking --</option>' +
+                demoBookings.map(b => 
+                    `<option value="${b.maDatPhong}">${b.maDat} - ${b.tenKhach} - Phòng ${b.soPhong}</option>`
+                ).join('');
+        }
+
+        function loadBookingServices() {
+            const bookingId = document.getElementById('bookingSelect').value;
+            if (!bookingId) {
+                document.getElementById('selectedBookingInfo').innerHTML = '';
+                document.getElementById('serviceUsageList').innerHTML = '';
+                return;
+            }
+
+            currentBooking = demoBookings.find(b => b.maDatPhong == bookingId);
+            
+            document.getElementById('selectedBookingInfo').innerHTML = `
+                <div style="background: #e8f5e9; padding: 15px; border-radius: 8px;">
+                    <strong>Booking:</strong> ${currentBooking.maDat} - ${currentBooking.tenKhach}<br>
+                    <strong>Phòng:</strong> ${currentBooking.soPhong}
+                </div>
+            `;
+
+            const usages = serviceUsages.filter(u => u.bookingId == bookingId);
+            displayServiceUsages(usages);
+        }
+
+        function displayServiceUsages(usages) {
+            const container = document.getElementById('serviceUsageList');
+            
+            if (usages.length === 0) {
+                container.innerHTML = '<p style="color: #999; padding: 20px; text-align: center;">Chưa sử dụng dịch vụ nào</p>';
+                return;
+            }
+
+            let total = 0;
+            let html = usages.map(u => {
+                const service = demoServices.find(s => s.maDV == u.serviceId);
+                const amount = service.donGia * u.quantity;
+                total += amount;
+                
+                return `
+                    <div class="service-usage-item">
+                        <div>
+                            <strong>${service.ten}</strong><br>
+                            <small>${formatPrice(service.donGia)} x ${u.quantity} = ${formatPrice(amount)}</small>
+                        </div>
+                        <button class="btn btn-danger" onclick="removeServiceUsage(${u.id})">🗑️</button>
+                    </div>
+                `;
+            }).join('');
+
+            html += `<div style="margin-top: 20px; padding: 15px; background: #f0f0f0; border-radius: 8px;">
+                <strong>Tổng cộng:</strong> <span style="font-size: 20px; color: #2d5016;">${formatPrice(total)}</span>
+            </div>`;
+
+            container.innerHTML = html;
+        }
+
+        function switchTab(tab) {
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            if (tab === 'list') {
+                document.getElementById('listTab').style.display = 'block';
+                document.getElementById('usageTab').style.display = 'none';
+            } else {
+                document.getElementById('listTab').style.display = 'none';
+                document.getElementById('usageTab').style.display = 'block';
+                loadBookingsForUsage();
+            }
+        }
+
+        function openAddModal() {
+            editingService = null;
+            document.getElementById('modalTitle').textContent = 'Thêm Dịch Vụ';
+            document.getElementById('serviceForm').reset();
+            document.getElementById('serviceModal').classList.add('show');
+        }
+
+        function editService(service) {
+            editingService = service;
+            document.getElementById('modalTitle').textContent = 'Sửa Dịch Vụ';
+            document.getElementById('serviceMa').value = service.ma;
+            document.getElementById('serviceTen').value = service.ten;
+            document.getElementById('serviceDonGia').value = service.donGia;
+            document.getElementById('serviceThue').value = service.thue;
+            document.getElementById('serviceModal').classList.add('show');
+        }
+
+        function deleteService(id) {
+            if (confirm('Xác nhận xóa dịch vụ này?')) {
+                console.log('Delete service:', id);
+                alert('Đã xóa! API: DELETE /api-admin/DichVu/' + id);
+            }
+        }
+
+        function openAddServiceModal() {
+            if (!currentBooking) {
+                alert('Vui lòng chọn booking trước!');
+                return;
+            }
+
+            const select = document.getElementById('usageServiceId');
+            select.innerHTML = '<option value="">-- Chọn --</option>' +
+                demoServices.map(s => `<option value="${s.maDV}">${s.ten} - ${formatPrice(s.donGia)}</option>`).join('');
+            
+            document.getElementById('serviceUsageForm').reset();
+            document.getElementById('addServiceUsageModal').classList.add('show');
+        }
+
+        function removeServiceUsage(id) {
+            serviceUsages = serviceUsages.filter(u => u.id !== id);
+            loadBookingServices();
+        }
+
+        function closeModal(id) {
+            document.getElementById(id).classList.remove('show');
+        }
+
+        function formatPrice(price) {
+            return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(price);
+        }
+
+        document.getElementById('serviceForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const data = {
+                ma: document.getElementById('serviceMa').value,
+                ten: document.getElementById('serviceTen').value,
+                donGia: document.getElementById('serviceDonGia').value,
+                thue: document.getElementById('serviceThue').value
+            };
+            
+            console.log(editingService ? 'Update' : 'Create', data);
+            alert(`${editingService ? 'Cập nhật' : 'Thêm'} thành công!\nAPI: ${editingService ? 'PUT' : 'POST'} /api-admin/DichVu`);
+            closeModal('serviceModal');
+        });
+
+        document.getElementById('serviceUsageForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            const usage = {
+                id: Date.now(),
+                bookingId: currentBooking.maDatPhong,
+                serviceId: document.getElementById('usageServiceId').value,
+                quantity: parseInt(document.getElementById('usageQuantity').value),
+                note: document.getElementById('usageNote').value
+            };
+            
+            serviceUsages.push(usage);
+            console.log('Add service usage:', usage);
+            
+            alert('Đã thêm dịch vụ!\nAPI: POST /api-admin/SuDungDichVu');
+            closeModal('addServiceUsageModal');
+            loadBookingServices();
+        });
+
+        displayServices();
+    </script>
+</body>
+</html>

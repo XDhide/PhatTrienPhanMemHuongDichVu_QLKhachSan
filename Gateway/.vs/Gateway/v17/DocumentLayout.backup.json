@@ -3,24 +3,24 @@
   "WorkspaceRootPath": "D:\\Code\\CODE\\Csharp\\QLKS\\PhatTrienPhanMemHuongDichVu_QLKhachSan\\Gateway\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{31735F95-A092-4268-934E-D48A19B139EC}|Gateway\\Gateway.csproj|d:\\code\\code\\csharp\\qlks\\phattrienphanmemhuongdichvu_qlkhachsan\\gateway\\gateway\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{31735F95-A092-4268-934E-D48A19B139EC}|Gateway\\Gateway.csproj|solutionrelative:gateway\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{31735F95-A092-4268-934E-D48A19B139EC}|Gateway\\Gateway.csproj|d:\\code\\code\\csharp\\qlks\\phattrienphanmemhuongdichvu_qlkhachsan\\gateway\\gateway\\gateway.http||{5703B403-55E7-4C63-8C88-A8F52C7A45C5}",
+      "RelativeMoniker": "D:0:0:{31735F95-A092-4268-934E-D48A19B139EC}|Gateway\\Gateway.csproj|solutionrelative:gateway\\gateway.http||{5703B403-55E7-4C63-8C88-A8F52C7A45C5}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{31735F95-A092-4268-934E-D48A19B139EC}|Gateway\\Gateway.csproj|d:\\code\\code\\csharp\\qlks\\phattrienphanmemhuongdichvu_qlkhachsan\\gateway\\gateway\\gateway.csproj||{04B8AB82-A572-4FEF-95CE-5222444B6B64}|",
+      "RelativeMoniker": "D:0:0:{31735F95-A092-4268-934E-D48A19B139EC}|Gateway\\Gateway.csproj|solutionrelative:gateway\\gateway.csproj||{04B8AB82-A572-4FEF-95CE-5222444B6B64}|"
     },
     {
       "AbsoluteMoniker": "D:0:0:{31735F95-A092-4268-934E-D48A19B139EC}|Gateway\\Gateway.csproj|d:\\code\\code\\csharp\\qlks\\phattrienphanmemhuongdichvu_qlkhachsan\\gateway\\gateway\\ocelot.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
       "RelativeMoniker": "D:0:0:{31735F95-A092-4268-934E-D48A19B139EC}|Gateway\\Gateway.csproj|solutionrelative:gateway\\ocelot.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{31735F95-A092-4268-934E-D48A19B139EC}|Gateway\\Gateway.csproj|d:\\code\\code\\csharp\\qlks\\phattrienphanmemhuongdichvu_qlkhachsan\\gateway\\gateway\\gateway.http||{5703B403-55E7-4C63-8C88-A8F52C7A45C5}",
-      "RelativeMoniker": "D:0:0:{31735F95-A092-4268-934E-D48A19B139EC}|Gateway\\Gateway.csproj|solutionrelative:gateway\\gateway.http||{5703B403-55E7-4C63-8C88-A8F52C7A45C5}"
+      "AbsoluteMoniker": "D:0:0:{31735F95-A092-4268-934E-D48A19B139EC}|Gateway\\Gateway.csproj|d:\\code\\code\\csharp\\qlks\\phattrienphanmemhuongdichvu_qlkhachsan\\gateway\\gateway\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{31735F95-A092-4268-934E-D48A19B139EC}|Gateway\\Gateway.csproj|solutionrelative:gateway\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{31735F95-A092-4268-934E-D48A19B139EC}|Gateway\\Gateway.csproj|d:\\code\\code\\csharp\\qlks\\phattrienphanmemhuongdichvu_qlkhachsan\\gateway\\gateway\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
       "RelativeMoniker": "D:0:0:{31735F95-A092-4268-934E-D48A19B139EC}|Gateway\\Gateway.csproj|solutionrelative:gateway\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{31735F95-A092-4268-934E-D48A19B139EC}|Gateway\\Gateway.csproj|d:\\code\\code\\csharp\\qlks\\phattrienphanmemhuongdichvu_qlkhachsan\\gateway\\gateway\\gateway.csproj||{04B8AB82-A572-4FEF-95CE-5222444B6B64}|",
-      "RelativeMoniker": "D:0:0:{31735F95-A092-4268-934E-D48A19B139EC}|Gateway\\Gateway.csproj|solutionrelative:gateway\\gateway.csproj||{04B8AB82-A572-4FEF-95CE-5222444B6B64}|"
     },
     {
       "AbsoluteMoniker": "D:0:0:{31735F95-A092-4268-934E-D48A19B139EC}|Gateway\\Gateway.csproj|d:\\code\\code\\csharp\\qlks\\phattrienphanmemhuongdichvu_qlkhachsan\\gateway\\gateway\\properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
@@ -38,7 +38,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 6,
+          "SelectedChildIndex": 1,
           "Children": [
             {
               "$type": "Bookmark",
@@ -46,7 +46,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 0,
               "Title": "Gateway.http",
               "DocumentMoniker": "D:\\Code\\CODE\\Csharp\\QLKS\\PhatTrienPhanMemHuongDichVu_QLKhachSan\\Gateway\\Gateway\\Gateway.http",
               "RelativeDocumentMoniker": "Gateway\\Gateway.http",
@@ -59,7 +59,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 4,
               "Title": "appsettings.json",
               "DocumentMoniker": "D:\\Code\\CODE\\Csharp\\QLKS\\PhatTrienPhanMemHuongDichVu_QLKhachSan\\Gateway\\Gateway\\appsettings.json",
               "RelativeDocumentMoniker": "Gateway\\appsettings.json",
@@ -67,20 +67,18 @@
               "RelativeToolTip": "Gateway\\appsettings.json",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2025-10-16T08:09:24.886Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-16T08:09:24.886Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 1,
               "Title": "Gateway",
               "DocumentMoniker": "D:\\Code\\CODE\\Csharp\\QLKS\\PhatTrienPhanMemHuongDichVu_QLKhachSan\\Gateway\\Gateway\\Gateway.csproj",
               "RelativeDocumentMoniker": "Gateway\\Gateway.csproj",
               "ToolTip": "D:\\Code\\CODE\\Csharp\\QLKS\\PhatTrienPhanMemHuongDichVu_QLKhachSan\\Gateway\\Gateway\\Gateway.csproj",
               "RelativeToolTip": "Gateway\\Gateway.csproj",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
-              "WhenOpened": "2025-10-16T08:09:30.263Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-16T08:09:30.263Z"
             },
             {
               "$type": "Document",
@@ -92,8 +90,7 @@
               "RelativeToolTip": "Gateway\\Properties\\launchSettings.json",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABgAAAAcAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2025-10-14T14:04:19.001Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-14T14:04:19.001Z"
             },
             {
               "$type": "Document",
@@ -101,16 +98,15 @@
               "Title": "Gateway.csproj",
               "DocumentMoniker": "D:\\Code\\CODE\\Csharp\\QLKS\\PhatTrienPhanMemHuongDichVu_QLKhachSan\\Gateway\\Gateway\\Gateway.csproj",
               "RelativeDocumentMoniker": "Gateway\\Gateway.csproj",
-              "ToolTip": "D:\\Code\\CODE\\Csharp\\QLKS\\PhatTrienPhanMemHuongDichVu_QLKhachSan\\Gateway\\Gateway\\Gateway.csproj*",
-              "RelativeToolTip": "Gateway\\Gateway.csproj*",
+              "ToolTip": "D:\\Code\\CODE\\Csharp\\QLKS\\PhatTrienPhanMemHuongDichVu_QLKhachSan\\Gateway\\Gateway\\Gateway.csproj",
+              "RelativeToolTip": "Gateway\\Gateway.csproj",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
-              "WhenOpened": "2025-10-14T13:59:05.938Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-14T13:59:05.938Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 3,
               "Title": "Program.cs",
               "DocumentMoniker": "D:\\Code\\CODE\\Csharp\\QLKS\\PhatTrienPhanMemHuongDichVu_QLKhachSan\\Gateway\\Gateway\\Program.cs",
               "RelativeDocumentMoniker": "Gateway\\Program.cs",
@@ -118,21 +114,19 @@
               "RelativeToolTip": "Gateway\\Program.cs",
               "ViewState": "AgIAABEAAAAAAAAAAAAAADoAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-14T14:00:50.939Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-14T14:00:50.939Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 2,
               "Title": "ocelot.json",
               "DocumentMoniker": "D:\\Code\\CODE\\Csharp\\QLKS\\PhatTrienPhanMemHuongDichVu_QLKhachSan\\Gateway\\Gateway\\ocelot.json",
               "RelativeDocumentMoniker": "Gateway\\ocelot.json",
               "ToolTip": "D:\\Code\\CODE\\Csharp\\QLKS\\PhatTrienPhanMemHuongDichVu_QLKhachSan\\Gateway\\Gateway\\ocelot.json",
               "RelativeToolTip": "Gateway\\ocelot.json",
-              "ViewState": "AgIAAAEAAAAAAAAAAAAswBYAAAAIAAAAAAAAAA==",
+              "ViewState": "AgIAAAEAAAAAAAAAAAAswCMAAAAqAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2025-10-14T14:00:10.215Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-14T14:00:10.215Z"
             }
           ]
         }

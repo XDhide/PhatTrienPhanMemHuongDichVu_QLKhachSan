@@ -27,9 +27,14 @@ namespace BLL
         {
             return _dal.GetPayment(maHD);
         }
-        public string Payment(int maHD,string Text)
+        public string Payment(int maHD, string tinhTrang, decimal soTienTra, string hinhThucThanhToan)
         {
-            return _dal.Payment(maHD, Text);
+            return _dal.Payment(maHD, tinhTrang, soTienTra, hinhThucThanhToan);
+        }
+        
+        public DataTable BaoCao()
+        {
+            return _dal.BaoCao();
         }
         public string Them(HoaDon obj)
         {

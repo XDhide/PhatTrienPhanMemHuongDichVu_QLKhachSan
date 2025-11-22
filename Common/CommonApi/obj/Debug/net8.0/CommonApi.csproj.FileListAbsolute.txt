@@ -34,3 +34,9 @@ D:\Code\CODE\Csharp\QLKS\PhatTrienPhanMemHuongDichVu_QLKhachSan\Common\CommonApi
 D:\Code\CODE\Csharp\QLKS\PhatTrienPhanMemHuongDichVu_QLKhachSan\Common\CommonApi\obj\Debug\net8.0\CommonApi.pdb
 D:\Code\CODE\Csharp\QLKS\PhatTrienPhanMemHuongDichVu_QLKhachSan\Common\CommonApi\obj\Debug\net8.0\CommonApi.genruntimeconfig.cache
 D:\Code\CODE\Csharp\QLKS\PhatTrienPhanMemHuongDichVu_QLKhachSan\Common\CommonApi\obj\Debug\net8.0\ref\CommonApi.dll
+D:\Code\CODE\Csharp\QLKS\PhatTrienPhanMemHuongDichVu_QLKhachSan\Common\CommonApi\bin\Debug\net8.0\System.Data.SqlClient.dll
+D:\Code\CODE\Csharp\QLKS\PhatTrienPhanMemHuongDichVu_QLKhachSan\Common\CommonApi\bin\Debug\net8.0\runtimes\win-arm64\native\sni.dll
+D:\Code\CODE\Csharp\QLKS\PhatTrienPhanMemHuongDichVu_QLKhachSan\Common\CommonApi\bin\Debug\net8.0\runtimes\win-x64\native\sni.dll
+D:\Code\CODE\Csharp\QLKS\PhatTrienPhanMemHuongDichVu_QLKhachSan\Common\CommonApi\bin\Debug\net8.0\runtimes\win-x86\native\sni.dll
+D:\Code\CODE\Csharp\QLKS\PhatTrienPhanMemHuongDichVu_QLKhachSan\Common\CommonApi\bin\Debug\net8.0\runtimes\unix\lib\net8.0\System.Data.SqlClient.dll
+D:\Code\CODE\Csharp\QLKS\PhatTrienPhanMemHuongDichVu_QLKhachSan\Common\CommonApi\bin\Debug\net8.0\runtimes\win\lib\net8.0\System.Data.SqlClient.dll
