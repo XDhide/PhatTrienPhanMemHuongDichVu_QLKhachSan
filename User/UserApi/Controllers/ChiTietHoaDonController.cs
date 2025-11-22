@@ -21,6 +21,7 @@ namespace HotelManagement.API.Accounting.Controllers
         }
 
         [HttpGet]
+        [Authorize(Policy = "AdminOrLeTanOrKeToan")]
         public IActionResult GetAll()
         {
             try
@@ -60,6 +61,7 @@ namespace HotelManagement.API.Accounting.Controllers
         }
 
         [HttpGet("{id}")]
+        [Authorize(Policy = "AdminOrLeTanOrKeToan")]
         public IActionResult GetById(int id)
         {
             try
@@ -105,6 +107,7 @@ namespace HotelManagement.API.Accounting.Controllers
         }
 
         [HttpPost]
+        [Authorize(Policy = "AdminOrLeTanOrKeToan")]
         public IActionResult Create([FromBody] HoaDonChiTiet hoaDonChiTiet)
         {
             try
@@ -151,6 +154,7 @@ namespace HotelManagement.API.Accounting.Controllers
 
 
         [HttpPut("{id}")]
+        [Authorize(Policy = "AdminOrLeTanOrKeToan")]
         public IActionResult Update(int id, [FromBody] HoaDonChiTiet hoaDonChiTiet)
         {
             try
@@ -196,6 +200,7 @@ namespace HotelManagement.API.Accounting.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize(Policy = "AdminOnly")]
         public IActionResult Delete(int id)
         {
             try

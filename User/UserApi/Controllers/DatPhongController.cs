@@ -22,6 +22,7 @@ namespace HotelManagement.API.Customer.Controllers
 
         // GET: api/datphong
         [HttpGet]
+        [Authorize(Policy = "AdminOrLeTan")]
         public IActionResult GetAll()
         {
             try
@@ -56,6 +57,7 @@ namespace HotelManagement.API.Customer.Controllers
 
         // GET: api/datphong/{id}
         [HttpGet("{id}")]
+        [Authorize(Policy = "AdminOrLeTan")]
         public IActionResult GetById(int id)
         {
             try
@@ -90,6 +92,7 @@ namespace HotelManagement.API.Customer.Controllers
 
         // POST: api/datphong
         [HttpPost]
+        [Authorize(Policy = "AdminOrLeTan")]
         public IActionResult Create([FromBody] DatPhong don)
         {
             try
@@ -111,6 +114,7 @@ namespace HotelManagement.API.Customer.Controllers
 
         // PUT: api/datphong/{id}
         [HttpPut("{id}")]
+        [Authorize(Policy = "AdminOrLeTan")]
         public IActionResult Update(int id, [FromBody] DatPhong don)
         {
             try
@@ -135,6 +139,7 @@ namespace HotelManagement.API.Customer.Controllers
 
         // DELETE: api/datphong/{id}
         [HttpDelete("{id}")]
+        [Authorize(Policy = "AdminOrLeTan")]
         public IActionResult Delete(int id)
         {
             try
@@ -153,6 +158,7 @@ namespace HotelManagement.API.Customer.Controllers
 
         // POST: api/datphong/{id}/checkin
         [HttpPost("{id}/checkin")]
+        [Authorize(Policy = "AdminOrLeTan")]
         public IActionResult CheckIn(int id, [FromBody] int? maPhong)
         {
             try
@@ -166,6 +172,7 @@ namespace HotelManagement.API.Customer.Controllers
 
         // POST: api/datphong/{id}/checkout
         [HttpPost("{id}/checkout")]
+        [Authorize(Policy = "AdminOrLeTan")]
         public IActionResult CheckOut(int id)
         {
             try

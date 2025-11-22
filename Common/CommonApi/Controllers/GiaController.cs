@@ -1,5 +1,6 @@
 ﻿using BLL;
 using HotelManagement.Module;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Data;
 
@@ -7,6 +8,7 @@ namespace UserApi.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
+    [Authorize]
     public class GiaController: ControllerBase
     {
         private readonly GiaBLL _bll;
@@ -99,6 +101,7 @@ namespace UserApi.Controllers
             }
         }
         [HttpPost]
+        [Authorize(Policy = "AdminOnly")]
         public IActionResult Create([FromBody] Gia gia)
         {
             try
@@ -139,6 +142,7 @@ namespace UserApi.Controllers
             }
         }
         [HttpPut("{id}")]
+        [Authorize(Policy = "AdminOnly")]
         public IActionResult Update(int id, [FromBody] Gia gia)
         {
             try
@@ -183,6 +187,7 @@ namespace UserApi.Controllers
 
 
         [HttpDelete("{id}")]
+        [Authorize(Policy = "AdminOnly")]
         public IActionResult Delete(int id)
         {
             try

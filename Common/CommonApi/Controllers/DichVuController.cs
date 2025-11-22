@@ -1,14 +1,16 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using BLL;
+using HotelManagement.Module;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Data;
-using BLL;
-using HotelManagement.Module;
 
 namespace HotelManagement.API.Common.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
+    [Authorize]
     public class DichVuController : ControllerBase
     {
         private readonly DichVuBLL _bll;
@@ -102,6 +104,7 @@ namespace HotelManagement.API.Common.Controllers
 
         // POST dịch vụ api
         [HttpPost]
+        [Authorize(Policy = "AdminOnly")]
         public IActionResult Create([FromBody] DichVu dichVu)
         {
             try
@@ -144,6 +147,7 @@ namespace HotelManagement.API.Common.Controllers
 
         // PUT dịch vụ api
         [HttpPut("{id}")]
+        [Authorize(Policy = "AdminOnly")]
         public IActionResult Update(int id, [FromBody] DichVu dichVu)
         {
             try
@@ -187,6 +191,7 @@ namespace HotelManagement.API.Common.Controllers
 
         //xóa dịch vụ api
         [HttpDelete("{id}")]
+        [Authorize(Policy = "AdminOnly")]
         public IActionResult Delete(int id)
         {
             try

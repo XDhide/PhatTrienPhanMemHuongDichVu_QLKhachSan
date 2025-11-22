@@ -1,14 +1,16 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using BLL;
+using HotelManagement.Module;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Data;
-using BLL;
-using HotelManagement.Module;
 
 namespace HotelManagement.API.Common.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
+    [Authorize]
     public class LoaiPhongController : ControllerBase
     {
         private readonly LoaiPhongBLL _bll;
@@ -102,6 +104,7 @@ namespace HotelManagement.API.Common.Controllers
 
         // post loiaj phòng api
         [HttpPost]
+        [Authorize(Policy = "AdminOnly")]
         public IActionResult Create([FromBody] LoaiPhong loaiPhong)
         {
             try
@@ -144,6 +147,7 @@ namespace HotelManagement.API.Common.Controllers
 
         //put loại phòng api
         [HttpPut("{id}")]
+        [Authorize(Policy = "AdminOnly")]
         public IActionResult Update(int id, [FromBody] LoaiPhong loaiPhong)
         {
             try
@@ -187,6 +191,7 @@ namespace HotelManagement.API.Common.Controllers
 
         //Xoa loai phòng api
         [HttpDelete("{id}")]
+        [Authorize(Policy = "AdminOnly")]
         public IActionResult Delete(int id)
         {
             try

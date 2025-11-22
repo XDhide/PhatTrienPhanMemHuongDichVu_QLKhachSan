@@ -117,6 +117,7 @@ namespace HotelManagement.API.Customer.Controllers
         //ĐỔI TT PHÒNG---------------------------------------------------
         // PUT: api/phong/{id}/status
         [HttpPut("{id}/status")]
+
         public IActionResult ChangeStatus(int id, [FromBody] string tinhTrang)
         {
             try

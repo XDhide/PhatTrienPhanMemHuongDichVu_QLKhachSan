@@ -1,7 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System.Data;
-using BLL;
+﻿using BLL;
 using HotelManagement.Module;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using System.Data;
 
 namespace HotelManagement.API.Customer.Controllers
 {
@@ -85,6 +86,7 @@ namespace HotelManagement.API.Customer.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize(Policy = "AdminOnly")]
         public IActionResult Delete(int id)
         {
             try

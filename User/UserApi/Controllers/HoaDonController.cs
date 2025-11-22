@@ -23,6 +23,7 @@ namespace HotelManagement.API.Accounting.Controllers
         }
 
         [HttpGet]
+        [Authorize(Policy = "AdminOrLeTanOrKeToan")]
         public IActionResult GetAll()
         {
             try
@@ -64,6 +65,7 @@ namespace HotelManagement.API.Accounting.Controllers
         }
 
         [HttpGet("{id}")]
+        [Authorize(Policy = "AdminOrLeTanOrKeToan")]
         public IActionResult GetById(int id)
         {
             try
@@ -111,6 +113,7 @@ namespace HotelManagement.API.Accounting.Controllers
         }
 
         [HttpPost]
+        [Authorize(Policy = "AdminOrLeTanOrKeToan")]
         public IActionResult Create([FromBody] HoaDon hoaDon)
         {
             try
@@ -152,6 +155,7 @@ namespace HotelManagement.API.Accounting.Controllers
         }
 
         [HttpPut("{id}")]
+        [Authorize(Policy = "AdminOnly")]
         public IActionResult Update(int id, [FromBody] HoaDon hoaDon)
         {
             try
@@ -196,6 +200,7 @@ namespace HotelManagement.API.Accounting.Controllers
 
 
         [HttpDelete("{id}")]
+        [Authorize(Policy = "AdminOnly")]
         public IActionResult Delete(int id)
         {
             try
@@ -230,7 +235,8 @@ namespace HotelManagement.API.Accounting.Controllers
 
 
             [HttpGet("Getpayment/{id}")]
-            public IActionResult GetPayment(int id)
+        [Authorize(Policy = "AdminOrLeTanOrKeToan")]
+        public IActionResult GetPayment(int id)
             {
                 try
                 {
@@ -287,6 +293,7 @@ namespace HotelManagement.API.Accounting.Controllers
         }
 
         [HttpPut("payment/{maHD}")]
+        [Authorize(Policy = "AdminOrLeTanOrKeToan")]
         public IActionResult Payment(int maHD, [FromBody] JsonElement request)
         {
             try
@@ -317,6 +324,7 @@ namespace HotelManagement.API.Accounting.Controllers
 
 
         [HttpGet("BaoCao")]
+        [Authorize(Policy = "AdminOrKeToan")]
         public IActionResult BaoCao(
         [FromQuery] string loai = "thang",
         [FromQuery] int? nam = null,
