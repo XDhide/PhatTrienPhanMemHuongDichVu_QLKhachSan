@@ -805,7 +805,7 @@
 
         function openBookingModal(room) {
             selectedRoom = room;
-            
+
             if (room.trangThai === 'occupied') {
                 alert('Phòng này đã được đặt!');
                 return;
@@ -815,4 +815,161 @@
                 return;
             }
 
-            document.
+            // Hiển thị modal
+            const modal = document.getElementById('bookingModal');
+            modal.classList.add('show');
+
+            // Reset form & message
+            const form = document.getElementById('bookingForm');
+            form.reset();
+            showMessage('', '');
+
+            // Điền thông tin phòng vào khung chi tiết
+            const details = document.getElementById('selectedRoomDetails');
+            details.innerHTML = `
+                <h3>Phòng ${room.soPhong} - ${room.maLoaiPhong}</h3>
+                <p>Giá: <strong>${formatPrice(room.gia)}</strong> / đêm</p>
+                <p>Mã phòng: ${room.maPhong}</p>
+            `;
+
+            // Gợi ý sẵn ngày nhận/trả theo filter ở trên
+            const checkInDate = document.getElementById('checkInDate').value;
+            const checkOutDate = document.getElementById('checkOutDate').value;
+            if (checkInDate) {
+                document.getElementById('checkInDateTime').value = checkInDate + 'T14:00';
+            }
+            if (checkOutDate) {
+                document.getElementById('checkOutDateTime').value = checkOutDate + 'T12:00';
+            }
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('bookingModal');
+            modal.classList.remove('show');
+            selectedRoom = null;
+        }
+
+        function toggleApiNotes() {
+            const notes = document.getElementById('apiNotes');
+            if (!notes) return;
+            notes.style.display = (notes.style.display === 'none' || notes.style.display === '') 
+                ? 'block' 
+                : 'none';
+        }
+
+        function formatPrice(value) {
+            if (value == null) return '';
+            return value.toLocaleString('vi-VN', {
+                style: 'currency',
+                currency: 'VND',
+                minimumFractionDigits: 0
+            });
+        }
+
+        function showMessage(type, text) {
+            const box = document.getElementById('modalMessage');
+            if (!box) return;
+
+            box.className = '';
+            if (!text) {
+                box.innerHTML = '';
+                return;
+            }
+
+            if (type === 'success') {
+                box.classList.add('success-message');
+            } else if (type === 'error') {
+                box.classList.add('error-message');
+            }
+            box.textContent = text;
+        }
+
+        // Xử lý submit form đặt phòng (demo: chỉ console.log + cập nhật trạng thái phòng)
+        document.getElementById('bookingForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            if (!selectedRoom) {
+                showMessage('error', 'Chưa chọn phòng để đặt.');
+                return;
+            }
+
+            const customerId = document.getElementById('customerId').value;
+            const checkIn = document.getElementById('checkInDateTime').value;
+            const checkOut = document.getElementById('checkOutDateTime').value;
+            const adults = parseInt(document.getElementById('adults').value || '1', 10);
+            const children = parseInt(document.getElementById('children').value || '0', 10);
+            const serviceSelect = document.getElementById('serviceId');
+            const notes = document.getElementById('notes').value.trim();
+
+            if (!customerId || !checkIn || !checkOut) {
+                showMessage('error', 'Vui lòng nhập đủ: Khách hàng, Ngày nhận và Ngày trả.');
+                return;
+            }
+
+            // Lấy danh sách dịch vụ đã chọn
+            const selectedServices = [];
+            Array.from(serviceSelect.options).forEach(opt => {
+                if (opt.selected && opt.value) {
+                    selectedServices.push(opt.value);
+                }
+            });
+
+            const payload = {
+                maPhong: selectedRoom.maPhong,
+                maKhach: customerId,
+                ngayNhan: checkIn,
+                ngayTra: checkOut,
+                soNguoiLon: adults,
+                soTreEm: children,
+                dichVu: selectedServices,
+                ghiChu: notes
+            };
+
+            // Demo: chỉ log ra console, chưa gọi API thật
+            console.log('Payload gửi API DatPhong (demo):', payload);
+
+            // Cập nhật trạng thái phòng sang "occupied" trong data demo
+            allRooms = allRooms.map(r => {
+                if (r.maPhong === selectedRoom.maPhong) {
+                    return { ...r, trangThai: 'occupied' };
+                }
+                return r;
+            });
+
+            updateStats();
+            filterRooms();
+
+            showMessage('success', 'Đặt phòng (demo) thành công! Kiểm tra tab Console để xem payload gửi API.');
+
+            // Đóng modal sau 1.5s
+            setTimeout(() => {
+                closeModal();
+            }, 1500);
+        });
+
+        // Click ra ngoài content thì đóng modal
+        document.getElementById('bookingModal').addEventListener('click', function (e) {
+            if (e.target.id === 'bookingModal') {
+                closeModal();
+            }
+        });
+
+        // Nhấn ESC để đóng modal
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'Escape') {
+                closeModal();
+            }
+        });
+
+        // Khởi động trang
+        window.addEventListener('load', function () {
+            loadInitialData();
+        });
+    </script>
+
+    <script src="js/config.js"></script>
+    <script src="js/utils.js"></script>
+    <script src="js/demo-data.js"></script>
+    <script src="js/booking.js"></script>
+</body>
+</html>
