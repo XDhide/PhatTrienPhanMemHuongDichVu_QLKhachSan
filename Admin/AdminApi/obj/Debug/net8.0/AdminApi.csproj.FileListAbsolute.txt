@@ -99,4 +99,3 @@ D:\api\PhatTrienPhanMemHuongDichVu_QLKhachSan\Admin\AdminApi\obj\Debug\net8.0\re
 D:\api\PhatTrienPhanMemHuongDichVu_QLKhachSan\Admin\AdminApi\obj\Debug\net8.0\AdminApi.pdb
 D:\api\PhatTrienPhanMemHuongDichVu_QLKhachSan\Admin\AdminApi\obj\Debug\net8.0\AdminApi.genruntimeconfig.cache
 D:\api\PhatTrienPhanMemHuongDichVu_QLKhachSan\Admin\AdminApi\obj\Debug\net8.0\ref\AdminApi.dll
-D:\api\PhatTrienPhanMemHuongDichVu_QLKhachSan\Admin\AdminApi\bin\Debug\net8.0\BCrypt.Net-Next.dll

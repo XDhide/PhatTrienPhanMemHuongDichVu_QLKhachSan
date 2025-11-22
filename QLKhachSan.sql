@@ -1,7 +1,7 @@
 
-C﻿REATE DATABASE QLKhachSan
+create database QLKhachSan
 GO
-USE QLKhachSan
+use QLKhachSan
 GO
 
 -- Nguoi dung / tai khoan
@@ -1135,7 +1135,7 @@ BEGIN
 
     -- 1. Cập nhật giá chi tiết phòng theo quy tắc
     UPDATE cthd
-    SET DonGia = 
+    SET cthd.DonGia = 
         CASE 
             WHEN DATEDIFF(HOUR, dp.NgayNhan, dp.NgayTra) <= 3 THEN g.GiaMoiGio
             WHEN DATEDIFF(HOUR, dp.NgayNhan, dp.NgayTra) > 24 THEN 0.7 * g.GiaMoiGio
@@ -1151,15 +1151,17 @@ BEGIN
     INNER JOIN HoaDon hd ON cthd.MaHD = hd.MaHD
     WHERE cthd.MaHD = @MaHD
           AND cthd.MaDatPhong IS NOT NULL
-          AND (LEN(hd.HinhThucThanhToan) = 0 OR LEN(hd.HinhThucThanhToan) = 1);
+          AND (hd.HinhThucThanhToan IS NULL OR LEN(hd.HinhThucThanhToan) <= 1);
 
-    -- 2. Cập nhật tổng tiền hóa đơn (chỉ những hóa đơn hợp lệ)
-    UPDATE hd
-    SET TongTien = ISNULL((SELECT SUM(ThanhTien) 
-                           FROM HoaDonChiTiet 
-                           WHERE MaHD = @MaHD),0)
-    WHERE hd.MaHD = @MaHD
-          AND (LEN(hd.HinhThucThanhToan) = 0 OR LEN(hd.HinhThucThanhToan) = 1);
+    -- 2. Cập nhật tổng tiền hóa đơn - SỬA LẠI PHẦN NÀY
+    UPDATE HoaDon
+    SET TongTien = ISNULL((
+        SELECT SUM(cthd.SoLuong * cthd.DonGia) 
+        FROM HoaDonChiTiet cthd
+        WHERE cthd.MaHD = @MaHD
+    ), 0)
+    WHERE MaHD = @MaHD
+          AND (HinhThucThanhToan IS NULL OR LEN(HinhThucThanhToan) <= 1);
 
     -- 3. Trả kết quả chi tiết hóa đơn
     SELECT 

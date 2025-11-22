@@ -10,7 +10,7 @@ namespace DAL
 {
     public class DatabaseConnect
     {
-        private static string connectionString = @"Data Source=DESKTOP-3GIS5H1\SQLEXPRESS;Initial Catalog=QLKhachSan;Integrated Security=True;";
+        private static string connectionString = @"Data Source=MINH05;Initial Catalog=QLKhachSan;Integrated Security=True;";
 
         private static SqlConnection conn;
 
