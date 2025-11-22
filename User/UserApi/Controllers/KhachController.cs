@@ -1,5 +1,6 @@
 ﻿using BLL;
 using HotelManagement.Module;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Data;
 namespace HotelManagement.API.Customer.Controllers
@@ -17,6 +18,7 @@ namespace HotelManagement.API.Customer.Controllers
 
         // GET: api/khach
         [HttpGet]
+        [Authorize(Policy = "AdminOrLeTanOrKeToan")]
         public IActionResult GetAll()
         {
             try
@@ -44,6 +46,7 @@ namespace HotelManagement.API.Customer.Controllers
 
         // GET: api/khach/{id}
         [HttpGet("{id}")]
+        [Authorize(Policy = "AdminOrLeTanOrKeToan")]
         public IActionResult GetById(int id)
         {
             try
@@ -71,6 +74,7 @@ namespace HotelManagement.API.Customer.Controllers
 
         // POST: api/khach
         [HttpPost]
+        [Authorize(Policy = "AdminOrLeTanOrKeToan")]
         public IActionResult Create([FromBody] Khach khach)
         {
             try
@@ -92,6 +96,7 @@ namespace HotelManagement.API.Customer.Controllers
 
         // PUT: api/khach/{id}
         [HttpPut("{id}")]
+        [Authorize(Policy = "AdminOrLeTanOrKeToan")]
         public IActionResult Update(int id, [FromBody] Khach khach)
         {
             try
@@ -114,6 +119,7 @@ namespace HotelManagement.API.Customer.Controllers
 
         // DELETE: api/khach/{id}
         [HttpDelete("{id}")]
+        [Authorize(Policy = "AdminOnly")]
         public IActionResult Delete(int id)
         {
             try
