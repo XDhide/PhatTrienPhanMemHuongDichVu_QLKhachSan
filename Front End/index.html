@@ -172,6 +172,23 @@
             text-decoration: underline;
         }
 
+        .register-link {
+            text-align: center;
+            margin-top: 30px;
+            font-size: 14px;
+            color: #666;
+        }
+
+        .register-link a {
+            color: #4CAF50;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .register-link a:hover {
+            text-decoration: underline;
+        }
+
         @media (max-width: 768px) {
             .container {
                 flex-direction: column;
@@ -221,6 +238,10 @@
                     <div class="error-message" id="errorMessage"></div>
                     <div class="success-message" id="successMessage"></div>
                 </form>
+
+                <div class="register-link">
+                    Chưa có tài khoản? <a href="/register.html">Đăng ký ngay</a>
+                </div>
             </div>
         </div>
     </div>
@@ -275,26 +296,14 @@
                         
                         showSuccess('Đăng nhập thành công! Đang chuyển hướng...');
                         
-                        // Chuyển hướng sau 1 giây
                         setTimeout(() => {
-                            // Chuyển hướng đến trang hóa đơn theo yêu cầu
-                            window.location.href = '/hoadon.html';
-                            
-                            // Nếu muốn phân quyền theo role:
-                            // if (role === 'Admin') {
-                            //     window.location.href = '/management.html';
-                            // } else if (role === 'NhanVien') {
-                            //     window.location.href = '/hoadon.html';
-                            // } else {
-                            //     window.location.href = '/hoadon.html';
-                            // }
+                            window.location.href = '/management.html';
                         }, 1000);
                     } catch (parseError) {
                         console.error('Token parse error:', parseError);
-                        // Nếu không parse được token, vẫn chuyển hướng đến trang hóa đơn
                         showSuccess('Đăng nhập thành công! Đang chuyển hướng...');
                         setTimeout(() => {
-                            window.location.href = '/hoadon.html';
+                            window.location.href = '/management.html';
                         }, 1000);
                     }
                 } else {
@@ -326,30 +335,11 @@
         window.addEventListener('load', () => {
             const token = localStorage.getItem('token');
             if (token) {
-                // Nếu đã có token, hiển thị thông báo và nút chuyển trang
                 showSuccess('Bạn đã đăng nhập!');
                 document.getElementById('loginBtn').textContent = 'Tiếp tục';
             }
         });
-
-        // Thêm nút bỏ qua đăng nhập
-        document.getElementById('loginForm').insertAdjacentHTML('afterend', `
-            <div style="text-align: center; margin-top: 20px;">
-                <button type="button" class="btn-skip" onclick="skipLogin()" 
-                        style="background: none; border: 1px solid #4CAF50; color: #4CAF50; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-size: 14px;">
-                    Bỏ qua đăng nhập (Demo)
-                </button>
-            </div>
-        `);
-
-        function skipLogin() {
-            // Xóa token nếu có
-            localStorage.removeItem('token');
-            showSuccess('Chuyển sang chế độ demo...');
-            setTimeout(() => {
-                window.location.href = '/hoadon.html';
-            }, 800);
-        }
     </script>
+    <script src="js/Auth.js"></script>
 </body>
 </html>

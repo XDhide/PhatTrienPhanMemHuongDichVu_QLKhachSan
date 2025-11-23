@@ -330,9 +330,119 @@ namespace HotelManagement.API.Admin.Controllers
             }
         }
 
+        // POST: api/auth/register - Đăng ký tài khoản mới (không cần xác thực)
+        [HttpPost("register")]
+        [AllowAnonymous] // Cho phép truy cập không cần token
+        public IActionResult Register([FromBody] RegisterRequest request)
+        {
+            try
+            {
+                // Validate dữ liệu đầu vào
+                if (request == null)
+                {
+                    return BadRequest(new
+                    {
+                        success = false,
+                        message = "Dữ liệu không hợp lệ"
+                    });
+                }
 
+                if (string.IsNullOrWhiteSpace(request.TenDangNhap))
+                {
+                    return BadRequest(new
+                    {
+                        success = false,
+                        message = "Tên đăng nhập không được để trống"
+                    });
+                }
 
+                if (string.IsNullOrWhiteSpace(request.MatKhau))
+                {
+                    return BadRequest(new
+                    {
+                        success = false,
+                        message = "Mật khẩu không được để trống"
+                    });
+                }
 
+                if (request.MatKhau.Length < 6)
+                {
+                    return BadRequest(new
+                    {
+                        success = false,
+                        message = "Mật khẩu phải có ít nhất 6 ký tự"
+                    });
+                }
 
+                if (string.IsNullOrWhiteSpace(request.HoTen))
+                {
+                    return BadRequest(new
+                    {
+                        success = false,
+                        message = "Họ tên không được để trống"
+                    });
+                }
+
+                // Kiểm tra xem tên đăng nhập đã tồn tại chưa
+                DataTable existingUsers = _bll.GetAll();
+                foreach (DataRow row in existingUsers.Rows)
+                {
+                    if (row["TenDangNhap"].ToString().ToLower() == request.TenDangNhap.ToLower())
+                    {
+                        return BadRequest(new
+                        {
+                            success = false,
+                            message = "Tên đăng nhập đã tồn tại"
+                        });
+                    }
+                }
+
+                // Tạo người dùng mới với vai trò mặc định là "KhachHang"
+                NguoiDung nguoiDung = new NguoiDung
+                {
+                    TenDangNhap = request.TenDangNhap,
+                    MatKhau = request.MatKhau, 
+                    HoTen = request.HoTen,
+                    VaiTro = "Khach" 
+                };
+
+                string result = _bll.Them(nguoiDung);
+
+                if (result.Contains("Lỗi"))
+                {
+                    return BadRequest(new
+                    {
+                        success = false,
+                        message = result
+                    });
+                }
+
+                return Ok(new
+                {
+                    success = true,
+                    message = "Đăng ký tài khoản thành công",
+                    data = new
+                    {
+                        TenDangNhap = nguoiDung.TenDangNhap,
+                        HoTen = nguoiDung.HoTen,
+                        VaiTro = nguoiDung.VaiTro
+                    }
+                });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new
+                {
+                    success = false,
+                    message = "Lỗi: " + ex.Message
+                });
+            }
+        }
     }
+
+
+
+
+
+
 }

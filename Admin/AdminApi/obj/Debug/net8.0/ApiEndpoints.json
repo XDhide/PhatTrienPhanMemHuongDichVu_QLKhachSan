@@ -130,5 +130,21 @@
       }
     ],
     "ReturnTypes": []
+  },
+  {
+    "ContainingType": "HotelManagement.API.Admin.Controllers.NguoiDungController",
+    "Method": "Register",
+    "RelativePath": "api/NguoiDung/register",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "HotelManagement.Module.RegisterRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
   }
 ]

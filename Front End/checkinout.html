@@ -4,110 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Check In/Out - Hotel Management</title>
+    <link rel="stylesheet" href="css/common.css">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: #f5f7fa;
-            min-height: 100vh;
-        }
-
-        .sidebar {
-            position: fixed;
-            left: 0;
-            top: 0;
-            width: 250px;
-            height: 100vh;
-            background: linear-gradient(180deg, #2d5016 0%, #1a3009 100%);
-            color: white;
-            padding: 20px;
-            overflow-y: auto;
-        }
-
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 10px;
-            padding-bottom: 15px;
-            border-bottom: 2px solid rgba(255,255,255,0.2);
-        }
-
-        .logo h1 {
-            font-size: 24px;
-            color: white;
-        }
-
-        .logo-subtitle {
-            color: rgba(255,255,255,0.7);
-            font-size: 12px;
-            margin-top: 5px;
-        }
-
-        .menu {
-            margin-top: 30px;
-        }
-
-        .menu-item {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 12px 15px;
-            margin-bottom: 8px;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.3s;
-            color: white;
-            text-decoration: none;
-        }
-
-        .menu-item:hover {
-            background: rgba(255,255,255,0.1);
-        }
-
-        .menu-item.active {
-            background: rgba(255,255,255,0.15);
-        }
-
-        .main-content {
-            margin-left: 250px;
-            padding: 20px;
-        }
-
-        .top-bar {
-            background: white;
-            padding: 15px 30px;
-            border-radius: 10px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 25px;
-        }
-
-        .user-info {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-
-        .user-avatar {
-            width: 40px;
-            height: 40px;
-            background: #2d5016;
-            color: white;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-        }
-
         .tabs {
             display: flex;
             gap: 10px;
@@ -133,13 +31,6 @@
         .tab-btn.active {
             background: #2d5016;
             color: white;
-        }
-
-        .content-card {
-            background: white;
-            padding: 25px;
-            border-radius: 10px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
         }
 
         .search-bar {
@@ -169,10 +60,6 @@
         .btn-primary {
             background: #2d5016;
             color: white;
-        }
-
-        .btn-primary:hover {
-            background: #1a3009;
         }
 
         .btn-success {
@@ -224,13 +111,13 @@
             color: #333;
         }
 
-        .status-checkout {
-            background: #28a745;
+        .status-staying {
+            background: #17a2b8;
             color: white;
         }
 
-        .status-staying {
-            background: #17a2b8;
+        .status-checkout {
+            background: #28a745;
             color: white;
         }
 
@@ -325,26 +212,6 @@
             margin: 5px 0;
             color: #666;
         }
-
-        .api-note {
-            background: #fff3cd;
-            border: 2px solid #ffc107;
-            padding: 15px;
-            border-radius: 8px;
-            margin-bottom: 20px;
-        }
-
-        .api-note h4 {
-            color: #856404;
-            margin-bottom: 10px;
-        }
-
-        .api-note code {
-            background: rgba(0,0,0,0.1);
-            padding: 2px 6px;
-            border-radius: 4px;
-            font-family: 'Courier New', monospace;
-        }
     </style>
 </head>
 <body>
@@ -359,13 +226,21 @@
         </div>
 
         <div class="menu">
-          <a href="/management.html" class="menu-item">
+            <a href="/management.html" class="menu-item">
                 <span>🏠</span>
                 <span>Trang chủ</span>
             </a>
-            <a href="/rooms.html" class="menu-item">
+            <a href="/Phong.html" class="menu-item">
                 <span>🚪</span>
-                <span>Danh Mục Phòng</span>
+                <span>Quản Lý Phòng</span>
+            </a>
+            <a href="/Gia.html" class="menu-item">
+                <span>💰</span>
+                <span>Quản Lý Giá</span>
+            </a>
+            <a href="/LoaiPhong.html" class="menu-item">
+                <span>🏷️</span>
+                <span>Loại Phòng</span>
             </a>
             <a href="/booking.html" class="menu-item ">
                 <span>📅</span>
@@ -387,6 +262,10 @@
                 <span>💰</span>
                 <span>Hóa Đơn</span>
             </a>
+            <a href="/users.html" class="menu-item">
+                <span>👥</span>
+                <span>Quản lý người dùng</span>
+            </a>
             <a href="/baocao.html" class="menu-item " >
                 <span>📊</span>
                 <span>Báo Cáo</span>
@@ -397,20 +276,34 @@
     <!-- Main Content -->
     <div class="main-content">
         <div class="top-bar">
-            <h2>Check In / Check Out</h2>
-            <div class="user-info">
-                <span id="userName">Lễ Tân</span>
-                <div class="user-avatar">L</div>
-            </div>
-        </div>
+            <h2 id="pageTitle">Check In/Out</h2>
 
-        <!-- API Note -->
-        <div class="api-note">
-            <h4>📌 API Endpoints (đang dùng demo data):</h4>
-            <p><strong>GET /api-admin/DatPhong</strong> - Lấy danh sách đặt phòng theo trạng thái</p>
-            <p><strong>POST /api-admin/CheckIn</strong> - Check in (cập nhật trạng thái DaDat → DaNhan)</p>
-            <p><strong>POST /api-admin/CheckOut</strong> - Check out (cập nhật trạng thái DaNhan → DaTra, tạo hóa đơn)</p>
-            <p><strong>POST /api-admin/ChuyenPhong</strong> - Chuyển phòng</p>
+            <div class="user-dropdown">
+                <div class="user-info" id="userInfoTrigger">
+                    <span id="userNameDisplay" class="user-name">Admin</span>
+                    <div class="user-avatar" id="userAvatar">A</div>
+                </div>
+
+                <!-- Dropdown Menu -->
+                <div class="dropdown-menu" id="userDropdown">
+                    <div class="dropdown-header">
+                        <div class="user-avatar-large" id="dropdownAvatar">A</div>
+                        <div>
+                            <div class="dropdown-user-name" id="dropdownUserName">Admin</div>
+                            <div class="dropdown-user-role" id="dropdownUserRole">Quản trị viên</div>
+                        </div>
+                    </div>
+
+                    <div class="dropdown-divider"></div>
+
+                    <a href="profile.html" class="dropdown-item">
+                        <span>👤</span> Hồ sơ cá nhân
+                    </a>
+                    <a href="#" class="dropdown-item text-danger" onclick="logout()">
+                        <span>🚪</span> Đăng xuất
+                    </a>
+                </div>
+            </div>
         </div>
 
         <!-- Tabs -->
@@ -421,10 +314,17 @@
         </div>
 
         <!-- Content Card -->
-        <div class="content-card">
+        <div class="card">
+            <div class="card-header">
+                <div>
+                    <h3 class="card-title">Danh Sách Đặt Phòng</h3>
+                    <p style="color: #666; font-size: 14px; margin-top: 5px;">Quản lý check in/out</p>
+                </div>
+            </div>
+
             <div class="search-bar">
-                <input type="text" class="search-input" placeholder="Tìm theo tên khách, số phòng, mã đặt..." id="searchInput">
-                <button class="btn btn-primary" onclick="searchBookings()">🔍 Tìm kiếm</button>
+                <input type="text" class="search-input" placeholder="🔍 Tìm theo tên khách, số phòng, mã đặt..." id="searchInput">
+                <button class="btn btn-primary" onclick="searchBookings()">Tìm kiếm</button>
             </div>
 
             <div id="bookingsList"></div>
@@ -523,228 +423,7 @@
             </form>
         </div>
     </div>
-
-    <script>
-        // Demo data - thay thế API calls
-        const demoBookings = [
-            {
-                maDatPhong: 19,
-                maDat: 'DP019',
-                maKhach: 19,
-                tenKhach: 'Nguyễn Thị Hòa',
-                dienThoai: '0918901234',
-                maPhong: 4,
-                soPhong: '104',
-                maLoaiPhong: 'Deluxe',
-                ngayNhan: '2024-09-25T14:00:00',
-                ngayTra: '2024-09-27T12:00:00',
-                soKhach: 1,
-                trangThai: 'DaDat',
-                ghiChu: 'Solo traveler'
-            },
-            {
-                maDatPhong: 18,
-                maDat: 'DP018',
-                maKhach: 18,
-                tenKhach: 'Trần Thế Thiên',
-                dienThoai: '0917890123',
-                maPhong: 33,
-                soPhong: '303',
-                maLoaiPhong: 'VIP',
-                ngayNhan: '2024-09-23T16:00:00',
-                ngayTra: '2024-09-25T11:00:00',
-                soKhach: 4,
-                trangThai: 'DaNhan',
-                ghiChu: 'Currently staying'
-            }
-        ];
-
-        let currentTab = 'checkin';
-        let currentBooking = null;
-
-        // Load bookings theo tab
-        function loadBookings(status) {
-            let filtered = [];
-            
-            if (status === 'checkin') {
-                filtered = demoBookings.filter(b => b.trangThai === 'DaDat');
-            } else if (status === 'staying') {
-                filtered = demoBookings.filter(b => b.trangThai === 'DaNhan');
-            } else if (status === 'checkout') {
-                filtered = demoBookings.filter(b => b.trangThai === 'DaNhan');
-            }
-
-            displayBookings(filtered);
-        }
-
-        function displayBookings(bookings) {
-            const container = document.getElementById('bookingsList');
-            
-            if (bookings.length === 0) {
-                container.innerHTML = '<p style="text-align: center; color: #999; padding: 40px;">Không có đặt phòng nào</p>';
-                return;
-            }
-
-            let html = '<table><thead><tr>';
-            html += '<th>Mã đặt</th>';
-            html += '<th>Khách hàng</th>';
-            html += '<th>Phòng</th>';
-            html += '<th>Loại phòng</th>';
-            html += '<th>Ngày nhận</th>';
-            html += '<th>Ngày trả</th>';
-            html += '<th>Trạng thái</th>';
-            html += '<th>Thao tác</th>';
-            html += '</tr></thead><tbody>';
-
-            bookings.forEach(booking => {
-                const statusClass = booking.trangThai === 'DaDat' ? 'status-checkin' : 
-                                   booking.trangThai === 'DaNhan' ? 'status-staying' : 'status-checkout';
-                const statusText = booking.trangThai === 'DaDat' ? 'Chờ nhận' : 
-                                  booking.trangThai === 'DaNhan' ? 'Đang ở' : 'Đã trả';
-
-                html += '<tr>';
-                html += `<td>${booking.maDat}</td>`;
-                html += `<td>${booking.tenKhach}<br><small>${booking.dienThoai}</small></td>`;
-                html += `<td><strong>${booking.soPhong}</strong></td>`;
-                html += `<td>${booking.maLoaiPhong}</td>`;
-                html += `<td>${formatDateTime(booking.ngayNhan)}</td>`;
-                html += `<td>${formatDateTime(booking.ngayTra)}</td>`;
-                html += `<td><span class="status-badge ${statusClass}">${statusText}</span></td>`;
-                html += '<td>';
-                
-                if (booking.trangThai === 'DaDat') {
-                    html += `<button class="btn btn-success" onclick='openCheckInModal(${JSON.stringify(booking)})'>Check In</button>`;
-                } else if (booking.trangThai === 'DaNhan') {
-                    html += `<button class="btn btn-danger" onclick='openCheckOutModal(${JSON.stringify(booking)})'>Check Out</button>`;
-                    html += ` <button class="btn btn-warning" onclick='changeRoom(${JSON.stringify(booking)})'>Chuyển phòng</button>`;
-                }
-                
-                html += '</td>';
-                html += '</tr>';
-            });
-
-            html += '</tbody></table>';
-            container.innerHTML = html;
-        }
-
-        function switchTab(tab) {
-            currentTab = tab;
-            
-            // Update tab buttons
-            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
-            event.target.classList.add('active');
-            
-            loadBookings(tab);
-        }
-
-        function searchBookings() {
-            const query = document.getElementById('searchInput').value.toLowerCase();
-            const filtered = demoBookings.filter(b => 
-                b.maDat.toLowerCase().includes(query) ||
-                b.tenKhach.toLowerCase().includes(query) ||
-                b.soPhong.toLowerCase().includes(query)
-            );
-            displayBookings(filtered);
-        }
-
-        function openCheckInModal(booking) {
-            currentBooking = booking;
-            const modal = document.getElementById('checkinModal');
-            const info = document.getElementById('checkinBookingInfo');
-            
-            info.innerHTML = `
-                <h3>Thông tin đặt phòng</h3>
-                <p><strong>Mã đặt:</strong> ${booking.maDat}</p>
-                <p><strong>Khách hàng:</strong> ${booking.tenKhach}</p>
-                <p><strong>Phòng:</strong> ${booking.soPhong} - ${booking.maLoaiPhong}</p>
-                <p><strong>Thời gian:</strong> ${formatDateTime(booking.ngayNhan)} → ${formatDateTime(booking.ngayTra)}</p>
-            `;
-            
-            modal.classList.add('show');
-        }
-
-        function openCheckOutModal(booking) {
-            currentBooking = booking;
-            const modal = document.getElementById('checkoutModal');
-            const info = document.getElementById('checkoutBookingInfo');
-            
-            // Tính phí phòng (giả sử 800k/đêm)
-            const nights = Math.ceil((new Date(booking.ngayTra) - new Date(booking.ngayNhan)) / (1000 * 60 * 60 * 24));
-            const roomFee = nights * 800000;
-            const serviceFee = 0;
-            const total = roomFee + serviceFee;
-            
-            info.innerHTML = `
-                <h3>Thông tin đặt phòng</h3>
-                <p><strong>Mã đặt:</strong> ${booking.maDat}</p>
-                <p><strong>Khách hàng:</strong> ${booking.tenKhach}</p>
-                <p><strong>Phòng:</strong> ${booking.soPhong} - ${booking.maLoaiPhong}</p>
-                <p><strong>Số đêm:</strong> ${nights} đêm</p>
-            `;
-            
-            document.getElementById('checkoutRoomFee').value = roomFee;
-            document.getElementById('checkoutServiceFee').value = serviceFee;
-            document.getElementById('checkoutTotal').value = total;
-            document.getElementById('checkoutAmount').value = total;
-            
-            modal.classList.add('show');
-        }
-
-        function closeModal(modalId) {
-            document.getElementById(modalId).classList.remove('show');
-        }
-
-        function changeRoom(booking) {
-            alert(`Chức năng chuyển phòng cho ${booking.maDat} - Sẽ được triển khai`);
-        }
-
-        function formatDateTime(dateStr) {
-            const d = new Date(dateStr);
-            return d.toLocaleDateString('vi-VN') + ' ' + d.toLocaleTimeString('vi-VN', {hour: '2-digit', minute: '2-digit'});
-        }
-
-        // Form submissions
-        document.getElementById('checkinForm').addEventListener('submit', (e) => {
-            e.preventDefault();
-            console.log('Check In:', {
-                maDatPhong: currentBooking.maDatPhong,
-                cmnd: document.getElementById('checkinCMND').value,
-                adults: document.getElementById('checkinAdults').value,
-                children: document.getElementById('checkinChildren').value,
-                deposit: document.getElementById('checkinDeposit').value,
-                note: document.getElementById('checkinNote').value
-            });
-            
-            alert('Check in thành công!\n\nAPI: POST /api-admin/CheckIn');
-            closeModal('checkinModal');
-            
-            // Cập nhật trạng thái demo
-            currentBooking.trangThai = 'DaNhan';
-            loadBookings(currentTab);
-        });
-
-        document.getElementById('checkoutForm').addEventListener('submit', (e) => {
-            e.preventDefault();
-            console.log('Check Out:', {
-                maDatPhong: currentBooking.maDatPhong,
-                roomFee: document.getElementById('checkoutRoomFee').value,
-                serviceFee: document.getElementById('checkoutServiceFee').value,
-                total: document.getElementById('checkoutTotal').value,
-                payment: document.getElementById('checkoutPayment').value,
-                amount: document.getElementById('checkoutAmount').value,
-                note: document.getElementById('checkoutNote').value
-            });
-            
-            alert('Check out thành công!\nHóa đơn đã được tạo.\n\nAPI: POST /api-admin/CheckOut');
-            closeModal('checkoutModal');
-            
-            // Cập nhật trạng thái demo
-            currentBooking.trangThai = 'DaTra';
-            loadBookings(currentTab);
-        });
-
-        // Load initial data
-        loadBookings('checkin');
-    </script>
+    <script src="js/Auth.js"></script>
+    <script src="js/checkinout.js"></script>
 </body>
 </html>

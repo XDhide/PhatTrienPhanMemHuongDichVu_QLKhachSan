@@ -108,7 +108,6 @@ namespace DAL
                 return "Lỗi: " + ex.Message;
             }
         }
-
         public string DoiTrangThai(int maPhong, string tinhTrang)
         {
             try
@@ -121,47 +120,21 @@ namespace DAL
                 cmd.ExecuteNonQuery();
                 return "Cập nhật trạng thái phòng thành công";
             }
-            catch (Exception ex) { return "Lỗi: " + ex.Message; }
-            finally { DatabaseConnect.CloseDatabase(); }
-        }
-
-        public DataTable LichTrong(int roomTypeId, DateTime from, DateTime to)
-        {
-            try
+            catch (Exception ex)
             {
-                DatabaseConnect.OpenDatabase();
-                using var cmd = new SqlCommand("sp_Phong_LichTrong", DatabaseConnect.Conn);
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@MaLoaiPhong", roomTypeId);
-                cmd.Parameters.AddWithValue("@TuNgay", from);
-                cmd.Parameters.AddWithValue("@DenNgay", to);
-                var dt = new DataTable();
-                dt.Load(cmd.ExecuteReader());
-                return dt;
+                return "Lỗi: " + ex.Message;
             }
-            finally { DatabaseConnect.CloseDatabase(); }
-        }
-
-        public class GiaDAL
-        {
-            public DataTable BaoGia(int roomTypeId, DateTime from, DateTime to, string channel)
+            finally
             {
-                try
-                {
-                    DatabaseConnect.OpenDatabase();
-                    using var cmd = new SqlCommand("sp_Gia_BaoGia", DatabaseConnect.Conn);
-                    cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.Parameters.AddWithValue("@MaLoaiPhong", roomTypeId);
-                    cmd.Parameters.AddWithValue("@TuNgay", from);
-                    cmd.Parameters.AddWithValue("@DenNgay", to);
-                    cmd.Parameters.AddWithValue("@Kenh", channel);
-                    var dt = new DataTable();
-                    dt.Load(cmd.ExecuteReader());
-                    return dt;
-                }
-                finally { DatabaseConnect.CloseDatabase(); }
+                DatabaseConnect.CloseDatabase();
             }
         }
+
+
+
+
+
+
 
     }
 }

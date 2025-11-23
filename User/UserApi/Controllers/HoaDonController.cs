@@ -345,7 +345,6 @@ namespace HotelManagement.API.Accounting.Controllers
                 if (ngay.HasValue)
                     query = query.Where(r => ((DateTime)r["NgayLap"]).Day == ngay.Value);
 
-                // Lọc tuần hoặc quý nếu cần
                 if (loai.ToLower() == "quy" && thang.HasValue)
                 {
                     int quy = (thang.Value - 1) / 3 + 1;
@@ -368,7 +367,6 @@ namespace HotelManagement.API.Accounting.Controllers
                     });
                 }
 
-                // Tính tổng
                 decimal tongTien = query.Sum(r => Convert.ToDecimal(r["ThanhTien"]));
                 int soPhong = query.Count(r => r["MaDatPhong"] != DBNull.Value);
                 int soHoaDon = query.Select(r => r["MaHD"]).Distinct().Count();

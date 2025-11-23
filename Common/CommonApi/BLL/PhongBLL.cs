@@ -43,22 +43,11 @@ namespace BLL
             return _dal.Xoa(maPhong);
         }
 
+
         public string DoiTrangThai(int maPhong, string tinhTrang)
         {
-            if (string.IsNullOrWhiteSpace(tinhTrang)) return "Trạng thái không hợp lệ";
             return _dal.DoiTrangThai(maPhong, tinhTrang);
         }
 
-        public DataTable LichTrong(int roomTypeId, DateTime from, DateTime to)
-        {
-            return _dal.LichTrong(roomTypeId, from, to);
-        }
-
-        //public class GiaBLL
-        //{
-        //    private GiaDAL _dal = new GiaDAL();
-        //    public DataTable BaoGia(int roomTypeId, DateTime from, DateTime to, string channel)
-        //        => _dal.BaoGia(roomTypeId, from, to, channel);
-        //}
     }
 }

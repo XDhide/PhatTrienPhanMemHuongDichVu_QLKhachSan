@@ -1,361 +1,552 @@
-// booking.js - Kết nối trang Đặt phòng với API backend
-// Cần: config.js, utils.js đã được load trước
+// ✅ HYBRID MODE: Tự động thử cả Gateway và User API
+const GATEWAY_URL = 'https://localhost:7105'; // Gateway API (cho team)
+const USER_API_URL = 'https://localhost:7141'; // User API (fallback cho bạn)
+let API_BASE_URL = GATEWAY_URL; // Bắt đầu với Gateway
+let allBookings = [];
+let allRooms = [];
+let customers = [];
+let services = [];
+let currentToken = '';
+let isApiMode = false;
+let selectedRoom = null;
 
-document.addEventListener('DOMContentLoaded', () => {
+// ========================
+// DEMO DATA FALLBACK
+// ========================
+const demoBookings = [
+    { MaDatPhong: 1, MaDat: 'DP001', MaKhach: 1, MaPhong: 101, MaLoaiPhong: 1, NgayNhan: '2024-01-01', NgayTra: '2024-01-03', SoKhach: 2, TrangThai: 'Confirmed', GhiChu: '' },
+    { MaDatPhong: 2, MaDat: 'DP002', MaKhach: 2, MaPhong: 102, MaLoaiPhong: 1, NgayNhan: '2024-01-02', NgayTra: '2024-01-05', SoKhach: 1, TrangThai: 'CheckedIn', GhiChu: '' }
+];
 
-  // === STATE TOÀN CỤC ===
-  let allRooms = [];        // tất cả phòng
-  let filteredRooms = [];   // phòng sau khi lọc
-  let customers = [];       // danh sách khách
-  let selectedRoom = null;  // phòng đang được chọn trong modal
+const demoCustomers = [
+    { MaKhach: 1, HoTen: 'Nguyễn Văn A', DienThoai: '0901234567' },
+    { MaKhach: 2, HoTen: 'Trần Thị B', DienThoai: '0912345678' }
+];
 
-  // === 1. SET NGÀY MẶC ĐỊNH TRÊN Ô LỌC ===
-  const today = new Date();
-  const tomorrow = new Date(today);
-  tomorrow.setDate(tomorrow.getDate() + 1);
+const demoServices = [
+    { MaDV: 1, Ten: 'Giặt ủi', DonGia: 50000 },
+    { MaDV: 2, Ten: 'Ăn sáng', DonGia: 100000 }
+];
 
-  const checkInDateInput = document.getElementById('checkInDate');
-  const checkOutDateInput = document.getElementById('checkOutDate');
-  if (checkInDateInput && checkOutDateInput) {
-    checkInDateInput.value = today.toISOString().split('T')[0];
-    checkOutDateInput.value = tomorrow.toISOString().split('T')[0];
-  }
+// ========================
+// KIỂM TRA TOKEN 
+// ========================
+function checkAuth() {
+    currentToken = localStorage.getItem('token');
+    
+    if (!currentToken) {
+        showWarning('Bạn chưa đăng nhập. Đang sử dụng chế độ demo.');
+        return false;
+    }
 
-  // Gắn submit cho form
-  const bookingForm = document.getElementById('bookingForm');
-  if (bookingForm) {
-    bookingForm.addEventListener('submit', handleBookingSubmit);
-  }
-
-  // Load dữ liệu lần đầu
-  loadInitialData();
-
-  // =====================================================
-  // 2. HÀM GỌI API
-  // =====================================================
-
-  async function loadInitialData() {
     try {
-      // Hiện loading cho khung phòng
-      if (typeof showLoading === 'function') {
-        showLoading('roomsContainer');
-      }
+        const tokenPayload = JSON.parse(atob(currentToken.split('.')[1]));
+        const role = tokenPayload.role || tokenPayload["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"];
+        console.log('✅ User role:', role);
+        return true;
+    } catch (error) {
+        console.error('❌ Token parse error:', error);
+        return false;
+    }
+}
 
-      // Gọi song song 2 API: Rooms + Customers
-      const [roomRes, customerRes] = await Promise.all([
-        API.get(CONFIG.ENDPOINTS.ROOMS),
-        API.get(CONFIG.ENDPOINTS.CUSTOMERS)
-      ]);
+// ========================
+// GỌI API - HYBRID MODE: Tự động chuyển đổi
+// ========================
+async function fetchAPI(endpoint, options = {}) {
+    if (!currentToken) {
+        throw new Error('NO_TOKEN');
+    }
 
-      const roomData = roomRes.data || roomRes;           // tuỳ backend trả {data:...} hay [] luôn
-      const customerData = customerRes.data || customerRes;
+    const defaultOptions = {
+        headers: {
+            'Authorization': `Bearer ${currentToken}`,
+            'Content-Type': 'application/json',
+            ...options.headers
+        }
+    };
 
-      // Map dữ liệu API sang format mà UI đang dùng
-      allRooms = roomData.map(normalizeRoomFromAPI);
-      filteredRooms = [...allRooms];
+    // 🔄 Thử Gateway trước
+    let fullUrl = `${API_BASE_URL}${endpoint}`;
+    console.log('📞 Trying:', fullUrl);
 
-      customers = customerData.map(normalizeCustomerFromAPI);
+    try {
+        const response = await fetch(fullUrl, {
+            ...options,
+            ...defaultOptions
+        });
 
-      // Đổ dữ liệu lên UI
-      populateCustomers(customers);
+        if (response.status === 401 || response.status === 403) {
+            throw new Error('UNAUTHORIZED');
+        }
 
-      // Chưa có API dịch vụ thì tạm dùng demo nếu bạn có trong demo-data.js
-      if (window.demoServices) {
-        populateServices(window.demoServices);
-      }
+        if (!response.ok) {
+            const errorData = await response.json().catch(() => ({}));
+            throw new Error(errorData.message || `HTTP ${response.status}`);
+        }
 
-      updateStats();
-      displayRooms(filteredRooms);
+        const data = await response.json();
+        console.log('✅ Response from', API_BASE_URL, ':', data);
+        return data;
+    } catch (error) {
+        // ⚠️ Nếu Gateway lỗi, thử User API
+        if (API_BASE_URL === GATEWAY_URL) {
+            console.warn('⚠️ Gateway failed, trying User API...');
+            API_BASE_URL = USER_API_URL;
+            fullUrl = `${API_BASE_URL}${endpoint}`;
+            console.log('📞 Retry with:', fullUrl);
+            
+            try {
+                const response = await fetch(fullUrl, {
+                    ...options,
+                    ...defaultOptions
+                });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}`);
+                }
+
+                const data = await response.json();
+                console.log('✅ Response from User API:', data);
+                return data;
+            } catch (fallbackError) {
+                console.error('❌ Both APIs failed:', fallbackError);
+                throw fallbackError;
+            }
+        }
+        throw error;
+    }
+}
+
+// ========================
+// LOAD DỮ LIỆU QUA GATEWAY
+// ========================
+async function loadInitialData() {
+    try {
+        showLoading();
+        
+        // ✅ GỌI QUA GATEWAY: /api/DatPhong (routing từ User API)
+        console.log('📞 Gọi Gateway:', `${API_BASE_URL}/api-user/DatPhong`);
+        const response = await fetchAPI('/api-user/DatPhong');
+        
+        if (response.success) {
+            console.log('✅ API Response:', response);
+            
+            // Map dữ liệu từ API
+            allBookings = (response.data || []).map(booking => ({
+                MaDatPhong: booking.MaDatPhong || booking.maDatPhong,
+                MaDat: booking.MaDat || booking.maDat,
+                MaKhach: booking.MaKhach || booking.maKhach,
+                MaPhong: booking.MaPhong || booking.maPhong,
+                MaLoaiPhong: booking.MaLoaiPhong || booking.maLoaiPhong,
+                NgayNhan: booking.NgayNhan || booking.ngayNhan,
+                NgayTra: booking.NgayTra || booking.ngayTra,
+                SoKhach: booking.SoKhach || booking.soKhach,
+                TrangThai: booking.TrangThai || booking.trangThai,
+                GhiChu: booking.GhiChu || booking.ghiChu || ''
+            }));
+
+            console.log('✅ Mapped bookings:', allBookings.length);
+
+            // Tạo danh sách phòng từ bookings
+            allRooms = generateRoomsFromBookings(allBookings);
+            
+            // Load thêm customers và services
+            await loadCustomersAndServices();
+            
+            isApiMode = true;
+            populateCustomers();
+            populateServices();
+            displayRooms(allRooms);
+            updateStats();
+            
+            console.log('✅ Đã load xong dữ liệu qua Gateway');
+        } else {
+            throw new Error(response.message || 'API Error');
+        }
+    } catch (error) {
+        console.error('❌ Gateway API Error:', error.message);
+        console.warn('⚠️ API không khả dụng, chuyển sang chế độ demo');
+        loadDemoData();
+    }
+}
+
+async function loadCustomersAndServices() {
+    try {
+        // ✅ GỌI QUA GATEWAY: /api/Khach (routing từ Admin hoặc User API)
+        console.log('📞 Loading customers qua Gateway...');
+        let custResponse = await fetchAPI('/api-user/Khach').catch(err => {
+            console.warn('⚠️ Gateway không có /api-user/Khach:', err.message);
+            return null;
+        });
+        
+        if (custResponse && custResponse.success) {
+            customers = (custResponse.data || []).map(k => ({
+                MaKhach: k.MaKhach || k.maKhach,
+                HoTen: k.HoTen || k.hoTen,
+                DienThoai: k.DienThoai || k.dienThoai || k.SDT
+            }));
+            console.log('✅ Loaded customers:', customers.length);
+        } else {
+            customers = demoCustomers;
+            console.log('⚠️ Dùng demo customers');
+        }
+
+        // ✅ GỌI QUA GATEWAY: /api/DichVu (routing từ Admin hoặc User API)
+        console.log('📞 Loading services qua Gateway...');
+        let servResponse = await fetchAPI('/api-common/DichVu').catch(err => {
+            console.warn('⚠️ Gateway không có /api-common/DichVu:', err.message);
+            return null;
+        });
+        
+        if (servResponse && servResponse.success) {
+            services = (servResponse.data || []).map(s => ({
+                MaDV: s.MaDV || s.maDV,
+                Ten: s.Ten || s.ten,
+                DonGia: s.DonGia || s.donGia
+            }));
+            console.log('✅ Loaded services:', services.length);
+        } else {
+            services = demoServices;
+            console.log('⚠️ Dùng demo services');
+        }
     } catch (err) {
-      console.error('Lỗi loadInitialData:', err);
-      alert('Không tải được dữ liệu từ API, tạm dùng dữ liệu demo (nếu có).');
-
-      // Fallback: nếu bạn vẫn giữ demoRooms, demoCustomers, demoServices thì dùng
-      if (window.demoRooms && window.demoCustomers && window.demoServices) {
-        allRooms = [...window.demoRooms];
-        filteredRooms = [...allRooms];
-        customers = [...window.demoCustomers];
-        populateCustomers(customers);
-        populateServices(window.demoServices);
-        updateStats();
-        displayRooms(filteredRooms);
-      }
+        console.error('❌ Load customers/services error:', err);
+        customers = demoCustomers;
+        services = demoServices;
     }
-  }
+}
 
-  // Chuyển 1 record phòng từ API về dạng mà UI cần
-  function normalizeRoomFromAPI(p) {
-    // TODO: chỗ này chỉnh tên field cho đúng với API / DB của bạn
-    const maPhong = p.maPhong ?? p.MaPhong;
-    const soPhong = p.soPhong ?? p.SoPhong ?? p.tenPhong ?? p.TenPhong ?? '';
-    const maLoaiPhong = p.maLoaiPhong ?? p.MaLoaiPhong ?? p.tenLoaiPhong ?? p.TenLoaiPhong ?? '';
-    const gia = p.gia ?? p.Gia ?? p.donGia ?? p.DonGia ?? 0;
-    const tinhTrang = p.tinhTrang ?? p.TinhTrang ?? p.trangThai ?? p.TrangThai ?? '';
+// ========================
+// LOAD DEMO DATA
+// ========================
+function loadDemoData() {
+    allBookings = [...demoBookings];
+    allRooms = generateRoomsFromBookings(demoBookings);
+    customers = [...demoCustomers];
+    services = [...demoServices];
+    isApiMode = false;
+    
+    showWarning('Không thể kết nối API. Đang sử dụng dữ liệu demo.');
+    populateCustomers();
+    populateServices();
+    displayRooms(allRooms);
+    updateStats();
+}
 
-    return {
-      maPhong,
-      soPhong,
-      maLoaiPhong,
-      gia,
-      trangThai: mapRoomStatus(tinhTrang)  // convert về 'available' / 'occupied' / 'maintenance'
-    };
-  }
+// ========================
+// TẠO DANH SÁCH PHÒNG TỪ BOOKINGS
+// ========================
+function generateRoomsFromBookings(bookings) {
+    const rooms = [];
+    const roomMap = new Map();
 
-  // Convert trạng thái trong DB → class sử dụng trong UI
-  function mapRoomStatus(apiStatus) {
-    if (apiStatus === null || apiStatus === undefined) return 'available';
-    const s = String(apiStatus).toLowerCase();
-
-    // Dựa vào config.js: ROOM_STATUS: SanSang, DaThue, BaoTri,...
-    if (s.includes('sansang') || s.includes('trong') || s === '0') return 'available';
-    if (s.includes('dathue') || s.includes('dadat') || s === '1') return 'occupied';
-    if (s.includes('baotri') || s.includes('dong') || s === '2') return 'maintenance';
-
-    return 'available';
-  }
-
-  // Chuyển record khách từ API về dạng UI dùng
-  function normalizeCustomerFromAPI(k) {
-    // TODO: chỉnh tên field cho đúng: HoTen / TenKhach / SDT / DienThoai / Email, ...
-    return {
-      maKhach: k.maKhach ?? k.MaKhach,
-      hoTen: k.hoTen ?? k.HoTen ?? k.tenKhach ?? k.TenKhach,
-      sdt: k.sdt ?? k.SDT ?? k.dienThoai ?? k.DienThoai,
-      email: k.email ?? k.Email
-    };
-  }
-
-  // =====================================================
-  // 3. ĐỔ DỮ LIỆU LÊN UI
-  // =====================================================
-
-  function populateCustomers(customers) {
-    const select = document.getElementById('customerId');
-    if (!select) return;
-
-    select.innerHTML = '<option value="">-- Chọn khách hàng --</option>';
-
-    customers.forEach(customer => {
-      const option = document.createElement('option');
-      option.value = customer.maKhach;
-      option.textContent = `${customer.hoTen} - ${customer.sdt || customer.email || ''}`;
-      select.appendChild(option);
+    bookings.forEach(b => {
+        if (b.MaPhong && !roomMap.has(b.MaPhong)) {
+            rooms.push({
+                MaPhong: b.MaPhong,
+                SoPhong: `${b.MaPhong}`,
+                MaLoaiPhong: b.MaLoaiPhong,
+                TenLoaiPhong: getLoaiPhongName(b.MaLoaiPhong),
+                Gia: 500000,
+                TrangThai: b.TrangThai
+            });
+            roomMap.set(b.MaPhong, true);
+        }
     });
-  }
 
-  function populateServices(services) {
-    const select = document.getElementById('serviceId');
-    if (!select) return;
+    // Thêm phòng demo nếu không có dữ liệu
+    if (rooms.length === 0) {
+        for (let i = 101; i <= 110; i++) {
+            rooms.push({
+                MaPhong: i,
+                SoPhong: `${i}`,
+                MaLoaiPhong: 1,
+                TenLoaiPhong: 'Standard',
+                Gia: 500000,
+                TrangThai: 'Confirmed'
+            });
+        }
+    }
 
-    select.innerHTML = '<option value="">-- Không chọn --</option>';
+    return rooms;
+}
 
-    services.forEach(service => {
-      const option = document.createElement('option');
-      option.value = service.maDV;
-      option.textContent = `${service.ten} - ${formatPrice(service.donGia)}`;
-      select.appendChild(option);
-    });
-  }
+function getLoaiPhongName(maLoai) {
+    const types = { 
+        1: 'Standard', 
+        2: 'Superior', 
+        3: 'Deluxe', 
+        4: 'Junior Suite', 
+        5: 'Executive Suite', 
+        6: 'Family Room', 
+        7: 'Presidential Suite' 
+    };
+    return types[maLoai] || 'Standard';
+}
 
-  function updateStats() {
-    const available = allRooms.filter(r => r.trangThai === 'available').length;
-    const occupied = allRooms.filter(r => r.trangThai === 'occupied').length;
-    const maintenance = allRooms.filter(r => r.trangThai === 'maintenance').length;
-
-    const totalRoomsEl = document.getElementById('totalRooms');
-    const availableRoomsEl = document.getElementById('availableRooms');
-    const occupiedRoomsEl = document.getElementById('occupiedRooms');
-    const maintenanceRoomsEl = document.getElementById('maintenanceRooms');
-
-    if (totalRoomsEl) totalRoomsEl.textContent = allRooms.length;
-    if (availableRoomsEl) availableRoomsEl.textContent = available;
-    if (occupiedRoomsEl) occupiedRoomsEl.textContent = occupied;
-    if (maintenanceRoomsEl) maintenanceRoomsEl.textContent = maintenance;
-  }
-
-  function displayRooms(rooms) {
+// ========================
+// UI FUNCTIONS
+// ========================
+function showLoading() {
     const container = document.getElementById('roomsContainer');
-    if (!container) return;
+    if (container) {
+        container.innerHTML = '<div style="text-align:center;padding:40px;color:#666;">Đang tải dữ liệu...</div>';
+    }
+}
 
-    if (!rooms || rooms.length === 0) {
-      container.innerHTML = '<p style="text-align:center;color:#999;">Không tìm thấy phòng nào.</p>';
-      return;
+function showWarning(message) {
+    const warning = document.createElement('div');
+    warning.style.cssText = 'background:#fff3cd;border-left:4px solid #ffc107;color:#856404;padding:15px;border-radius:8px;margin-bottom:20px;';
+    warning.innerHTML = `<strong>⚠️ Thông báo:</strong> ${message}`;
+    
+    const container = document.querySelector('.main-content');
+    if (container && container.children.length > 1) {
+        container.insertBefore(warning, container.children[1]);
+    }
+}
+
+function populateCustomers() {
+    const sel = document.getElementById("customerId");
+    if (!sel) return;
+    
+    sel.innerHTML = `<option value="">-- Chọn khách hàng --</option>`;
+
+    customers.forEach(k => {
+        const hoTen = k.HoTen || k.hoTen || 'N/A';
+        const sdt = k.DienThoai || k.dienThoai || k.SDT || '';
+        const maKhach = k.MaKhach || k.maKhach;
+        sel.innerHTML += `<option value="${maKhach}">${hoTen} - ${sdt}</option>`;
+    });
+}
+
+function populateServices() {
+    const sel = document.getElementById("serviceId");
+    if (!sel) return;
+    
+    sel.innerHTML = "";
+
+    services.forEach(s => {
+        const ten = s.Ten || s.ten || 'N/A';
+        const gia = s.DonGia || s.donGia || 0;
+        const maDV = s.MaDV || s.maDV;
+        sel.innerHTML += `<option value="${maDV}">${ten} - ${gia.toLocaleString()}đ</option>`;
+    });
+}
+
+function updateStats() {
+    const total = allRooms.length;
+    const available = allRooms.filter(r => 
+        ['Confirmed', 'DaDat', 'Pending'].includes(r.TrangThai)
+    ).length;
+    const occupied = allRooms.filter(r => 
+        ['CheckedIn', 'DangSuDung', 'DaNhan'].includes(r.TrangThai)
+    ).length;
+    const maintenance = allRooms.filter(r => 
+        ['Cancelled', 'CheckedOut', 'DaTra', 'BaoTri'].includes(r.TrangThai)
+    ).length;
+
+    document.getElementById("totalRooms").textContent = total;
+    document.getElementById("availableRooms").textContent = available;
+    document.getElementById("occupiedRooms").textContent = occupied;
+    document.getElementById("maintenanceRooms").textContent = maintenance;
+}
+
+function displayRooms(rooms) {
+    const box = document.getElementById("roomsContainer");
+    
+    if (!box) return;
+    
+    if (rooms.length === 0) {
+        box.innerHTML = '<p style="text-align:center;color:#999;padding:40px;">Không có phòng nào</p>';
+        return;
     }
 
-    container.innerHTML = '';
+    box.innerHTML = "";
 
-    rooms.forEach(room => {
-      const card = document.createElement('div');
-      card.className = `room-card ${room.trangThai}`;
+    rooms.forEach(r => {
+        const status = mapStatus(r.TrangThai);
+        const soPhong = r.SoPhong || r.soPhong || 'N/A';
+        const tenLoai = r.TenLoaiPhong || r.tenLoaiPhong || 'Standard';
+        const gia = r.Gia || r.gia || 0;
+        const maPhong = r.MaPhong || r.maPhong;
 
-      card.addEventListener('click', () => openBookingModal(room));
-
-      const statusText =
-        room.trangThai === 'available'
-          ? 'Trống'
-          : room.trangThai === 'occupied'
-          ? 'Đã đặt / đang ở'
-          : 'Bảo trì';
-
-      card.innerHTML = `
-        <div class="room-number">Phòng ${room.soPhong}</div>
-        <div class="room-type">${room.maLoaiPhong || ''}</div>
-        <div class="room-price">${formatPrice(room.gia || 0)}</div>
-        <span class="room-status status-${room.trangThai}">${statusText}</span>
-      `;
-
-      container.appendChild(card);
+        const card = document.createElement('div');
+        card.className = `room-card ${status.class}`;
+        card.onclick = () => openBookingModal(maPhong);
+        card.innerHTML = `
+            <div class="room-number">Phòng ${soPhong}</div>
+            <div class="room-type">${tenLoai}</div>
+            <div class="room-price">${gia.toLocaleString()}đ</div>
+            <span class="room-status status-${status.class}">
+                ${status.text}
+            </span>
+        `;
+        box.appendChild(card);
     });
-  }
+}
 
-  // =====================================================
-  // 4. LỌC PHÒNG (được gọi từ onchange trên select)
-  // =====================================================
+function mapStatus(code) {
+    const statusMap = {
+        'Confirmed': { class: 'available', text: 'Đã đặt' },
+        'DaDat': { class: 'available', text: 'Đã đặt' },
+        'Pending': { class: 'available', text: 'Chờ xác nhận' },
+        'CheckedIn': { class: 'occupied', text: 'Đang ở' },
+        'DangSuDung': { class: 'occupied', text: 'Đang ở' },
+        'DaNhan': { class: 'occupied', text: 'Đã nhận' },
+        'CheckedOut': { class: 'maintenance', text: 'Đã trả' },
+        'DaTra': { class: 'maintenance', text: 'Đã trả' },
+        'Cancelled': { class: 'maintenance', text: 'Đã hủy' },
+        'BaoTri': { class: 'maintenance', text: 'Bảo trì' }
+    };
 
-  window.filterRooms = function () {
+    return statusMap[code] || { class: 'available', text: 'Trống' };
+}
+
+// ========================
+// MODAL & BOOKING
+// ========================
+window.openBookingModal = function (maPhong) {
+    selectedRoom = allRooms.find(r => (r.MaPhong || r.maPhong) == maPhong);
+
+    if (!selectedRoom) {
+        alert('Không tìm thấy phòng!');
+        return;
+    }
+
+    const soPhong = selectedRoom.SoPhong || selectedRoom.soPhong || 'N/A';
+    const tenLoai = selectedRoom.TenLoaiPhong || selectedRoom.tenLoaiPhong || 'Standard';
+    const gia = selectedRoom.Gia || selectedRoom.gia || 0;
+
+    document.getElementById("selectedRoomDetails").innerHTML = `
+        <h3>Phòng ${soPhong}</h3>
+        <p>Loại: ${tenLoai}</p>
+        <p>Giá: <strong>${gia.toLocaleString()}đ</strong>/đêm</p>
+    `;
+
+    document.getElementById("bookingModal").classList.add("show");
+};
+
+window.closeModal = function () {
+    document.getElementById("bookingModal").classList.remove("show");
+    document.getElementById("bookingForm").reset();
+    document.getElementById("modalMessage").innerHTML = '';
+    selectedRoom = null;
+};
+
+// ========================
+// SUBMIT BOOKING - GỌI QUA GATEWAY
+// ========================
+document.getElementById("bookingForm").addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    if (!selectedRoom) {
+        alert('Vui lòng chọn phòng!');
+        return;
+    }
+
+    const maKhach = Number(document.getElementById("customerId").value);
+    if (!maKhach) {
+        alert('Vui lòng chọn khách hàng!');
+        return;
+    }
+
+    // ✅ MAP SANG FORMAT C# API - GIỐNG USERS.JS
+    const bookingData = {
+        MaDat: "DP" + Date.now(),
+        MaKhach: maKhach,
+        MaPhong: selectedRoom.MaPhong || selectedRoom.maPhong,
+        MaLoaiPhong: selectedRoom.MaLoaiPhong || selectedRoom.maLoaiPhong || 1,
+        NgayNhan: document.getElementById("checkInDateTime").value,
+        NgayTra: document.getElementById("checkOutDateTime").value,
+        SoKhach: Number(document.getElementById("adults").value) + Number(document.getElementById("children").value),
+        TrangThai: "DaDat",
+        GhiChu: document.getElementById("notes").value || ""
+    };
+
+    const msg = document.getElementById("modalMessage");
+
+    try {
+        if (isApiMode) {
+            console.log('📤 Creating booking qua Gateway:', bookingData);
+            
+            // ✅ GỌI QUA GATEWAY: POST /api/DatPhong (routing tới User API)
+            const response = await fetchAPI('/api-user/DatPhong', {
+                method: 'POST',
+                body: JSON.stringify(bookingData)
+            });
+
+            console.log('📥 API Response:', response);
+
+            if (response.success) {
+                msg.className = "success-message";
+                msg.textContent = "✅ Đặt phòng thành công!";
+                setTimeout(() => {
+                    closeModal();
+                    loadInitialData(); // Reload data
+                }, 1500);
+            } else {
+                throw new Error(response.message || 'Đặt phòng thất bại');
+            }
+        } else {
+            // Demo mode
+            console.log('📋 Demo booking:', bookingData);
+            msg.className = "success-message";
+            msg.textContent = "✅ Đặt phòng thành công (Demo mode)!";
+            setTimeout(closeModal, 1500);
+        }
+    } catch (error) {
+        console.error('❌ Booking Error:', error);
+        msg.className = "error-message";
+        msg.textContent = "❌ Lỗi: " + error.message;
+    }
+});
+
+// ========================
+// FILTER FUNCTIONS
+// ========================
+window.filterRooms = function() {
     const typeFilter = document.getElementById('roomTypeFilter')?.value || '';
     const statusFilter = document.getElementById('statusFilter')?.value || '';
 
-    filteredRooms = [...allRooms];
+    let filtered = allRooms.filter(r => {
+        const matchType = !typeFilter || (r.TenLoaiPhong || r.tenLoaiPhong) === typeFilter;
+        const status = mapStatus(r.TrangThai);
+        const matchStatus = !statusFilter || status.class === statusFilter;
+        return matchType && matchStatus;
+    });
 
-    if (typeFilter) {
-      filteredRooms = filteredRooms.filter(r => r.maLoaiPhong === typeFilter);
+    displayRooms(filtered);
+};
+
+window.toggleApiNotes = function() {
+    const notes = document.getElementById('apiNotes');
+    if (notes) {
+        notes.style.display = notes.style.display === 'none' ? 'block' : 'none';
     }
+};
 
-    if (statusFilter) {
-      filteredRooms = filteredRooms.filter(r => r.trangThai === statusFilter);
+// ========================
+// LOGOUT
+// ========================
+function logout() {
+    if (confirm('Bạn có muốn đăng xuất?')) {
+        localStorage.removeItem('token');
+        window.location.href = '/index.html';
     }
-
-    // TODO: nếu muốn lọc theo khoảng ngày checkInDate/checkOutDate thì có thể call API /Phong/lich
-    displayRooms(filteredRooms);
-  };
-
-  // =====================================================
-  // 5. MỞ / ĐÓNG MODAL ĐẶT PHÒNG
-  // =====================================================
-
-  function openBookingModal(room) {
-    selectedRoom = room;
-
-    if (room.trangThai === 'occupied') {
-      alert('Phòng này đã được đặt!');
-      return;
+}
+checkRole(['Admin','LeTan','KeToan']);
+// ========================
+// INITIALIZE
+// ========================
+window.addEventListener('DOMContentLoaded', () => {
+    console.log('🚀 Khởi động booking.js - HYBRID MODE');
+    console.log('🔄 Thử Gateway trước:', GATEWAY_URL);
+    console.log('🔄 Fallback User API:', USER_API_URL);
+    
+    if (checkAuth()) {
+        loadInitialData();
+    } else {
+        loadDemoData();
     }
-    if (room.trangThai === 'maintenance') {
-      alert('Phòng này đang bảo trì!');
-      return;
-    }
-
-    const modal = document.getElementById('bookingModal');
-    const details = document.getElementById('selectedRoomDetails');
-    const msg = document.getElementById('modalMessage');
-
-    if (details) {
-      details.innerHTML = `
-        <h3>Phòng ${room.soPhong}</h3>
-        <p>Loại phòng: <strong>${room.maLoaiPhong || ''}</strong></p>
-        <p>Giá: <strong>${formatPrice(room.gia || 0)}</strong> / đêm</p>
-      `;
-    }
-
-    if (msg) {
-      msg.textContent = '';
-      msg.style.color = '';
-    }
-
-    if (modal) {
-      modal.classList.add('show');
-    }
-  }
-
-  window.closeModal = function () {
-    const modal = document.getElementById('bookingModal');
-    if (modal) {
-      modal.classList.remove('show');
-    }
-    selectedRoom = null;
-  };
-
-  // =====================================================
-  // 6. GỬI FORM ĐẶT PHÒNG → API BOOKINGS
-  // =====================================================
-
-  async function handleBookingSubmit(e) {
-    e.preventDefault();
-
-    const msg = document.getElementById('modalMessage');
-
-    if (!selectedRoom) {
-      if (msg) {
-        msg.style.color = '#dc3545';
-        msg.textContent = 'Bạn chưa chọn phòng.';
-      }
-      return;
-    }
-
-    const customerId = document.getElementById('customerId')?.value;
-    if (!customerId) {
-      if (msg) {
-        msg.style.color = '#dc3545';
-        msg.textContent = 'Bạn chưa chọn khách hàng.';
-      }
-      return;
-    }
-
-    const checkInDateTime = document.getElementById('checkInDateTime')?.value;
-    const checkOutDateTime = document.getElementById('checkOutDateTime')?.value;
-
-    if (!checkInDateTime || !checkOutDateTime) {
-      if (msg) {
-        msg.style.color = '#dc3545';
-        msg.textContent = 'Vui lòng chọn đầy đủ thời gian nhận / trả phòng.';
-      }
-      return;
-    }
-
-    const adults = Number(document.getElementById('adults')?.value || 1);
-    const children = Number(document.getElementById('children')?.value || 0);
-    const notes = document.getElementById('notes')?.value || '';
-
-    const body = {
-      // TODO: chỉnh field cho khớp DTO DatPhong bên backend
-      maPhong: selectedRoom.maPhong,
-      maKhach: Number(customerId),
-      ngayNhan: checkInDateTime,
-      ngayTra: checkOutDateTime,
-      soKhach: adults + children,
-      ghiChu: notes
-      // Có thể cần thêm: KenhDat, NguoiTao, MaLoaiPhong, ...
-    };
-
-    try {
-      const res = await API.post(CONFIG.ENDPOINTS.BOOKINGS, body);
-
-      if (res && res.success) {
-        if (msg) {
-          msg.style.color = '#28a745';
-          msg.textContent = res.message || 'Đặt phòng thành công!';
-        }
-
-        // Reload lại danh sách phòng sau khi đặt
-        await loadInitialData();
-
-        // Đóng modal sau 1 chút
-        setTimeout(() => {
-          closeModal();
-        }, 1000);
-      } else {
-        if (msg) {
-          msg.style.color = '#dc3545';
-          msg.textContent = (res && res.message) || 'Đặt phòng thất bại!';
-        }
-      }
-    } catch (err) {
-      console.error('Lỗi khi gọi API BOOKINGS:', err);
-      if (msg) {
-        msg.style.color = '#dc3545';
-        msg.textContent = 'Lỗi kết nối API khi đặt phòng.';
-      }
-    }
-  }
 });

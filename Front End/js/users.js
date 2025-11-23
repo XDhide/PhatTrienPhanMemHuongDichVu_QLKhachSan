@@ -1,366 +1,426 @@
-// users.js - Logic quản lý người dùng
+// users.js - Sửa lỗi mapping dữ liệu với API
+const API_BASE_URL = 'https://localhost:7105';
+let allUsers = [];
+let currentToken = '';
+let isApiMode = false;
+let editingUserId = null;
 
-// Demo data
+// Demo data fallback
 const demoUsers = [
-    { maND: 1, tenDangNhap: 'admin', hoTen: 'Nguyễn Văn Admin', vaiTro: 'Admin', email: 'admin@hotel.com', sdt: '0901234567', trangThai: 'active' },
-    { maND: 2, tenDangNhap: 'letan01', hoTen: 'Trần Thị Lan', vaiTro: 'LeTan', email: 'lan@hotel.com', sdt: '0902345678', trangThai: 'active' },
-    { maND: 3, tenDangNhap: 'ketoan01', hoTen: 'Lê Văn Minh', vaiTro: 'KeToan', email: 'minh@hotel.com', sdt: '0903456789', trangThai: 'active' },
-    { maND: 4, tenDangNhap: 'letan02', hoTen: 'Phạm Thị Hoa', vaiTro: 'LeTan', email: 'hoa@hotel.com', sdt: '0904567890', trangThai: 'active' },
-    { maND: 5, tenDangNhap: 'admin2', hoTen: 'Hoàng Văn Quân', vaiTro: 'Admin', email: 'quan@hotel.com', sdt: '0905678901', trangThai: 'inactive' },
+    { maNguoiDung: 1, tenDangNhap: 'admin', hoTen: 'Quản trị viên', vaiTro: 'Admin', email: 'admin@hotel.com', soDienThoai: '0901234567', trangThai: 'Active' },
+    { maNguoiDung: 2, tenDangNhap: 'letan01', hoTen: 'Nguyễn Văn A', vaiTro: 'LeTan', email: 'letan@hotel.com', soDienThoai: '0912345678', trangThai: 'Active' },
+    { maNguoiDung: 3, tenDangNhap: 'ketoan01', hoTen: 'Trần Thị B', vaiTro: 'KeToan', email: 'ketoan@hotel.com', soDienThoai: '0923456789', trangThai: 'Active' },
+    { maNguoiDung: 4, tenDangNhap: 'khach01', hoTen: 'Lê Văn C', vaiTro: 'Khach', email: 'khach@gmail.com', soDienThoai: '0934567890', trangThai: 'Inactive' }
 ];
 
-let allUsers = [...demoUsers];
-let editingUser = null;
-
-// Initialize page
-document.addEventListener('DOMContentLoaded', () => {
-    loadUsers();
-    updateStats();
-    initSidebar();
+// Kiểm tra quyền Admin
+function checkAdminAuth() {
+    currentToken = localStorage.getItem('token');
     
-    // Set current user name
-    const currentUser = getCurrentUser();
-    if (currentUser) {
-        document.getElementById('currentUserName').textContent = currentUser.name || currentUser.username;
+    if (!currentToken) {
+        showWarning('Bạn chưa đăng nhập. Đang sử dụng chế độ demo.');
+        return false;
     }
-});
 
-/**
- * Load và hiển thị danh sách người dùng
- */
-function loadUsers() {
-    // API Call (đã comment)
-    /*
-    fetch('https://localhost:7105/api-admin/NguoiDung', {
-        headers: {
-            'Authorization': `Bearer ${localStorage.getItem('token')}`
+    try {
+        const tokenPayload = JSON.parse(atob(currentToken.split('.')[1]));
+        const role = tokenPayload.role || tokenPayload["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"];
+        
+        if (role !== 'Admin') {
+            showError('Bạn không có quyền truy cập trang này!');
+            setTimeout(() => {
+                window.location.href = '/hoadon.html';
+            }, 2000);
+            return false;
         }
-    })
-    .then(response => response.json())
-    .then(data => {
-        allUsers = data.data || data;
-        displayUsers(allUsers);
-        updateStats();
-    })
-    .catch(error => {
-        console.error('Error:', error);
-        showError('Không thể tải danh sách người dùng!');
-    });
-    */
-    
-    displayUsers(allUsers);
+        
+        return true;
+    } catch (error) {
+        console.error('Token parse error:', error);
+        return false;
+    }
 }
 
-/**
- * Hiển thị danh sách người dùng
- */
+// Gọi API với xử lý lỗi
+async function fetchAPI(endpoint, options = {}) {
+    if (!currentToken) {
+        throw new Error('NO_TOKEN');
+    }
+
+    const defaultOptions = {
+        headers: {
+            'Authorization': `Bearer ${currentToken}`,
+            'Content-Type': 'application/json',
+            ...options.headers
+        }
+    };
+
+    const response = await fetch(`${API_BASE_URL}${endpoint}`, {
+        ...options,
+        ...defaultOptions
+    });
+
+    if (response.status === 401 || response.status === 403) {
+        throw new Error('UNAUTHORIZED');
+    }
+
+    if (!response.ok) {
+        const errorData = await response.json().catch(() => ({}));
+        throw new Error(errorData.message || `HTTP ${response.status}`);
+    }
+
+    const data = await response.json();
+    return data;
+}
+
+// Load danh sách người dùng
+async function loadUsers() {
+    try {
+        showLoading();
+        
+        // Thử kết nối với endpoint gốc của bạn
+        const response = await fetchAPI('/api-admin/NguoiDung');
+        
+        if (response.success) {
+            // Map từ API format sang frontend format
+            allUsers = (response.data || []).map(user => ({
+                maNguoiDung: user.maND || user.MaND,
+                tenDangNhap: user.tenDangNhap || user.TenDangNhap,
+                hoTen: user.hoTen || user.HoTen,
+                vaiTro: user.vaiTro || user.VaiTro,
+                email: user.email || user.Email || '',
+                soDienThoai: user.soDienThoai || user.SoDienThoai || '',
+                trangThai: 'Active'
+            }));
+            
+            isApiMode = true;
+            displayUsers(allUsers);
+            updateStats();
+        } else {
+            throw new Error(response.message || 'API Error');
+        }
+    } catch (error) {
+        console.error('❌ API Error:', error);
+        console.warn('API không khả dụng, chuyển sang chế độ demo:', error.message);
+        loadDemoData();
+    }
+}
+
+// Load dữ liệu demo
+function loadDemoData() {
+    allUsers = [...demoUsers];
+    isApiMode = false;
+    showWarning('Không thể kết nối API. Đang sử dụng dữ liệu demo.');
+    displayUsers(allUsers);
+    updateStats();
+}
+
+// Hiển thị danh sách người dùng
 function displayUsers(users) {
     const container = document.getElementById('usersTableContainer');
     
     if (users.length === 0) {
-        container.innerHTML = `
-            <div class="empty-state">
-                <div class="empty-state-icon">👥</div>
-                <h3>Không có người dùng nào</h3>
-            </div>
-        `;
+        container.innerHTML = '<p style="text-align: center; color: #999; padding: 40px;">Không có người dùng nào</p>';
         return;
     }
 
-    const table = `
-        <table>
+    let html = `
+        <table style="width: 100%; border-collapse: collapse; margin-top: 15px;">
             <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Tên đăng nhập</th>
-                    <th>Họ và tên</th>
-                    <th>Vai trò</th>
-                    <th>Email</th>
-                    <th>SĐT</th>
-                    <th>Trạng thái</th>
-                    <th style="text-align: center;">Thao tác</th>
+                <tr style="background: #f8f9fa;">
+                    <th style="padding: 12px; text-align: left; border-bottom: 2px solid #dee2e6;">Username</th>
+                    <th style="padding: 12px; text-align: left; border-bottom: 2px solid #dee2e6;">Họ tên</th>
+                    <th style="padding: 12px; text-align: left; border-bottom: 2px solid #dee2e6;">Vai trò</th>
+                    <th style="padding: 12px; text-align: left; border-bottom: 2px solid #dee2e6;">Email</th>
+                    <th style="padding: 12px; text-align: left; border-bottom: 2px solid #dee2e6;">SĐT</th>
+                    <th style="padding: 12px; text-align: center; border-bottom: 2px solid #dee2e6;">Thao tác</th>
                 </tr>
             </thead>
             <tbody>
-                ${users.map(user => `
-                    <tr>
-                        <td><strong>${user.maND}</strong></td>
-                        <td>${user.tenDangNhap}</td>
-                        <td>${user.hoTen}</td>
-                        <td>${getRoleBadge(user.vaiTro)}</td>
-                        <td>${user.email || '-'}</td>
-                        <td>${user.sdt || '-'}</td>
-                        <td>${getStatusBadge(user.trangThai)}</td>
-                        <td style="text-align: center;">
-                            <button class="btn btn-warning" onclick='editUser(${JSON.stringify(user).replace(/'/g, "&#39;")})' 
-                                    style="padding: 6px 12px; margin-right: 5px;">
-                                ✏️
-                            </button>
-                            <button class="btn btn-danger" onclick="deleteUser(${user.maND})" 
-                                    style="padding: 6px 12px;">
-                                🗑️
-                            </button>
-                        </td>
-                    </tr>
-                `).join('')}
-            </tbody>
-        </table>
     `;
-    
-    container.innerHTML = table;
+
+    users.forEach(user => {
+        const roleColor = {
+            'Admin': '#dc3545',
+            'LeTan': '#17a2b8',
+            'KeToan': '#ffc107',
+            'Khach': '#28a745'
+        }[user.vaiTro] || '#6c757d';
+
+        html += `
+            <tr style="border-bottom: 1px solid #dee2e6;">
+                <td style="padding: 12px;"><strong>${user.tenDangNhap}</strong></td>
+                <td style="padding: 12px;">${user.hoTen}</td>
+                <td style="padding: 12px;">
+                    <span style="background: ${roleColor}; color: white; padding: 4px 10px; border-radius: 12px; font-size: 12px; font-weight: 600;">
+                        ${getRoleText(user.vaiTro)}
+                    </span>
+                </td>
+                <td style="padding: 12px;">${user.email || '-'}</td>
+                <td style="padding: 12px;">${user.soDienThoai || '-'}</td>
+                <td style="padding: 12px; text-align: center;">
+                    <button onclick='editUser(${JSON.stringify(user).replace(/'/g, "&#39;")})' 
+                            style="background: #ffc107; color: #333; border: none; padding: 6px 12px; border-radius: 5px; cursor: pointer; margin-right: 5px;">
+                        ✏️ Sửa
+                    </button>
+                    <button onclick="deleteUser(${user.maNguoiDung}, '${user.tenDangNhap}')" 
+                            style="background: #dc3545; color: white; border: none; padding: 6px 12px; border-radius: 5px; cursor: pointer;">
+                        🗑️ Xóa
+                    </button>
+                </td>
+            </tr>
+        `;
+    });
+
+    html += '</tbody></table>';
+    container.innerHTML = html;
 }
 
-/**
- * Lọc người dùng
- */
+// Lọc người dùng
 function filterUsers() {
     const search = document.getElementById('searchInput').value.toLowerCase();
     const role = document.getElementById('roleFilter').value;
-    
-    let filtered = [...allUsers];
-    
-    if (search) {
-        filtered = filtered.filter(user => 
+
+    const filtered = allUsers.filter(user => {
+        const matchSearch = !search || 
             user.tenDangNhap.toLowerCase().includes(search) ||
-            user.hoTen.toLowerCase().includes(search) ||
-            (user.email && user.email.toLowerCase().includes(search))
-        );
-    }
-    
-    if (role) {
-        filtered = filtered.filter(user => user.vaiTro === role);
-    }
-    
+            user.hoTen.toLowerCase().includes(search);
+        const matchRole = !role || user.vaiTro === role;
+        return matchSearch && matchRole;
+    });
+
     displayUsers(filtered);
 }
 
-/**
- * Cập nhật thống kê
- */
-function updateStats() {
-    const total = allUsers.length;
-    const adminCount = allUsers.filter(u => u.vaiTro === 'Admin').length;
-    const staffCount = allUsers.filter(u => u.vaiTro === 'LeTan' || u.vaiTro === 'KeToan').length;
-    const activeCount = allUsers.filter(u => u.trangThai === 'active').length;
-    
-    document.getElementById('totalUsers').textContent = total;
-    document.getElementById('adminCount').textContent = adminCount;
-    document.getElementById('staffCount').textContent = staffCount;
-    document.getElementById('activeCount').textContent = activeCount;
-}
-
-/**
- * Mở modal thêm người dùng
- */
+// Mở modal thêm người dùng
 function openAddModal() {
-    editingUser = null;
+    editingUserId = null;
     document.getElementById('modalTitle').textContent = 'Thêm Người Dùng';
     document.getElementById('userForm').reset();
     document.getElementById('password').required = true;
-    document.getElementById('userModal').classList.add('show');
+    document.getElementById('password').placeholder = 'Nhập mật khẩu';
+    document.getElementById('userModal').style.display = 'flex';
 }
 
-/**
- * Mở modal sửa người dùng
- */
+// Sửa người dùng
 function editUser(user) {
-    editingUser = user;
+    editingUserId = user.maNguoiDung;
     document.getElementById('modalTitle').textContent = 'Sửa Người Dùng';
-    
     document.getElementById('username').value = user.tenDangNhap;
     document.getElementById('fullName').value = user.hoTen;
     document.getElementById('role').value = user.vaiTro;
     document.getElementById('email').value = user.email || '';
-    document.getElementById('phone').value = user.sdt || '';
+    document.getElementById('phone').value = user.soDienThoai || '';
+    
+    // Mật khẩu không bắt buộc khi sửa
     document.getElementById('password').required = false;
     document.getElementById('password').value = '';
+    document.getElementById('password').placeholder = 'Để trống nếu không đổi mật khẩu';
     
-    document.getElementById('userModal').classList.add('show');
+    document.getElementById('userModal').style.display = 'flex';
 }
 
-/**
- * Đóng modal
- */
-function closeModal() {
-    document.getElementById('userModal').classList.remove('show');
-}
-
-/**
- * Xóa người dùng
- */
-function deleteUser(id) {
-    if (!confirm('Bạn có chắc chắn muốn xóa người dùng này?')) {
+// Xóa người dùng
+async function deleteUser(userId, username) {
+    if (!confirm(`Bạn có chắc chắn muốn xóa người dùng "${username}"?`)) {
         return;
     }
-    
-    // API Call (đã comment)
-    /*
-    fetch(`https://localhost:7105/api-admin/NguoiDung/${id}`, {
-        method: 'DELETE',
-        headers: {
-            'Authorization': `Bearer ${localStorage.getItem('token')}`
-        }
-    })
-    .then(response => {
-        if (response.ok) {
-            showSuccess('Xóa người dùng thành công!');
-            loadUsers();
+
+    try {
+        if (isApiMode) {
+            console.log('🗑️ Deleting user:', userId);
+            const response = await fetchAPI(`/api-admin/NguoiDung/${userId}`, {
+                method: 'DELETE'
+            });
+
+            if (response.success) {
+                alert('✅ Xóa người dùng thành công!');
+                loadUsers();
+            } else {
+                throw new Error(response.message || 'Xóa thất bại');
+            }
         } else {
-            throw new Error('Xóa thất bại');
+            // Demo mode
+            allUsers = allUsers.filter(u => u.maNguoiDung !== userId);
+            alert('✅ Đã xóa (Demo mode)');
+            displayUsers(allUsers);
+            updateStats();
         }
-    })
-    .catch(error => {
-        console.error('Error:', error);
-        showError('Không thể xóa người dùng!');
-    });
-    */
-    
-    // Demo: Remove from array
-    allUsers = allUsers.filter(u => u.maND !== id);
-    displayUsers(allUsers);
-    updateStats();
-    showSuccess('Xóa người dùng thành công!');
-    console.log('API: DELETE /api-admin/NguoiDung/' + id);
+    } catch (error) {
+        console.error('❌ Delete Error:', error);
+        alert('❌ Lỗi: ' + error.message);
+    }
 }
 
-/**
- * Get role badge HTML
- */
-function getRoleBadge(role) {
-    const badges = {
-        'Admin': '<span class="badge badge-danger">Admin</span>',
-        'LeTan': '<span class="badge badge-info">Lễ Tân</span>',
-        'KeToan': '<span class="badge badge-success">Kế Toán</span>',
-        'Khach': '<span class="badge badge-secondary">Khách</span>'
-    };
-    return badges[role] || '<span class="badge badge-secondary">' + role + '</span>';
+// Đóng modal
+function closeModal() {
+    document.getElementById('userModal').style.display = 'none';
+    document.getElementById('userForm').reset();
 }
 
-/**
- * Get status badge HTML
- */
-function getStatusBadge(status) {
-    return status === 'active' 
-        ? '<span class="badge badge-success">Hoạt động</span>'
-        : '<span class="badge badge-secondary">Tạm khóa</span>';
-}
-
-/**
- * Handle form submission
- */
-document.getElementById('userForm').addEventListener('submit', (e) => {
+// Submit form
+document.getElementById('userForm').addEventListener('submit', async (e) => {
     e.preventDefault();
-    
+
     const username = document.getElementById('username').value.trim();
     const password = document.getElementById('password').value;
     const fullName = document.getElementById('fullName').value.trim();
     const role = document.getElementById('role').value;
     const email = document.getElementById('email').value.trim();
     const phone = document.getElementById('phone').value.trim();
-    
-    // Validation
-    if (!username || !fullName || !role) {
-        showError('Vui lòng điền đầy đủ thông tin!');
+
+    // Validate
+    if (!editingUserId && password.length < 6) {
+        alert('⚠️ Mật khẩu phải có ít nhất 6 ký tự!');
         return;
     }
-    
-    if (!editingUser && (!password || password.length < 6)) {
-        showError('Mật khẩu phải có ít nhất 6 ký tự!');
-        return;
-    }
-    
-    if (email && !validateEmail(email)) {
-        showError('Email không hợp lệ!');
-        return;
-    }
-    
-    if (phone && !validatePhone(phone)) {
-        showError('Số điện thoại không hợp lệ!');
-        return;
-    }
-    
+
+    // **QUAN TRỌNG: Map sang format mà API C# mong đợi**
     const userData = {
-        tenDangNhap: username,
-        hoTen: fullName,
-        vaiTro: role,
-        email: email,
-        sdt: phone,
-        trangThai: 'active'
+        TenDangNhap: username,
+        HoTen: fullName,
+        VaiTro: role
     };
-    
-    if (!editingUser || password) {
-        userData.matKhau = password;
+
+    // Chỉ gửi mật khẩu nếu có nhập
+    if (password) {
+        userData.MatKhau = password;
     }
-    
-    if (editingUser) {
-        // Update
-        /*
-        fetch(`https://localhost:7105/api-admin/NguoiDung/${editingUser.maND}`, {
-            method: 'PUT',
-            headers: {
-                'Authorization': `Bearer ${localStorage.getItem('token')}`,
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ ...userData, maND: editingUser.maND })
-        })
-        .then(response => {
-            if (response.ok) {
-                showSuccess('Cập nhật người dùng thành công!');
+
+    try {
+        if (isApiMode) {
+            let response;
+            
+            if (editingUserId) {
+                // Cập nhật - GỌI đúng endpoint /api-admin/NguoiDung/{id}
+                console.log('📝 Updating user:', editingUserId, userData);
+                response = await fetchAPI(`/api-admin/NguoiDung/${editingUserId}`, {
+                    method: 'PUT',
+                    body: JSON.stringify(userData)
+                });
+            } else {
+                // Thêm mới - Mật khẩu bắt buộc
+                if (!password) {
+                    alert('⚠️ Mật khẩu là bắt buộc khi thêm người dùng mới!');
+                    return;
+                }
+                console.log('➕ Creating user:', userData);
+                response = await fetchAPI('/api-admin/NguoiDung', {
+                    method: 'POST',
+                    body: JSON.stringify(userData)
+                });
+            }
+
+            if (response.success) {
+                alert(`✅ ${editingUserId ? 'Cập nhật' : 'Thêm'} người dùng thành công!`);
                 closeModal();
                 loadUsers();
             } else {
-                throw new Error('Cập nhật thất bại');
+                throw new Error(response.message || 'Thao tác thất bại');
             }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            showError('Không thể cập nhật người dùng!');
-        });
-        */
-        
-        // Demo: Update in array
-        const index = allUsers.findIndex(u => u.maND === editingUser.maND);
-        if (index !== -1) {
-            allUsers[index] = { ...allUsers[index], ...userData };
-        }
-        
-        showSuccess('Cập nhật người dùng thành công!');
-        console.log('API: PUT /api-admin/NguoiDung/' + editingUser.maND, userData);
-    } else {
-        // Create
-        /*
-        fetch('https://localhost:7105/api-admin/NguoiDung', {
-            method: 'POST',
-            headers: {
-                'Authorization': `Bearer ${localStorage.getItem('token')}`,
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(userData)
-        })
-        .then(response => response.json())
-        .then(data => {
-            showSuccess('Thêm người dùng thành công!');
+        } else {
+            // Demo mode
+            if (editingUserId) {
+                const index = allUsers.findIndex(u => u.maNguoiDung === editingUserId);
+                if (index !== -1) {
+                    allUsers[index] = { 
+                        ...allUsers[index], 
+                        tenDangNhap: username,
+                        hoTen: fullName,
+                        vaiTro: role,
+                        email: email,
+                        soDienThoai: phone
+                    };
+                }
+            } else {
+                allUsers.push({
+                    maNguoiDung: Date.now(),
+                    tenDangNhap: username,
+                    hoTen: fullName,
+                    vaiTro: role,
+                    email: email,
+                    soDienThoai: phone,
+                    trangThai: 'Active'
+                });
+            }
+            alert(`✅ ${editingUserId ? 'Cập nhật' : 'Thêm'} thành công (Demo mode)`);
             closeModal();
-            loadUsers();
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            showError('Không thể thêm người dùng!');
-        });
-        */
-        
-        // Demo: Add to array
-        const newUser = {
-            maND: Math.max(...allUsers.map(u => u.maND)) + 1,
-            ...userData
-        };
-        allUsers.push(newUser);
-        
-        showSuccess('Thêm người dùng thành công!');
-        console.log('API: POST /api-admin/NguoiDung', userData);
+            displayUsers(allUsers);
+            updateStats();
+        }
+    } catch (error) {
+        console.error('❌ Submit Error:', error);
+        alert('❌ Lỗi: ' + error.message);
     }
-    
-    closeModal();
-    displayUsers(allUsers);
-    updateStats();
 });
+
+// Cập nhật thống kê
+function updateStats() {
+    document.getElementById('totalUsers').textContent = allUsers.length;
+    document.getElementById('adminCount').textContent = allUsers.filter(u => u.vaiTro === 'Admin').length;
+    document.getElementById('staffCount').textContent = allUsers.filter(u => u.vaiTro === 'LeTan' || u.vaiTro === 'KeToan').length;
+    document.getElementById('activeCount').textContent = allUsers.filter(u => u.trangThai === 'Active').length;
+}
+
+// Helper functions
+function getRoleText(role) {
+    const roles = {
+        'Admin': 'Quản trị',
+        'LeTan': 'Lễ tân',
+        'KeToan': 'Kế toán',
+        'Khach': 'Khách'
+    };
+    return roles[role] || role;
+}
+
+function showLoading() {
+    document.getElementById('usersTableContainer').innerHTML = '<div style="text-align: center; padding: 40px; color: #666;">Đang tải dữ liệu...</div>';
+}
+
+function showWarning(message) {
+    const warning = document.createElement('div');
+    warning.className = 'warning-message';
+    warning.style.cssText = 'background: #fff3cd; border-left: 4px solid #ffc107; color: #856404; padding: 15px; border-radius: 8px; margin-bottom: 20px;';
+    warning.innerHTML = `<strong>⚠️ Thông báo:</strong> ${message}`;
+    
+    const container = document.querySelector('.main-content');
+    container.insertBefore(warning, container.children[1]);
+}
+
+function showError(message) {
+    const error = document.createElement('div');
+    error.style.cssText = 'background: #f8d7da; border-left: 4px solid #dc3545; color: #721c24; padding: 15px; border-radius: 8px; margin-bottom: 20px;';
+    error.innerHTML = `<strong>❌ Lỗi:</strong> ${message}`;
+    
+    const container = document.querySelector('.main-content');
+    container.insertBefore(error, container.children[1]);
+}
+
+function logout() {
+    if (confirm('Bạn có muốn đăng xuất?')) {
+        localStorage.removeItem('token');
+        window.location.href = '/index.html';
+    }
+}
+
+// Lấy chữ cái đầu tên người dùng từ token hoặc localStorage
+    window.addEventListener('load', () => {
+      const token = localStorage.getItem('token');
+      if (token) {
+        try {
+          const payload = JSON.parse(atob(token.split('.')[1]));
+          const hoTen = payload.HoTen || payload["HoTen"] || "User";
+          document.getElementById('userInitial').textContent = hoTen.charAt(0).toUpperCase();
+        } catch (e) {
+          document.getElementById('userInitial').textContent = 'U';
+        }
+      }
+    });
+
+    checkRole(['Admin']);
+// Initialize
+if (checkAdminAuth()) {
+    loadUsers();
+} else {
+    loadDemoData();
+}

@@ -15,7 +15,6 @@
   <ItemGroup>
     <Folder Include="BLL\" />
     <Folder Include="Controllers\" />
-    <Folder Include="DAL\" />
     <Folder Include="Model\" />
   </ItemGroup>
 

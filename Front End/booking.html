@@ -471,9 +471,17 @@
                 <span>🏠</span>
                 <span>Trang chủ</span>
             </a>
-            <a href="/rooms.html" class="menu-item">
+            <a href="/Phong.html" class="menu-item">
                 <span>🚪</span>
-                <span>Danh Mục Phòng</span>
+                <span>Quản Lý Phòng</span>
+            </a>
+            <a href="/Gia.html" class="menu-item">
+                <span>💰</span>
+                <span>Quản Lý Giá</span>
+            </a>
+            <a href="/LoaiPhong.html" class="menu-item">
+                <span>🏷️</span>
+                <span>Loại Phòng</span>
             </a>
             <a href="/booking.html" class="menu-item active">
                 <span>📅</span>
@@ -494,6 +502,10 @@
             <a href="/hoadon.html" class="menu-item">
                 <span>💰</span>
                 <span>Hóa Đơn</span>
+            </a>
+            <a href="/users.html" class="menu-item">
+                <span>👥</span>
+                <span>Quản lý người dùng</span>
             </a>
             <a href="/baocao.html" class="menu-item " >
                 <span>📊</span>
@@ -655,321 +667,7 @@
         </div>
     </div>
 
-    <script>
-        // Dữ liệu demo - thay thế cho API
-        const demoRooms = [
-            { maPhong: 'P101', soPhong: '101', maLoaiPhong: 'Standard', gia: 500000, trangThai: 'available' },
-            { maPhong: 'P102', soPhong: '102', maLoaiPhong: 'Standard', gia: 500000, trangThai: 'occupied' },
-            { maPhong: 'P103', soPhong: '103', maLoaiPhong: 'Standard', gia: 500000, trangThai: 'available' },
-            { maPhong: 'P104', soPhong: '104', maLoaiPhong: 'Deluxe', gia: 800000, trangThai: 'available' },
-            { maPhong: 'P105', soPhong: '105', maLoaiPhong: 'Deluxe', gia: 800000, trangThai: 'maintenance' },
-            { maPhong: 'P201', soPhong: '201', maLoaiPhong: 'VIP', gia: 1200000, trangThai: 'available' },
-            { maPhong: 'P202', soPhong: '202', maLoaiPhong: 'VIP', gia: 1200000, trangThai: 'occupied' },
-            { maPhong: 'P203', soPhong: '203', maLoaiPhong: 'VIP', gia: 1200000, trangThai: 'available' },
-            { maPhong: 'P204', soPhong: '204', maLoaiPhong: 'Standard', gia: 500000, trangThai: 'available' },
-            { maPhong: 'P205', soPhong: '205', maLoaiPhong: 'Standard', gia: 500000, trangThai: 'occupied' },
-            { maPhong: 'P301', soPhong: '301', maLoaiPhong: 'Deluxe', gia: 800000, trangThai: 'available' },
-            { maPhong: 'P302', soPhong: '302', maLoaiPhong: 'Deluxe', gia: 800000, trangThai: 'available' },
-            { maPhong: 'P303', soPhong: '303', maLoaiPhong: 'VIP', gia: 1200000, trangThai: 'occupied' },
-            { maPhong: 'P304', soPhong: '304', maLoaiPhong: 'Standard', gia: 500000, trangThai: 'available' },
-            { maPhong: 'P305', soPhong: '305', maLoaiPhong: 'Standard', gia: 500000, trangThai: 'maintenance' },
-        ];
-
-        const demoCustomers = [
-            { maKhach: 'KH001', hoTen: 'Nguyễn Văn A', sdt: '0901234567', email: 'nva@email.com' },
-            { maKhach: 'KH002', hoTen: 'Trần Thị B', sdt: '0907654321', email: 'ttb@email.com' },
-            { maKhach: 'KH003', hoTen: 'Lê Văn C', sdt: '0912345678', email: 'lvc@email.com' },
-            { maKhach: 'KH004', hoTen: 'Phạm Thị D', sdt: '0908765432', email: 'ptd@email.com' },
-        ];
-
-        const demoServices = [
-            { maDV: 'DV001', ten: 'Giặt ủi', donGia: 50000 },
-            { maDV: 'DV002', ten: 'Ăn sáng', donGia: 100000 },
-            { maDV: 'DV003', ten: 'Massage', donGia: 300000 },
-            { maDV: 'DV004', ten: 'Đưa đón sân bay', donGia: 200000 },
-        ];
-
-        let allRooms = [...demoRooms];
-        let filteredRooms = [...demoRooms];
-        let selectedRoom = null;
-
-        // API đã được comment - dùng data demo
-        /*
-        const API_BASE = 'https://localhost:7105';
-        const token = localStorage.getItem('token');
-
-        async function fetchAPI(endpoint, options = {}) {
-            const response = await fetch(`${API_BASE}${endpoint}`, {
-                ...options,
-                headers: {
-                    'Authorization': `Bearer ${token}`,
-                    'Content-Type': 'application/json',
-                    ...options.headers
-                }
-            });
-            return response.json();
-        }
-        */
-
-        // Set ngày mặc định
-        const today = new Date();
-        const tomorrow = new Date(today);
-        tomorrow.setDate(tomorrow.getDate() + 1);
-        document.getElementById('checkInDate').value = today.toISOString().split('T')[0];
-        document.getElementById('checkOutDate').value = tomorrow.toISOString().split('T')[0];
-
-        // Load dữ liệu ban đầu
-        function loadInitialData() {
-            // Thay vì gọi API, dùng data demo
-            updateStats();
-            populateCustomers(demoCustomers);
-            populateServices(demoServices);
-            displayRooms(allRooms);
-        }
-
-        function updateStats() {
-            const available = allRooms.filter(r => r.trangThai === 'available').length;
-            const occupied = allRooms.filter(r => r.trangThai === 'occupied').length;
-            const maintenance = allRooms.filter(r => r.trangThai === 'maintenance').length;
-
-            document.getElementById('totalRooms').textContent = allRooms.length;
-            document.getElementById('availableRooms').textContent = available;
-            document.getElementById('occupiedRooms').textContent = occupied;
-            document.getElementById('maintenanceRooms').textContent = maintenance;
-        }
-
-        function populateCustomers(customers) {
-            const select = document.getElementById('customerId');
-            customers.forEach(customer => {
-                const option = document.createElement('option');
-                option.value = customer.maKhach;
-                option.textContent = `${customer.hoTen} - ${customer.sdt || customer.email}`;
-                select.appendChild(option);
-            });
-        }
-
-        function populateServices(services) {
-            const select = document.getElementById('serviceId');
-            services.forEach(service => {
-                const option = document.createElement('option');
-                option.value = service.maDV;
-                option.textContent = `${service.ten} - ${formatPrice(service.donGia)}`;
-                select.appendChild(option);
-            });
-        }
-
-        function displayRooms(rooms) {
-            const container = document.getElementById('roomsContainer');
-            container.innerHTML = '';
-
-            if (rooms.length === 0) {
-                container.innerHTML = '<p style="text-align: center; color: #999; grid-column: 1/-1;">Không tìm thấy phòng nào.</p>';
-                return;
-            }
-
-            rooms.forEach(room => {
-                const card = document.createElement('div');
-                card.className = `room-card ${room.trangThai}`;
-                card.onclick = () => openBookingModal(room);
-                
-                const statusText = room.trangThai === 'available' ? 'Trống' : 
-                                  room.trangThai === 'occupied' ? 'Đã đặt' : 'Bảo trì';
-                
-                card.innerHTML = `
-                    <div class="room-number">Phòng ${room.soPhong}</div>
-                    <div class="room-type">${room.maLoaiPhong}</div>
-                    <div class="room-price">${formatPrice(room.gia)}</div>
-                    <span class="room-status status-${room.trangThai}">${statusText}</span>
-                `;
-                
-                container.appendChild(card);
-            });
-        }
-
-        function filterRooms() {
-            const typeFilter = document.getElementById('roomTypeFilter').value;
-            const statusFilter = document.getElementById('statusFilter').value;
-
-            filteredRooms = allRooms;
-
-            if (typeFilter) {
-                filteredRooms = filteredRooms.filter(r => r.maLoaiPhong === typeFilter);
-            }
-
-            if (statusFilter) {
-                filteredRooms = filteredRooms.filter(r => r.trangThai === statusFilter);
-            }
-
-            displayRooms(filteredRooms);
-        }
-
-        function openBookingModal(room) {
-            selectedRoom = room;
-
-            if (room.trangThai === 'occupied') {
-                alert('Phòng này đã được đặt!');
-                return;
-            }
-            if (room.trangThai === 'maintenance') {
-                alert('Phòng này đang bảo trì!');
-                return;
-            }
-
-            // Hiển thị modal
-            const modal = document.getElementById('bookingModal');
-            modal.classList.add('show');
-
-            // Reset form & message
-            const form = document.getElementById('bookingForm');
-            form.reset();
-            showMessage('', '');
-
-            // Điền thông tin phòng vào khung chi tiết
-            const details = document.getElementById('selectedRoomDetails');
-            details.innerHTML = `
-                <h3>Phòng ${room.soPhong} - ${room.maLoaiPhong}</h3>
-                <p>Giá: <strong>${formatPrice(room.gia)}</strong> / đêm</p>
-                <p>Mã phòng: ${room.maPhong}</p>
-            `;
-
-            // Gợi ý sẵn ngày nhận/trả theo filter ở trên
-            const checkInDate = document.getElementById('checkInDate').value;
-            const checkOutDate = document.getElementById('checkOutDate').value;
-            if (checkInDate) {
-                document.getElementById('checkInDateTime').value = checkInDate + 'T14:00';
-            }
-            if (checkOutDate) {
-                document.getElementById('checkOutDateTime').value = checkOutDate + 'T12:00';
-            }
-        }
-
-        function closeModal() {
-            const modal = document.getElementById('bookingModal');
-            modal.classList.remove('show');
-            selectedRoom = null;
-        }
-
-        function toggleApiNotes() {
-            const notes = document.getElementById('apiNotes');
-            if (!notes) return;
-            notes.style.display = (notes.style.display === 'none' || notes.style.display === '') 
-                ? 'block' 
-                : 'none';
-        }
-
-        function formatPrice(value) {
-            if (value == null) return '';
-            return value.toLocaleString('vi-VN', {
-                style: 'currency',
-                currency: 'VND',
-                minimumFractionDigits: 0
-            });
-        }
-
-        function showMessage(type, text) {
-            const box = document.getElementById('modalMessage');
-            if (!box) return;
-
-            box.className = '';
-            if (!text) {
-                box.innerHTML = '';
-                return;
-            }
-
-            if (type === 'success') {
-                box.classList.add('success-message');
-            } else if (type === 'error') {
-                box.classList.add('error-message');
-            }
-            box.textContent = text;
-        }
-
-        // Xử lý submit form đặt phòng (demo: chỉ console.log + cập nhật trạng thái phòng)
-        document.getElementById('bookingForm').addEventListener('submit', function (e) {
-            e.preventDefault();
-
-            if (!selectedRoom) {
-                showMessage('error', 'Chưa chọn phòng để đặt.');
-                return;
-            }
-
-            const customerId = document.getElementById('customerId').value;
-            const checkIn = document.getElementById('checkInDateTime').value;
-            const checkOut = document.getElementById('checkOutDateTime').value;
-            const adults = parseInt(document.getElementById('adults').value || '1', 10);
-            const children = parseInt(document.getElementById('children').value || '0', 10);
-            const serviceSelect = document.getElementById('serviceId');
-            const notes = document.getElementById('notes').value.trim();
-
-            if (!customerId || !checkIn || !checkOut) {
-                showMessage('error', 'Vui lòng nhập đủ: Khách hàng, Ngày nhận và Ngày trả.');
-                return;
-            }
-
-            // Lấy danh sách dịch vụ đã chọn
-            const selectedServices = [];
-            Array.from(serviceSelect.options).forEach(opt => {
-                if (opt.selected && opt.value) {
-                    selectedServices.push(opt.value);
-                }
-            });
-
-            const payload = {
-                maPhong: selectedRoom.maPhong,
-                maKhach: customerId,
-                ngayNhan: checkIn,
-                ngayTra: checkOut,
-                soNguoiLon: adults,
-                soTreEm: children,
-                dichVu: selectedServices,
-                ghiChu: notes
-            };
-
-            // Demo: chỉ log ra console, chưa gọi API thật
-            console.log('Payload gửi API DatPhong (demo):', payload);
-
-            // Cập nhật trạng thái phòng sang "occupied" trong data demo
-            allRooms = allRooms.map(r => {
-                if (r.maPhong === selectedRoom.maPhong) {
-                    return { ...r, trangThai: 'occupied' };
-                }
-                return r;
-            });
-
-            updateStats();
-            filterRooms();
-
-            showMessage('success', 'Đặt phòng (demo) thành công! Kiểm tra tab Console để xem payload gửi API.');
-
-            // Đóng modal sau 1.5s
-            setTimeout(() => {
-                closeModal();
-            }, 1500);
-        });
-
-        // Click ra ngoài content thì đóng modal
-        document.getElementById('bookingModal').addEventListener('click', function (e) {
-            if (e.target.id === 'bookingModal') {
-                closeModal();
-            }
-        });
-
-        // Nhấn ESC để đóng modal
-        document.addEventListener('keydown', function (e) {
-            if (e.key === 'Escape') {
-                closeModal();
-            }
-        });
-
-        // Khởi động trang
-        window.addEventListener('load', function () {
-            loadInitialData();
-        });
-    </script>
-
-    <script src="js/config.js"></script>
-    <script src="js/utils.js"></script>
-    <script src="js/demo-data.js"></script>
+   <script src="js/Auth.js"></script>
     <script src="js/booking.js"></script>
 </body>
 </html>

@@ -1,630 +1,4 @@
-<!DOCTYPE html>
-<html lang="vi">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Thanh Toán - Hotel Management</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: #f5f7fa;
-            min-height: 100vh;
-        }
-
-        .sidebar {
-            position: fixed;
-            left: 0;
-            top: 0;
-            width: 250px;
-            height: 100vh;
-            background: linear-gradient(180deg, #2d5016 0%, #1a3009 100%);
-            color: white;
-            padding: 20px;
-            overflow-y: auto;
-        }
-
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 10px;
-            padding-bottom: 15px;
-            border-bottom: 2px solid rgba(255,255,255,0.2);
-        }
-
-        .logo h1 {
-            font-size: 24px;
-            color: white;
-        }
-
-        .logo-subtitle {
-            color: rgba(255,255,255,0.7);
-            font-size: 12px;
-            margin-top: 5px;
-        }
-
-        .menu {
-            margin-top: 30px;
-        }
-
-        .menu-item {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 12px 15px;
-            margin-bottom: 8px;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.3s;
-            color: white;
-            text-decoration: none;
-        }
-
-        .menu-item:hover {
-            background: rgba(255,255,255,0.1);
-        }
-
-        .menu-item.active {
-            background: rgba(255,255,255,0.15);
-        }
-
-        .main-content {
-            margin-left: 250px;
-            padding: 20px;
-        }
-
-        .top-bar {
-            background: white;
-            padding: 15px 30px;
-            border-radius: 10px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 25px;
-        }
-
-        .user-avatar {
-            width: 40px;
-            height: 40px;
-            background: #2d5016;
-            color: white;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-        }
-
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-            margin-bottom: 25px;
-        }
-
-        .stat-card {
-            background: white;
-            padding: 25px;
-            border-radius: 10px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-            border-left: 4px solid #dc3545;
-        }
-
-        .stat-number {
-            font-size: 32px;
-            font-weight: bold;
-            color: #dc3545;
-            margin-bottom: 5px;
-        }
-
-        .stat-label {
-            color: #666;
-            font-size: 14px;
-        }
-
-        .content-card {
-            background: white;
-            padding: 25px;
-            border-radius: 10px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-        }
-
-        .filter-bar {
-            display: flex;
-            gap: 15px;
-            margin-bottom: 25px;
-            align-items: center;
-        }
-
-        .filter-bar input {
-            flex: 1;
-            padding: 12px 15px;
-            border: 2px solid #e0e0e0;
-            border-radius: 8px;
-            font-size: 14px;
-        }
-
-        .btn {
-            padding: 12px 24px;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 14px;
-            font-weight: 500;
-            transition: all 0.3s;
-        }
-
-        .btn-primary {
-            background: #2d5016;
-            color: white;
-        }
-
-        .btn-success {
-            background: #28a745;
-            color: white;
-        }
-
-        .btn:disabled {
-            background: #ccc;
-            cursor: not-allowed;
-        }
-
-        .invoices-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 20px;
-        }
-
-        .invoice-card {
-            background: white;
-            border: 3px solid #dc3545;
-            border-radius: 12px;
-            padding: 20px;
-            cursor: pointer;
-            transition: all 0.3s;
-            position: relative;
-        }
-
-        .invoice-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 20px rgba(220, 53, 69, 0.3);
-        }
-
-        .invoice-card-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
-        }
-
-        .invoice-number {
-            font-size: 20px;
-            font-weight: bold;
-            color: #2d5016;
-        }
-
-        .status-badge {
-            padding: 5px 12px;
-            border-radius: 20px;
-            font-size: 11px;
-            font-weight: 600;
-            background: #dc3545;
-            color: white;
-        }
-
-        .customer-name {
-            font-size: 16px;
-            font-weight: 600;
-            color: #333;
-            margin-bottom: 8px;
-        }
-
-        .invoice-info {
-            font-size: 13px;
-            color: #666;
-            margin-bottom: 5px;
-        }
-
-        .amount-section {
-            margin-top: 15px;
-            padding-top: 15px;
-            border-top: 2px solid #f0f0f0;
-        }
-
-        .amount-label {
-            font-size: 12px;
-            color: #999;
-            text-transform: uppercase;
-        }
-
-        .amount-value {
-            font-size: 24px;
-            font-weight: bold;
-            color: #dc3545;
-            margin-top: 5px;
-        }
-
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.7);
-            z-index: 1000;
-            overflow-y: auto;
-        }
-
-        .modal.show {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .modal-content {
-            background: white;
-            padding: 30px;
-            border-radius: 15px;
-            max-width: 800px;
-            width: 90%;
-            max-height: 90vh;
-            overflow-y: auto;
-            animation: slideDown 0.3s ease-out;
-        }
-
-        @keyframes slideDown {
-            from {
-                opacity: 0;
-                transform: translateY(-50px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .modal-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 25px;
-            padding-bottom: 15px;
-            border-bottom: 2px solid #f0f0f0;
-        }
-
-        .modal-header h2 {
-            color: #2d5016;
-            font-size: 24px;
-        }
-
-        .close-btn {
-            background: none;
-            border: none;
-            font-size: 28px;
-            cursor: pointer;
-            color: #999;
-        }
-
-        .invoice-detail-section {
-            background: #f8f9fa;
-            padding: 20px;
-            border-radius: 8px;
-            margin-bottom: 20px;
-        }
-
-        .invoice-detail-section h3 {
-            color: #2d5016;
-            margin-bottom: 15px;
-            font-size: 18px;
-        }
-
-        .detail-row {
-            display: flex;
-            justify-content: space-between;
-            padding: 10px 0;
-            border-bottom: 1px solid #dee2e6;
-        }
-
-        .detail-row:last-child {
-            border-bottom: none;
-        }
-
-        .detail-label {
-            color: #666;
-            font-size: 14px;
-        }
-
-        .detail-value {
-            font-weight: 600;
-            color: #333;
-            font-size: 14px;
-        }
-
-        .items-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 20px 0;
-        }
-
-        .items-table th,
-        .items-table td {
-            padding: 12px;
-            text-align: left;
-            border-bottom: 1px solid #e0e0e0;
-        }
-
-        .items-table th {
-            background: #f8f9fa;
-            font-weight: 600;
-            color: #333;
-        }
-
-        .total-section {
-            background: #fff3cd;
-            padding: 20px;
-            border-radius: 8px;
-            margin: 20px 0;
-        }
-
-        .total-row {
-            display: flex;
-            justify-content: space-between;
-            padding: 8px 0;
-            font-size: 16px;
-        }
-
-        .total-row.grand-total {
-            border-top: 2px solid #ffc107;
-            padding-top: 15px;
-            margin-top: 10px;
-            font-size: 20px;
-            font-weight: bold;
-            color: #dc3545;
-        }
-
-        .payment-section {
-            background: #e8f5e9;
-            padding: 20px;
-            border-radius: 8px;
-        }
-
-        .payment-section h3 {
-            color: #2d5016;
-            margin-bottom: 15px;
-        }
-
-        .form-group {
-            margin-bottom: 20px;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 600;
-            color: #333;
-        }
-
-        .form-group input,
-        .form-group select {
-            width: 100%;
-            padding: 12px 15px;
-            border: 2px solid #e0e0e0;
-            border-radius: 8px;
-            font-size: 14px;
-        }
-
-        .payment-methods {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 10px;
-            margin-bottom: 20px;
-        }
-
-        .payment-method {
-            padding: 15px;
-            border: 2px solid #e0e0e0;
-            border-radius: 8px;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-
-        .payment-method:hover {
-            border-color: #2d5016;
-        }
-
-        .payment-method.selected {
-            border-color: #2d5016;
-            background: #f0f8f0;
-        }
-
-        .payment-method-icon {
-            font-size: 28px;
-            margin-bottom: 8px;
-        }
-
-        .payment-method-label {
-            font-size: 13px;
-            font-weight: 600;
-        }
-
-        .success-modal {
-            background: white;
-            padding: 40px;
-            border-radius: 15px;
-            max-width: 500px;
-            text-align: center;
-        }
-
-        .success-icon {
-            font-size: 80px;
-            margin-bottom: 20px;
-        }
-
-        .success-message h2 {
-            color: #28a745;
-            margin-bottom: 15px;
-        }
-
-        .empty-state {
-            text-align: center;
-            padding: 60px 20px;
-            color: #999;
-        }
-
-        .empty-state-icon {
-            font-size: 64px;
-            margin-bottom: 20px;
-        }
-
-        .loading {
-            text-align: center;
-            padding: 40px;
-            color: #666;
-        }
-
-        .warning-message {
-            background: #fff3cd;
-            border-left: 4px solid #ffc107;
-            color: #856404;
-            padding: 15px;
-            border-radius: 8px;
-            margin-bottom: 20px;
-        }
-
-        .mode-indicator {
-            display: inline-block;
-            padding: 4px 12px;
-            border-radius: 12px;
-            font-size: 11px;
-            font-weight: 600;
-            margin-left: 10px;
-        }
-
-        .mode-demo {
-            background: #fff3cd;
-            color: #856404;
-        }
-
-        .mode-live {
-            background: #d4edda;
-            color: #155724;
-        }
-    </style>
-</head>
-<body>
-    <div class="sidebar">
-        <div class="logo">
-            <span>🏨</span>
-            <div>
-                <h1>HOTEL</h1>
-                <div class="logo-subtitle">Quản Lý Khách Sạn</div>
-            </div>
-        </div>
-
-        <div class="menu">
-            <a href="/management.html" class="menu-item">
-                <span>🏠</span>
-                <span>Trang chủ</span>
-            </a>
-            <a href="/rooms.html" class="menu-item">
-                <span>🚪</span>
-                <span>Danh Mục Phòng</span>
-            </a>
-            <a href="/booking.html" class="menu-item">
-                <span>📅</span>
-                <span>Đặt phòng</span>
-            </a>
-            <a href="/thanhtoan.html" class="menu-item active">
-                <span>💳</span>
-                <span>Thanh toán</span>
-            </a>
-            <a href="/checkinout.html" class="menu-item">
-                <span>✅</span>
-                <span>Check In/Out</span>
-            </a>
-            <a href="/dichvu.html" class="menu-item">
-                <span>🛎️</span>
-                <span>Dịch Vụ</span>
-            </a>
-            <a href="/hoadon.html" class="menu-item">
-                <span>💰</span>
-                <span>Hóa Đơn</span>
-            </a>
-            <a href="/baocao.html" class="menu-item">
-                <span>📊</span>
-                <span>Báo Cáo</span>
-            </a>
-        </div>
-    </div>
-
-    <div class="main-content">
-        <div class="top-bar">
-            <div>
-                <h2>💳 Thanh Toán Hóa Đơn</h2>
-                <span class="mode-indicator" id="modeIndicator">Chế độ Demo</span>
-            </div>
-            <div class="user-avatar">K</div>
-        </div>
-
-        <div id="warningBox"></div>
-
-        <div class="stats-grid">
-            <div class="stat-card">
-                <div class="stat-number" id="totalUnpaid">0</div>
-                <div class="stat-label">Hóa đơn chưa thanh toán</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-number" id="totalAmount">0đ</div>
-                <div class="stat-label">Tổng tiền cần thu</div>
-            </div>
-            <div class="stat-card" style="border-left-color: #ffc107;">
-                <div class="stat-number" style="color: #ffc107;" id="partialPaid">0</div>
-                <div class="stat-label">Thanh toán một phần</div>
-            </div>
-        </div>
-
-        <div class="content-card">
-            <div class="filter-bar">
-                <input type="text" id="searchInput" placeholder="🔍 Tìm theo số HĐ, mã khách..." onkeyup="filterInvoices()">
-                <button class="btn btn-primary" onclick="filterInvoices()">Tìm kiếm</button>
-            </div>
-
-            <div class="invoices-grid" id="invoicesGrid"></div>
-        </div>
-    </div>
-
-    <!-- Invoice Detail Modal -->
-    <div id="invoiceModal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2>Chi Tiết Hóa Đơn</h2>
-                <button class="close-btn" onclick="closeModal()">&times;</button>
-            </div>
-            <div id="invoiceDetailContent"></div>
-        </div>
-    </div>
-
-    <!-- Success Modal -->
-    <div id="successModal" class="modal">
-        <div class="success-modal">
-            <div class="success-icon">✅</div>
-            <h2 style="color: #28a745; margin-bottom: 15px;">Thanh Toán Thành Công!</h2>
-            <p style="color: #666; margin-bottom: 30px;">Hóa đơn đã được cập nhật vào hệ thống</p>
-            <button class="btn btn-success" onclick="closeSuccessModal()" style="width: 100%;">Đóng</button>
-        </div>
-    </div>
-
-    <script>
-        const API_BASE_URL = 'https://localhost:7105';
+const API_BASE_URL = 'https://localhost:7105';
         let allInvoices = [];
         let selectedInvoice = null;
         let selectedPaymentMethod = null;
@@ -661,7 +35,7 @@
         // Kiểm tra token
         function checkAuth() {
             currentToken = localStorage.getItem('token');
-            return true; // Không bắt buộc
+            return true;
         }
 
         // Gọi API với xử lý lỗi
@@ -701,14 +75,13 @@
                 if (response.success) {
                     const data = response.data || [];
 
-                    // Lọc hóa đơn chưa thanh toán dựa theo số tiền như hàm displayInvoices
+                    // Lọc hóa đơn chưa thanh toán
                     allInvoices = data.filter(inv => {
                         const conNo = inv.soTienConNo ?? (inv.tongTien - inv.soTienDaTra);
-                        return conNo > 0; // ● Chỉ lấy hóa đơn còn nợ
+                        return conNo > 0;
                     });
 
                     isApiMode = true;
-                    updateModeIndicator(true);
                     updateStats();
                     displayInvoices(allInvoices);
 
@@ -716,7 +89,7 @@
                     throw new Error(response.message || 'API Error');
                 }
             } catch (error) {
-                console.warn('API không khả dụng, chuyển sang chế độ demo:', error.message);
+                console.warn('Chuyển sang dữ liệu demo');
                 loadDemoData();
             }
         }
@@ -725,30 +98,8 @@
         function loadDemoData() {
             allInvoices = [...demoInvoices];
             isApiMode = false;
-            updateModeIndicator(false);
-            showWarning('Không thể kết nối API. Đang sử dụng dữ liệu demo. Chức năng thanh toán sẽ được mô phỏng.');
             updateStats();
             displayInvoices(allInvoices);
-        }
-
-        function updateModeIndicator(isLive) {
-            const indicator = document.getElementById('modeIndicator');
-            if (isLive) {
-                indicator.textContent = '🟢 Kết nối API';
-                indicator.className = 'mode-indicator mode-live';
-            } else {
-                indicator.textContent = '🟡 Chế độ Demo';
-                indicator.className = 'mode-indicator mode-demo';
-            }
-        }
-
-        function showWarning(message) {
-            const warningBox = document.getElementById('warningBox');
-            warningBox.innerHTML = `
-                <div class="warning-message">
-                    <strong>⚠️ Thông báo:</strong> ${message}
-                </div>
-            `;
         }
 
         function displayInvoices(invoices) {
@@ -806,12 +157,10 @@
                         throw new Error('Không thể tải chi tiết');
                     }
                 } else {
-                    // Sử dụng demo data
                     const detail = demoInvoiceDetails[invoice.maHD] || createDemoDetail(invoice);
                     displayPaymentDetail(detail, invoice);
                 }
             } catch (error) {
-                console.error('Error:', error);
                 const detail = demoInvoiceDetails[invoice.maHD] || createDemoDetail(invoice);
                 displayPaymentDetail(detail, invoice);
             }
@@ -959,7 +308,6 @@
 
         function selectPaymentMethod(method) {
             selectedPaymentMethod = method;
-            // Cập nhật UI
             document.querySelectorAll('.payment-method').forEach(el => {
                 el.classList.remove('selected');
             });
@@ -991,14 +339,12 @@
 
             try {
                 if (isApiMode) {
-                    // Chuẩn bị dữ liệu thanh toán
                     const paymentData = {
                         soTienTra: amount,
                         hinhThucThanhToan: selectedPaymentMethod,
                         tinhTrang: "SanSang"
                     };
 
-                    // Gọi API thanh toán thực với PUT method
                     const response = await fetchAPI(`/api-user/HoaDon/payment/${selectedInvoice.maHD}`, {
                         method: 'PUT',
                         body: JSON.stringify(paymentData)
@@ -1010,17 +356,15 @@
                         throw new Error(response.message || 'Thanh toán thất bại');
                     }
                 } else {
-                    // Demo mode - mô phỏng thanh toán
+                    // Demo mode
                     await new Promise(resolve => setTimeout(resolve, 1000));
                     
-                    // Cập nhật demo data
                     const invoice = allInvoices.find(i => i.maHD === selectedInvoice.maHD);
                     if (invoice) {
                         invoice.soTienDaTra += amount;
                         invoice.soTienConNo -= amount;
                         invoice.hinhThucThanhToan = selectedPaymentMethod;
                         
-                        // Nếu thanh toán đủ, xóa khỏi danh sách
                         if (invoice.soTienConNo <= 0) {
                             allInvoices = allInvoices.filter(i => i.maHD !== selectedInvoice.maHD);
                         }
@@ -1037,13 +381,9 @@
         }
 
         function showSuccess() {
-            // Đóng modal chi tiết
             closeModal();
-
-            // Hiển thị modal thành công
             document.getElementById('successModal').classList.add('show');
 
-            // Reload lại danh sách sau 500ms
             setTimeout(() => {
                 if (isApiMode) {
                     loadUnpaidInvoices();
@@ -1099,9 +439,14 @@
             return new Date(dateStr).toLocaleDateString('vi-VN');
         }
 
-        // Initialize - không bắt buộc phải có token
+        function logout() {
+            if (confirm('Bạn có muốn đăng xuất?')) {
+                localStorage.removeItem('token');
+                window.location.href = '/index.html';
+            }
+        }
+
+        // Initialize
         checkAuth();
+        checkRole(['Admin', 'KeToan','LeTan']);
         loadUnpaidInvoices();
-    </script>
-</body>
-</html>

@@ -227,6 +227,37 @@
           }
         }
       }
+    },
+    "/api/NguoiDung/register": {
+      "post": {
+        "tags": [
+          "NguoiDung"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RegisterRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RegisterRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/RegisterRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
     }
   },
   "components": {
@@ -251,6 +282,24 @@
             "nullable": true
           },
           "vaiTro": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "RegisterRequest": {
+        "type": "object",
+        "properties": {
+          "tenDangNhap": {
+            "type": "string",
+            "nullable": true
+          },
+          "matKhau": {
+            "type": "string",
+            "nullable": true
+          },
+          "hoTen": {
             "type": "string",
             "nullable": true
           }

@@ -111,6 +111,10 @@ CREATE TABLE HoaDonChiTiet (
 );
 
 INSERT INTO NguoiDung (TenDangNhap, MatKhau, HoTen, VaiTro) VALUES
+('admin01', '123456', N'Đỗ Xuân Dũng', N'Admin'),
+('letan01', '123456', N'Đỗ Xuân Dũng', N'LeTan'),
+('khach01', '123456', N'Đỗ Xuân Dũng', N'Khach'),
+('ketoan01', '123456', N'Đỗ Xuân Dũng', N'KeToan'),
 ('dxdung', 'dung123', N'Đỗ Xuân Dũng', N'Admin'),
 ('tmlan', 'lan123', N'Trần Mai Lan', N'LeTan'),
 ('ldquangminh', 'minh123', N'Lưu Đình Quang Minh', N'KeToan');
@@ -245,13 +249,13 @@ INSERT INTO HoaDon (SoHD, MaKhach, MaND, NgayLap, TongTien, HinhThucThanhToan, S
 ('HD004', 4, 2, '2024-09-07 11:30:00', 5800000, N'The', 5800000),
 ('HD005', 5, 1, '2024-09-08 12:20:00', 8100000, N'ChuyenKhoan', 8100000),
 ('HD006', 6, 2, '2024-09-09 11:45:00', 6400000, N'TienMat', 6400000),
-('HD007', 7, 1, '2024-09-10 12:15:00', 17600000, N'ChuyenKhoan', 17600000),
-('HD008', 8, 2, '2024-09-12 12:30:00', 1850000, N'The', 1850000),
-('HD009', 9, 1, '2024-09-13 11:20:00', 2950000, N'TienMat', 2950000),
-('HD010', 10, 2, '2024-09-15 12:40:00', 6300000, N'ChuyenKhoan', 6300000),
-('HD011', 11, 1, '2024-09-17 11:25:00', 5900000, N'The', 5900000),
-('HD012', 12, 2, '2024-09-18 12:35:00', 8300000, N'ChuyenKhoan', 8300000),
-('HD013', 13, 1, '2024-09-19 11:40:00', 6100000, N'TienMat', 6100000),
+('HD007', 7, 1, '2024-09-10 12:15:00', 17600000, N'', 0),
+('HD008', 8, 2, '2024-09-12 12:30:00', 1850000, N'', 0),
+('HD009', 9, 1, '2024-09-13 11:20:00', 2950000, N'', 0),
+('HD010', 10, 2, '2024-09-15 12:40:00', 6300000, N'', 0),
+('HD011', 11, 1, '2024-09-17 11:25:00', 5900000, N'', 0),
+('HD012', 12, 2, '2024-09-18 12:35:00', 8300000, N'', 0),
+('HD013', 13, 1, '2024-09-19 11:40:00', 6100000, N'', 0),
 ('HD014', 14, 2, '2024-09-20 12:25:00', 18400000, N'ChuyenKhoan', 18400000),
 ('HD015', 15, 1, '2024-09-22 12:50:00', 2100000, N'The', 2100000),
 ('HD016', 16, 2, '2024-09-23 11:35:00', 3200000, N'TienMat', 3200000),
@@ -546,7 +550,23 @@ CREATE PROCEDURE sp_LoaiPhong_Xoa
     @MaLoaiPhong INT
 AS
 BEGIN
-    DELETE FROM LoaiPhong WHERE MaLoaiPhong = @MaLoaiPhong
+    DELETE cthd
+    FROM HoaDonChiTiet cthd
+    INNER JOIN DatPhong dp ON cthd.MaDatPhong = dp.MaDatPhong
+    WHERE dp.MaLoaiPhong = @MaLoaiPhong;
+
+    DELETE hd
+    FROM HoaDon hd
+    INNER JOIN DatPhong dp ON hd.MaKhach = dp.MaKhach
+    WHERE dp.MaLoaiPhong = @MaLoaiPhong;
+
+    DELETE FROM DatPhong WHERE MaLoaiPhong = @MaLoaiPhong;
+
+    DELETE FROM Gia WHERE MaLoaiPhong = @MaLoaiPhong;
+
+    DELETE FROM Phong WHERE MaLoaiPhong = @MaLoaiPhong;
+
+    DELETE FROM LoaiPhong WHERE MaLoaiPhong = @MaLoaiPhong;
 END
 GO
 
@@ -606,9 +626,22 @@ CREATE PROCEDURE sp_Phong_Xoa
     @MaPhong INT
 AS
 BEGIN
-    DELETE FROM Phong WHERE MaPhong = @MaPhong
+    DELETE cthd
+    FROM HoaDonChiTiet cthd
+    INNER JOIN DatPhong dp ON cthd.MaDatPhong = dp.MaDatPhong
+    WHERE dp.MaPhong = @MaPhong;
+
+    DELETE hd
+    FROM HoaDon hd
+    INNER JOIN DatPhong dp ON hd.MaKhach = dp.MaKhach
+    WHERE dp.MaPhong = @MaPhong;
+
+    DELETE FROM DatPhong WHERE MaPhong = @MaPhong;
+
+    DELETE FROM Phong WHERE MaPhong = @MaPhong;
 END
 GO
+
 
 -- Lấy danh sách phòng
 CREATE PROCEDURE sp_Phong_DanhSach
@@ -922,9 +955,12 @@ CREATE PROCEDURE sp_DichVu_Xoa
     @MaDV INT
 AS
 BEGIN
-    DELETE FROM DichVu WHERE MaDV = @MaDV
+    DELETE FROM HoaDonChiTiet WHERE MaDV = @MaDV;
+
+    DELETE FROM DichVu WHERE MaDV = @MaDV;
 END
 GO
+
 
 -- Lấy danh sách dịch vụ
 CREATE PROCEDURE sp_DichVu_DanhSach
@@ -1282,3 +1318,26 @@ BEGIN
     ORDER BY hd.NgayLap DESC, hd.MaHD, cthd.MaCTHD;
 END;
 GO
+CREATE PROCEDURE sp_Phong_DoiTrangThai
+    @MaPhong INT,
+    @TinhTrang NVARCHAR(50)
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    -- Kiểm tra nếu phòng tồn tại
+    IF EXISTS (SELECT 1 FROM Phong WHERE MaPhong = @MaPhong)
+    BEGIN
+        -- Cập nhật trạng thái
+        UPDATE Phong
+        SET TinhTrang = @TinhTrang
+        WHERE MaPhong = @MaPhong;
+
+        SELECT 'Cập nhật trạng thái phòng thành công' AS Message;
+    END
+    ELSE
+    BEGIN
+        -- Nếu không tìm thấy phòng
+        SELECT 'Không tìm thấy phòng với MaPhong này' AS Message;
+    END
+END

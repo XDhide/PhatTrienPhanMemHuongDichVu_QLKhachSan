@@ -5,10 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>HOTEL - Báo Cáo & Cài Đặt</title>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <link rel="stylesheet" href="css/common.css">
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%); color: #333; }
-    .container { display: flex; min-height: 100vh; }
+    .container-fluid { display: flex; min-height: 100vh; }
     
     /* Sidebar */
     .sidebar {
@@ -71,7 +72,7 @@
         }
 
     /* Main */
-    .main { margin-left: 260px; padding: 2rem; flex: 1; }
+    .main-content { margin-left: 260px; padding: 2rem; flex: 1; }
     .header {
       background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
       padding: 2rem; 
@@ -109,7 +110,7 @@
     /* Content */
     .content { display: none; }
     .content.active { display: block; }
-    .section { 
+    .content-card { 
       background: white; 
       padding: 2rem; 
       border-radius: 1rem; 
@@ -117,7 +118,7 @@
       margin-bottom: 2rem;
       transition: transform 0.3s, box-shadow 0.3s;
     }
-    .section:hover {
+    .content-card:hover {
       transform: translateY(-5px);
       box-shadow: 0 10px 30px rgba(0,0,0,0.15);
     }
@@ -168,13 +169,13 @@
     }
 
     /* Cards */
-    .cards { 
+    .cards-fancy { 
       display: grid; 
       grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); 
       gap: 1.5rem; 
       margin-bottom: 2rem; 
     }
-    .card {
+    .card-fancy {
       padding: 2rem;
       border-radius: 1rem;
       box-shadow: 0 5px 20px rgba(0,0,0,0.1);
@@ -184,7 +185,7 @@
       position: relative;
       overflow: hidden;
     }
-    .card::before {
+    .card-fancy::before {
       content: '';
       position: absolute;
       top: 0;
@@ -195,11 +196,11 @@
       border-radius: 50%;
       transform: translate(30%, -30%);
     }
-    .card:hover {
+    .card-fancy:hover {
       transform: translateY(-10px);
       box-shadow: 0 15px 35px rgba(0,0,0,0.2);
     }
-    .card h3 { 
+    .card-fancy h3 { 
       font-size: 2.5rem; 
       font-weight: bold; 
       margin-bottom: 0.5rem;
@@ -207,7 +208,7 @@
       -webkit-background-clip: text;
       background-clip: text;
     }
-    .card p { 
+    .card-fancy p { 
       font-size: 0.95rem; 
       color: #6b7280;
       font-weight: 500;
@@ -317,10 +318,10 @@
     }
 
     @media (max-width: 768px) {
-      .container { flex-direction: column; }
+      .container-fluid { flex-direction: column; }
       .sidebar { width: 100%; height: auto; position: relative; }
-      .main { margin-left: 0; }
-      .cards { grid-template-columns: 1fr; }
+      .main-content { margin-left: 0; }
+      .cards-fancy { grid-template-columns: 1fr; }
       .time-filter { flex-direction: column; align-items: stretch; }
     }
 
@@ -329,14 +330,14 @@
       from { opacity: 0; transform: translateY(20px); }
       to { opacity: 1; transform: translateY(0); }
     }
-    .section, .card {
+    .content-card, .card-fancy {
       animation: fadeIn 0.5s ease-out;
     }
   </style>
 </head>
 <body>
 
-<div class="container">
+<div class="container-fluid">
   <!-- Sidebar -->
   <div class="sidebar">
         <div class="logo">
@@ -348,13 +349,22 @@
         </div>
 
         <div class="menu">
-          <a href="/management.html" class="menu-item">
+          
+            <a href="/management.html" class="menu-item">
                 <span>🏠</span>
                 <span>Trang chủ</span>
             </a>
-            <a href="/rooms.html" class="menu-item">
+            <a href="/Phong.html" class="menu-item">
                 <span>🚪</span>
-                <span>Danh Mục Phòng</span>
+                <span>Quản Lý Phòng</span>
+            </a>
+            <a href="/Gia.html" class="menu-item">
+                <span>💰</span>
+                <span>Quản Lý Giá</span>
+            </a>
+            <a href="/LoaiPhong.html" class="menu-item">
+                <span>🏷️</span>
+                <span>Loại Phòng</span>
             </a>
             <a href="/booking.html" class="menu-item">
                 <span>📅</span>
@@ -376,6 +386,10 @@
                 <span>💰</span>
                 <span>Hóa Đơn</span>
             </a>
+            <a href="/users.html" class="menu-item">
+                <span>👥</span>
+                <span>Quản lý người dùng</span>
+            </a>
             <a href="/baocao.html" class="menu-item active" >
                 <span>📊</span>
                 <span>Báo Cáo</span>
@@ -384,14 +398,37 @@
     </div>
 
   <!-- Main Content -->
-  <main class="main">
-    <header class="header">
-      <h2 id="page-title">📊 Báo Cáo Doanh Thu</h2>
-      <div class="tabs">
-        <button class="tab-btn active" onclick="showSection('reports')">Báo Cáo</button>
-        <div style="width:50px;height:50px;background:white;color:#667eea;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:bold;font-size:1.3rem;box-shadow: 0 4px 15px rgba(0,0,0,0.2);">A</div>
-      </div>
-    </header>
+  <main class="main-content">
+    <div class="top-bar">
+            <h2 id="pageTitle">Trang Chủ</h2>
+
+                <div class="user-dropdown">
+                  <div class="user-info" id="userInfoTrigger">
+                  <span id="userNameDisplay" class="user-name">Admin</span>
+                  <div class="user-avatar" id="userAvatar">A</div>
+                </div>
+
+        <!-- Dropdown Menu -->
+        <div class="dropdown-menu" id="userDropdown">
+            <div class="dropdown-header">
+                <div class="user-avatar-large" id="dropdownAvatar">A</div>
+                <div>
+                    <div class="dropdown-user-name" id="dropdownUserName">Admin</div>
+                    <div class="dropdown-user-role" id="dropdownUserRole">Quản trị viên</div>
+                </div>
+            </div>
+
+            <div class="dropdown-divider"></div>
+
+            <a href="profile.html" class="dropdown-item">
+                <span>👤</span> Hồ sơ cá nhân
+            </a>
+            <a href="#" class="dropdown-item text-danger" onclick="logout()">
+                <span>🚪</span> Đăng xuất
+            </a>
+        </div>
+    </div>
+</div>
 
     <!-- Reports Section -->
     <section id="reports" class="content active">
@@ -431,30 +468,30 @@
         <label id="tuanLabel" style="display:none;"><strong>📅 Tuần:</strong></label>
         <input type="number" id="tuanFilter" style="display:none;" min="1" max="53" value="46" />
 
-        <button onclick="loadBaoCao()">🔍 Tải báo cáo</button>
+        <button class="btn btn-primary" onclick="loadBaoCao()">🔍 Tải báo cáo</button>
       </div>
 
       <div id="error-container"></div>
       <div id="loading-container" class="loading" style="display:none;">Đang tải dữ liệu</div>
 
       <!-- Revenue Cards -->
-      <div class="cards">
-        <div class="card" style="border-left-color:#10b981;">
+      <div class="cards-fancy">
+        <div class="card-fancy" style="border-left-color:#10b981;">
           <div class="card-icon">💰</div>
           <h3 style="color:#10b981;" id="tongTien">0đ</h3>
           <p>Tổng doanh thu</p>
         </div>
-        <div class="card" style="border-left-color:#3b82f6;">
+        <div class="card-fancy" style="border-left-color:#3b82f6;">
           <div class="card-icon">📄</div>
           <h3 style="color:#3b82f6;" id="soHoaDon">0</h3>
           <p>Tổng hóa đơn</p>
         </div>
-        <div class="card" style="border-left-color:#8b5cf6;">
+        <div class="card-fancy" style="border-left-color:#8b5cf6;">
           <div class="card-icon">🏨</div>
           <h3 style="color:#8b5cf6;" id="soPhong">0</h3>
           <p>Số phòng đã thuê</p>
         </div>
-        <div class="card" style="border-left-color:#f59e0b;">
+        <div class="card-fancy" style="border-left-color:#f59e0b;">
           <div class="card-icon">📊</div>
           <h3 style="color:#f59e0b;" id="giaTriTB">0đ</h3>
           <p>Giá trị TB/hóa đơn</p>
@@ -462,7 +499,7 @@
       </div>
 
       <!-- Charts Section -->
-      <div class="section">
+      <div class="content-card">
         <div class="chart-title">📈 Biểu Đồ Phân Tích</div>
         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
           <div class="chart-container" style="height: 350px;">
@@ -475,7 +512,7 @@
       </div>
 
       <!-- Statistics Grid -->
-      <div class="section">
+      <div class="content-card">
         <div class="chart-title">📊 Thống Kê Chi Tiết</div>
         <div class="stats-grid">
           <div class="stat-item">
@@ -497,286 +534,13 @@
         </div>
       </div>
 
-      <div class="api-note">
-        <strong>🔗 API đang sử dụng:</strong><br>
-        <code id="current-api-url">GET /api-user/HoaDon/BaoCao?loai=thang&nam=2025&thang=11</code>
-      </div>
+      
     </section>
   </main>
 </div>
 
-<script>
-  // API Configuration
-  const API_BASE_URL = 'https://localhost:7105';
-  let currentCharts = { doughnut: null, bar: null };
-  
-  // Lấy token từ localStorage
-  function getAuthToken() {
-    return localStorage.getItem('token');
-  }
-
-  // Format tiền VNĐ
-  const formatVND = (value) => {
-    return new Intl.NumberFormat('vi-VN', { 
-      style: 'currency', 
-      currency: 'VND', 
-      minimumFractionDigits: 0 
-    }).format(value);
-  };
-
-  // Show error message
-  function showError(message) {
-    const container = document.getElementById('error-container');
-    container.innerHTML = `<div class="error-message">❌ ${message}</div>`;
-  }
-
-  // Clear error message
-  function clearError() {
-    document.getElementById('error-container').innerHTML = '';
-  }
-
-  // Update filter visibility
-  document.getElementById('loaiFilter').addEventListener('change', function() {
-    const loai = this.value;
-    const thangLabel = document.getElementById('thangLabel');
-    const thangFilter = document.getElementById('thangFilter');
-    const ngayLabel = document.getElementById('ngayLabel');
-    const ngayFilter = document.getElementById('ngayFilter');
-    const tuanLabel = document.getElementById('tuanLabel');
-    const tuanFilter = document.getElementById('tuanFilter');
-
-    thangLabel.style.display = 'none';
-    thangFilter.style.display = 'none';
-    ngayLabel.style.display = 'none';
-    ngayFilter.style.display = 'none';
-    tuanLabel.style.display = 'none';
-    tuanFilter.style.display = 'none';
-
-    if (loai === 'ngay') {
-      thangLabel.style.display = 'inline';
-      thangFilter.style.display = 'inline';
-      ngayLabel.style.display = 'inline';
-      ngayFilter.style.display = 'inline';
-    } else if (loai === 'tuan') {
-      tuanLabel.style.display = 'inline';
-      tuanFilter.style.display = 'inline';
-    } else if (loai === 'thang' || loai === 'quy') {
-      thangLabel.style.display = 'inline';
-      thangFilter.style.display = 'inline';
-    }
-  });
-
-  // Load báo cáo
-  async function loadBaoCao() {
-    const loai = document.getElementById('loaiFilter').value;
-    const nam = document.getElementById('namFilter').value;
-    const thang = document.getElementById('thangFilter').value;
-    const ngay = document.getElementById('ngayFilter').value;
-    const tuan = document.getElementById('tuanFilter').value;
-
-    let apiUrl = `${API_BASE_URL}/api-user/HoaDon/BaoCao?loai=${loai}&nam=${nam}`;
-    
-    if (loai === 'ngay') {
-      apiUrl += `&thang=${thang}&ngay=${ngay}`;
-    } else if (loai === 'tuan') {
-      apiUrl += `&tuan=${tuan}`;
-    } else if (loai === 'thang' || loai === 'quy') {
-      apiUrl += `&thang=${thang}`;
-    }
-
-    document.getElementById('current-api-url').textContent = apiUrl;
-
-    const token = getAuthToken();
-    if (!token) {
-      showError('Bạn chưa đăng nhập! Token không tồn tại trong localStorage.');
-      return;
-    }
-
-    document.getElementById('loading-container').style.display = 'block';
-    clearError();
-
-    try {
-      const response = await fetch(apiUrl, {
-        method: 'GET',
-        headers: {
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json'
-        }
-      });
-
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-
-      const result = await response.json();
-
-      if (result.success) {
-        displayBaoCao(result.data, loai);
-        createCharts(result.data, loai);
-      } else {
-        showError(result.message || 'Không thể tải báo cáo');
-      }
-    } catch (error) {
-      console.error('Lỗi:', error);
-      showError('Không thể kết nối đến máy chủ! ' + error.message);
-    } finally {
-      document.getElementById('loading-container').style.display = 'none';
-    }
-  }
-
-  // Display báo cáo
-  function displayBaoCao(data, loai) {
-    document.getElementById('tongTien').textContent = formatVND(data.tongTien || 0);
-    document.getElementById('soHoaDon').textContent = data.soHoaDon || 0;
-    document.getElementById('soPhong').textContent = data.soPhong || 0;
-    
-    const giaTriTB = data.soHoaDon > 0 ? data.tongTien / data.soHoaDon : 0;
-    document.getElementById('giaTriTB').textContent = formatVND(giaTriTB);
-
-    // Calculate per day stats
-    let soDays = 1;
-    if (loai === 'thang') soDays = 30;
-    else if (loai === 'quy') soDays = 90;
-    else if (loai === 'nam') soDays = 365;
-    else if (loai === 'tuan') soDays = 7;
-
-    document.getElementById('statDoanhThuNgay').textContent = formatVND(data.tongTien / soDays);
-    document.getElementById('statHoaDonNgay').textContent = (data.soHoaDon / soDays).toFixed(1);
-    document.getElementById('statPhongNgay').textContent = (data.soPhong / soDays).toFixed(1);
-    
-    // Assume 50 total rooms for occupancy calculation
-    const tyLeLapDay = ((data.soPhong / (50 * soDays)) * 100).toFixed(1);
-    document.getElementById('statTyLe').textContent = tyLeLapDay + '%';
-
-    clearError();
-  }
-
-  // Create charts
-  function createCharts(data, loai) {
-    // Destroy old charts
-    if (currentCharts.doughnut) currentCharts.doughnut.destroy();
-    if (currentCharts.bar) currentCharts.bar.destroy();
-
-    // Doughnut Chart - Revenue breakdown
-    const doughnutCtx = document.getElementById('doughnutChart').getContext('2d');
-    currentCharts.doughnut = new Chart(doughnutCtx, {
-      type: 'doughnut',
-      data: {
-        labels: ['Doanh thu', 'Còn lại'],
-        datasets: [{
-          data: [data.tongTien, Math.max(100000000 - data.tongTien, 0)],
-          backgroundColor: [
-            'rgba(102, 126, 234, 0.8)',
-            'rgba(229, 231, 235, 0.5)'
-          ],
-          borderColor: [
-            'rgba(102, 126, 234, 1)',
-            'rgba(229, 231, 235, 1)'
-          ],
-          borderWidth: 2
-        }]
-      },
-      options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        plugins: {
-          legend: {
-            position: 'bottom',
-            labels: {
-              padding: 20,
-              font: { size: 14, weight: 'bold' }
-            }
-          },
-          title: {
-            display: true,
-            text: 'Phân Bổ Doanh Thu',
-            font: { size: 16, weight: 'bold' },
-            color: '#1f2937'
-          }
-        }
-      }
-    });
-
-    // Bar Chart - Performance metrics
-    const barCtx = document.getElementById('barChart').getContext('2d');
-    currentCharts.bar = new Chart(barCtx, {
-      type: 'bar',
-      data: {
-        labels: ['Hóa đơn', 'Phòng thuê', 'Giá trị TB (x100k)'],
-        datasets: [{
-          label: 'Số lượng',
-          data: [
-            data.soHoaDon, 
-            data.soPhong, 
-            Math.round((data.tongTien / data.soHoaDon) / 100000)
-          ],
-          backgroundColor: [
-            'rgba(59, 130, 246, 0.8)',
-            'rgba(139, 92, 246, 0.8)',
-            'rgba(245, 158, 11, 0.8)'
-          ],
-          borderColor: [
-            'rgba(59, 130, 246, 1)',
-            'rgba(139, 92, 246, 1)',
-            'rgba(245, 158, 11, 1)'
-          ],
-          borderWidth: 2,
-          borderRadius: 10
-        }]
-      },
-      options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        plugins: {
-          legend: {
-            display: false
-          },
-          title: {
-            display: true,
-            text: 'Chỉ Số Hiệu Suất',
-            font: { size: 16, weight: 'bold' },
-            color: '#1f2937'
-          }
-        },
-        scales: {
-          y: {
-            beginAtZero: true,
-            grid: {
-              color: 'rgba(0, 0, 0, 0.05)'
-            }
-          },
-          x: {
-            grid: {
-              display: false
-            }
-          }
-        }
-      }
-    });
-  }
-
-  // Chuyển tab
-  function showSection(section) {
-    document.querySelectorAll('.content').forEach(el => el.classList.remove('active'));
-    document.getElementById(section).classList.add('active');
-    document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
-    document.querySelectorAll('.tab-btn')[section === 'reports' ? 0 : 1].classList.add('active');
-  }
-
-  // Check token on load
-  window.addEventListener('load', () => {
-    const token = getAuthToken();
-    if (!token) {
-      showError('⚠️ Bạn chưa đăng nhập! Vui lòng đăng nhập để xem báo cáo.');
-      console.log('Token không tồn tại trong localStorage');
-    } else {
-      console.log('Token đã tìm thấy:', token.substring(0, 20) + '...');
-      loadBaoCao();
-    }
-
-    document.getElementById('loaiFilter').dispatchEvent(new Event('change'));
-  });
-</script>
+ <script src="js/Auth.js"></script>
+<script src="js/baocao.js"></script>
 
 </body>
 </html>

@@ -235,5 +235,105 @@
       }
     ],
     "ReturnTypes": []
+  },
+  {
+    "ContainingType": "HotelManagement.API.Customer.Controllers.PhongController",
+    "Method": "GetAll",
+    "RelativePath": "api/Phong",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "HotelManagement.API.Customer.Controllers.PhongController",
+    "Method": "Create",
+    "RelativePath": "api/Phong",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "phong",
+        "Type": "HotelManagement.Module.Phong",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "HotelManagement.API.Customer.Controllers.PhongController",
+    "Method": "GetById",
+    "RelativePath": "api/Phong/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "HotelManagement.API.Customer.Controllers.PhongController",
+    "Method": "Update",
+    "RelativePath": "api/Phong/{id}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "phong",
+        "Type": "HotelManagement.Module.Phong",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "HotelManagement.API.Customer.Controllers.PhongController",
+    "Method": "Delete",
+    "RelativePath": "api/Phong/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "HotelManagement.API.Customer.Controllers.PhongController",
+    "Method": "DoiTrangThai",
+    "RelativePath": "api/Phong/{id}/TrangThai",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "tinhTrang",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
   }
 ]
